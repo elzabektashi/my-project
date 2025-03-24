@@ -1,14 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const db = require("../db");
+const companyController = require("../controllers/companiesController");
 
-router.get("/", (req, res) => {
-  db.query("SELECT * FROM companies", (err, results) => {
-    if (err) return res.status(500).json({ error: err });
-    res.json(results);
-  });
-});
-
-// Add POST, PUT, DELETE similarly...
+// Routes
+router.get("/", companyController.getAllCompanies);
+router.get("/:id", companyController.getCompanyById);
+router.post("/", companyController.createCompany);
+router.put("/:id", companyController.updateCompany);
+router.delete("/:id", companyController.deleteCompany);
 
 module.exports = router;
