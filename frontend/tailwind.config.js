@@ -18,7 +18,7 @@ module.exports = {
           100: "#F5F8FF",
         },
         "secondary-orange": "#f79761",
-        "muted-foreground": "#9CA3AF", // Tailwind gray-400
+        "muted-foreground": "#94a3b8", // Tailwind gray-400
         background: "#091121",
         // Hero background
         "light-white": {
