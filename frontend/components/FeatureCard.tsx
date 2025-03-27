@@ -26,7 +26,7 @@ export default function FeatureCard({
       <div className="mt-auto pt-4">
         <Link
           href="#"
-          className="inline-flex items-center text-sm font-medium text-primary hover:underline"
+          className="inline-flex items-center text-sm font-medium text-primary"
         >
           Learn more
           <ChevronRight className="ml-1 h-4 w-4" />

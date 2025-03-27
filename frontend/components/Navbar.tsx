@@ -16,29 +16,27 @@ const NavBar = () => {
 
         {/* Navigation Links */}
         <ul className="hidden md:flex items-center gap-6 text-sm font-medium">
-          {["Features", "How It Works", "Testimonials", "Pricing"].map(
-            (item) => (
-              <li key={item}>
-                <Link
-                  href={`#${item.toLowerCase().replace(/\s/g, "-")}`}
-                  className="text-gray-400 hover:text-white transition relative px-2 py-1"
-                >
-                  <span className="relative z-10">{item}</span>
-                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-[2px] bg-primary rounded-full scale-x-0 group-hover:scale-x-100 transition-transform origin-center"></span>
-                </Link>
-              </li>
-            )
-          )}
+          {["Features", "How It Works", "Reviews", "Pricing"].map((item) => (
+            <li key={item}>
+              <Link
+                href={`#${item.toLowerCase().replace(/\s/g, "-")}`}
+                className="text-gray-400 hover:text-white transition relative px-2 py-1"
+              >
+                <span className="relative z-10">{item}</span>
+                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-[2px] bg-primary rounded-full scale-x-0 group-hover:scale-x-100 transition-transform origin-center"></span>
+              </Link>
+            </li>
+          ))}
         </ul>
 
         {/* Right-side Buttons */}
         <div className="hidden md:flex items-center gap-4">
-          <Link href="/login" className="text-sm text-white hover:underline">
+          <Link href="/login" className="px-4 py-2 text-sm rounded-md font-medium text-white transition-all hover:bg-[#1e293b]">
             Log in
           </Link>
           <Link
             href="/signup"
-            className="bg-primary hover:bg-blue-700 text-white px-4 py-2 text-sm rounded-md font-medium"
+            className="bg-primary hover:bg-blue-700 text-white transition-all px-4 py-2 text-sm rounded-md font-medium"
           >
             Sign up free
           </Link>

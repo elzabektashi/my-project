@@ -19,7 +19,7 @@ module.exports = {
         },
         "secondary-orange": "#f79761",
         "muted-foreground": "#94a3b8", // Tailwind gray-400
-        background: "#091121",
+        background: "#0d1526",
         // Hero background
         "light-white": {
           DEFAULT: "rgba(59,60,152,0.03)",

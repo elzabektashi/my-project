@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Car Hub",
+  title: "LogiFlow",
   description: "Discover the best cars in the world",
 };
 
