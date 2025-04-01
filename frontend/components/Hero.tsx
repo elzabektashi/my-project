@@ -1,5 +1,5 @@
 "use client";
-import FeatureCard from "@/components/FeatureCard";
+import FeatureCard from "@/components/hero-cards/FeatureCard";
 import {
   CheckCircle2,
   ArrowRight,
@@ -12,7 +12,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import ReviewsCard from "./ReviewsCard";
+import ReviewsCard from "./hero-cards/ReviewsCard";
+import PricingCard from "./hero-cards/PricingCard";
 
 const Hero = () => {
   return (
@@ -38,7 +39,7 @@ const Hero = () => {
 
           <Link
             href="/signup"
-            className="bg-blue-600 hover:bg-blue-700 text-white transition-all px-6 py-3 rounded-lg font-medium flex items-center gap-2 mb-6"
+            className="bg-primary hover:bg-blue-700 text-white transition-all px-6 py-3 rounded-lg font-medium flex items-center gap-2 mb-6"
           >
             Get Started Free <ArrowRight className="h-4 w-4" />
           </Link>
@@ -122,10 +123,7 @@ const Hero = () => {
           </div>
         </section>
         {/*How it works section */}
-        <section
-          id="how-it-works"
-          className="w-full bg-[#0d1526] py-16 md:py-24"
-        >
+        <section id="how-it-works" className="w-full py-16 md:py-24">
           <div className="max-w-7xl mx-auto px-4 md:px-6">
             <div className="mx-auto max-w-2xl text-center flex flex-col items-center gap-4">
               <div className="bg-[#232740] text-sm px-4 py-1 rounded-full mb-6 flex items-center gap-2">
@@ -183,7 +181,7 @@ const Hero = () => {
             <div className="mt-16 flex justify-center">
               <Link
                 href="/signup"
-                className="bg-blue-600 hover:bg-blue-700 text-white transition-all duration-200 font-medium px-6 py-3 rounded-lg flex items-center gap-2"
+                className="bg-primary hover:bg-blue-700 text-white transition-all duration-200 font-medium px-6 py-3 rounded-lg flex items-center gap-2"
               >
                 Get Started Now
                 <ArrowRight className="h-4 w-4" />
@@ -242,6 +240,105 @@ const Hero = () => {
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
+            </div>
+          </div>
+        </section>
+        {/* Pricing Section */}
+        <section id="pricing" className="w-full py-16 md:py-24">
+          <div className="max-w-7xl mx-auto px-4 md:px-6">
+            <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
+              <div className="bg-[#232740] text-sm px-4 py-1 rounded-full mb-6 flex items-center gap-2">
+                <span className="text-muted-foreground font-medium">
+                  Pricing Plans
+                </span>
+              </div>
+              <h2 className="text-white text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+                Simple, Transparent Pricing
+              </h2>
+              <p className="max-w-[85%] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                Choose the plan that's right for your business
+              </p>
+            </div>
+            <div className="mx-auto mt-16 grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-3">
+              <PricingCard
+                title="Starter"
+                description="Perfect for small businesses just getting started"
+                price="$49"
+                features={[
+                  "Up to 5 users",
+                  "Manage up to 20 vehicles",
+                  "Basic reporting",
+                  "Email support",
+                  "Mobile app access",
+                ]}
+                ctaText="Get Started"
+                ctaLink="/signup?plan=starter"
+                popular={false}
+              />
+              <PricingCard
+                title="Professional"
+                description="Ideal for growing logistics operations"
+                price="$99"
+                features={[
+                  "Up to 15 users",
+                  "Manage up to 50 vehicles",
+                  "Advanced reporting",
+                  "Priority email & phone support",
+                  "API access",
+                  "Route optimization",
+                ]}
+                ctaText="Get Started"
+                ctaLink="/signup?plan=professional"
+                popular={true}
+              />
+              <PricingCard
+                title="Enterprise"
+                description="For large-scale logistics operations"
+                price="$249"
+                features={[
+                  "Unlimited users",
+                  "Unlimited vehicles",
+                  "Custom reporting",
+                  "24/7 dedicated support",
+                  "Advanced API access",
+                  "Custom integrations",
+                  "Dedicated account manager",
+                ]}
+                ctaText="Contact Sales"
+                ctaLink="/contact-sales"
+                popular={false}
+                variant="outline"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="w-full bg-primary py-16 md:py-24">
+          <div className="max-w-7xl mx-auto px-4 md:px-6">
+            <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-6 text-center">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+                Ready to Transform Your Logistics Operations?
+              </h2>
+              <p className="max-w-[85%] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                Join thousands of companies already using LogiFlow to streamline
+                their operations.
+              </p>
+              <div className="flex flex-col gap-3 min-[400px]:flex-row">
+                <Button
+                  size="lg"
+                  className="h-12 px-8 bg-background text-white hover:bg-[#1e293b] hover:text-white focus:outline-none"
+                  asChild
+                >
+                  <Link href="/signup">
+                    Start Your Free Trial
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </div>
+              <p className="text-sm text-primary-foreground/80">
+                No credit card required. 14-day free trial. Cancel anytime.
+              </p>
             </div>
           </div>
         </section>

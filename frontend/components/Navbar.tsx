@@ -31,14 +31,17 @@ const NavBar = () => {
 
         {/* Right-side Buttons */}
         <div className="hidden md:flex items-center gap-4">
-          <Link href="/login" className="px-4 py-2 text-sm rounded-md font-medium text-white transition-all hover:bg-[#1e293b]">
+          <Link
+            href="/login"
+            className="px-4 py-2 text-sm rounded-md font-medium text-white transition-all hover:bg-[#1e293b]"
+          >
             Log in
           </Link>
           <Link
             href="/signup"
             className="bg-primary hover:bg-blue-700 text-white transition-all px-4 py-2 text-sm rounded-md font-medium"
           >
-            Sign up free
+            Sign up
           </Link>
         </div>
       </nav>
