@@ -1,7 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
-import { Company } from "./Company";
-import { Driver } from "./Driver";
-import { Vehicle } from "./Vehicle";
+import { Company } from "./Company.js";
+import { Driver } from "./Driver.js";
 
 @Entity()
 export class Order {
@@ -20,12 +19,9 @@ export class Order {
   @Column({ name: "cargo_description" })
   cargoDescription!: string;
 
-  @ManyToOne(() => Company, (company) => company.id)
+  @ManyToOne(() => Company, (company) => company.orders)
   company!: Company;
 
-  @ManyToOne(() => Vehicle, (vehicle) => vehicle.id)
-  vehicle!: Vehicle;
-
-  @ManyToOne(() => Driver, (driver) => driver.id)
+  @ManyToOne(() => Driver, (driver) => driver.orders)
   driver!: Driver;
 }

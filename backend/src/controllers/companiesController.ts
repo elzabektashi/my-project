@@ -1,67 +1,56 @@
 import { Request, Response } from "express";
-import db from "../db";
-import { OkPacket, RowDataPacket } from "mysql2"; // ✅ from mysql2
+import { AppDataSource } from "../data-source.js";
+import { Company } from "../entities/Company.js";
 
-// Get all companies
-export const getAllCompanies = (req: Request, res: Response): void => {
-  db.query("SELECT * FROM companies", (err: any, results: RowDataPacket[]) => {
-    if (err) return res.status(500).json({ error: err });
-    res.json(results);
-  });
+// GET /companies
+export const getAllCompanies = async (req: Request, res: Response) => {
+  const companyRepo = AppDataSource.getRepository(Company);
+  const companies = await companyRepo.find();
+  res.json(companies);
 };
 
-// Get company by ID
-export const getCompanyById = (req: Request, res: Response): void => {
-  const id = req.params.id;
-  db.query("SELECT * FROM companies WHERE id = ?", [id], (err: any, results: RowDataPacket[]) => {
-    if (err) return res.status(500).json({ error: err });
-    if (results.length === 0)
-      return res.status(404).json({ message: "Company not found" });
-    res.json(results[0]);
-  });
+// GET /companies/:id
+export const getCompanyById = async (req: Request, res: Response) => {
+  const companyRepo = AppDataSource.getRepository(Company);
+  const company = await companyRepo.findOneBy({ id: Number(req.params.id) });
+
+  if (!company) {
+    return res.status(404).json({ message: "Company not found" });
+  }
+
+  res.json(company);
 };
 
-// Create a new company
-export const createCompany = (req: Request, res: Response): void => {
-  const { name, address, contact } = req.body;
-  db.query(
-    "INSERT INTO companies (name, address, contact) VALUES (?, ?, ?)",
-    [name, address, contact],
-    (err: any, result: OkPacket) => {
-      if (err) return res.status(500).json({ error: err });
-      res.status(201).json({
-        id: result.insertId,
-        name,
-        address,
-        contact
-      });
-    }
-  );
+// POST /companies
+export const createCompany = async (req: Request, res: Response) => {
+  const companyRepo = AppDataSource.getRepository(Company);
+  const newCompany = companyRepo.create(req.body);
+  const result = await companyRepo.save(newCompany);
+  res.status(201).json(result);
 };
 
-// Update an existing company
-export const updateCompany = (req: Request, res: Response): void => {
-  const id = req.params.id;
-  const { name, address, contact } = req.body;
-  db.query(
-    "UPDATE companies SET name = ?, address = ?, contact = ? WHERE id = ?",
-    [name, address, contact, id],
-    (err: any, result: OkPacket) => {
-      if (err) return res.status(500).json({ error: err });
-      if (result.affectedRows === 0)
-        return res.status(404).json({ message: "Company not found" });
-      res.json({ message: "Company updated successfully" });
-    }
-  );
+// PUT /companies/:id
+export const updateCompany = async (req: Request, res: Response) => {
+  const companyRepo = AppDataSource.getRepository(Company);
+  const existing = await companyRepo.findOneBy({ id: Number(req.params.id) });
+
+  if (!existing) {
+    return res.status(404).json({ message: "Company not found" });
+  }
+
+  companyRepo.merge(existing, req.body);
+  const result = await companyRepo.save(existing);
+  res.json(result);
 };
 
-// Delete a company
-export const deleteCompany = (req: Request, res: Response): void => {
-  const id = req.params.id;
-  db.query("DELETE FROM companies WHERE id = ?", [id], (err: any, result: OkPacket) => {
-    if (err) return res.status(500).json({ error: err });
-    if (result.affectedRows === 0)
-      return res.status(404).json({ message: "Company not found" });
-    res.json({ message: "Company deleted successfully" });
-  });
+// DELETE /companies/:id
+export const deleteCompany = async (req: Request, res: Response) => {
+  const companyRepo = AppDataSource.getRepository(Company);
+  const result = await companyRepo.delete(req.params.id);
+
+  if (result.affected === 0) {
+    return res.status(404).json({ message: "Company not found" });
+  }
+
+  res.json({ message: "Company deleted successfully" });
 };

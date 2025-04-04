@@ -1,77 +1,79 @@
 import { Request, Response } from "express";
-import db from "../db";
-import { RowDataPacket, OkPacket } from "mysql2";
+import { AppDataSource } from "../data-source.js";
+import { Vehicle } from "../entities/Vehicle.js";
 
 // Get all vehicles
-export const getAllVehicles = (req: Request, res: Response): void => {
-  db.query("SELECT * FROM vehicles", (err: any, results: RowDataPacket[]) => {
-    if (err) return res.status(500).json({ error: err });
-    res.json(results);
+export const getAllVehicles = async (req: Request, res: Response) => {
+  const vehicleRepo = AppDataSource.getRepository(Vehicle);
+  const vehicles = await vehicleRepo.find({
+    relations: ["company"],
   });
+  res.json(vehicles);
 };
 
 // Get vehicle by ID
-export const getVehicleById = (req: Request, res: Response): void => {
-  const id = req.params.id;
-  db.query(
-    "SELECT * FROM vehicles WHERE id = ?",
-    [id],
-    (err: any, results: RowDataPacket[]) => {
-      if (err) return res.status(500).json({ error: err });
-      if (results.length === 0)
-        return res.status(404).json({ message: "Vehicle not found" });
-      res.json(results[0]);
-    }
-  );
+export const getVehicleById = async (req: Request, res: Response) => {
+  const vehicleRepo = AppDataSource.getRepository(Vehicle);
+  const vehicle = await vehicleRepo.findOne({
+    where: { id: Number(req.params.id) },
+    relations: ["company"],
+  });
+
+  if (!vehicle) {
+    return res.status(404).json({ message: "Vehicle not found" });
+  }
+
+  res.json(vehicle);
 };
 
 // Create a new vehicle
-export const createVehicle = (req: Request, res: Response): void => {
-  const { license_plate, model, capacity, status, company_id } = req.body;
-  db.query(
-    "INSERT INTO vehicles (license_plate, model, capacity, status, company_id) VALUES (?, ?, ?, ?, ?)",
-    [license_plate, model, capacity, status, company_id],
-    (err: any, result: OkPacket) => {
-      if (err) return res.status(500).json({ error: err });
-      res.status(201).json({
-        id: result.insertId,
-        license_plate,
-        model,
-        capacity,
-        status,
-        company_id,
-      });
-    }
-  );
+export const createVehicle = async (req: Request, res: Response) => {
+  const vehicleRepo = AppDataSource.getRepository(Vehicle);
+  const { model, capacity, status, company_id } = req.body;
+
+  const newVehicle = vehicleRepo.create({
+    model,
+    capacity,
+    status,
+    company: { id: company_id },
+  });
+
+  const saved = await vehicleRepo.save(newVehicle);
+  res.status(201).json(saved);
 };
 
 // Update an existing vehicle
-export const updateVehicle = (req: Request, res: Response): void => {
-  const id = req.params.id;
-  const { license_plate, model, capacity, status, company_id } = req.body;
-  db.query(
-    "UPDATE vehicles SET license_plate = ?, model = ?, capacity = ?, status = ?, company_id = ? WHERE id = ?",
-    [license_plate, model, capacity, status, company_id, id],
-    (err: any, result: OkPacket) => {
-      if (err) return res.status(500).json({ error: err });
-      if (result.affectedRows === 0)
-        return res.status(404).json({ message: "Vehicle not found" });
-      res.json({ message: "Vehicle updated successfully" });
-    }
-  );
+export const updateVehicle = async (req: Request, res: Response) => {
+  const vehicleRepo = AppDataSource.getRepository(Vehicle);
+  const id = Number(req.params.id);
+  const existing = await vehicleRepo.findOneBy({ id });
+
+  if (!existing) {
+    return res.status(404).json({ message: "Vehicle not found" });
+  }
+
+  const { model, capacity, status, company_id } = req.body;
+
+  vehicleRepo.merge(existing, {
+    model,
+    capacity,
+    status,
+    company: { id: company_id },
+  });
+
+  const updated = await vehicleRepo.save(existing);
+  res.json(updated);
 };
 
 // Delete a vehicle
-export const deleteVehicle = (req: Request, res: Response): void => {
-  const id = req.params.id;
-  db.query(
-    "DELETE FROM vehicles WHERE id = ?",
-    [id],
-    (err: any, result: OkPacket) => {
-      if (err) return res.status(500).json({ error: err });
-      if (result.affectedRows === 0)
-        return res.status(404).json({ message: "Vehicle not found" });
-      res.json({ message: "Vehicle deleted successfully" });
-    }
-  );
+export const deleteVehicle = async (req: Request, res: Response) => {
+  const vehicleRepo = AppDataSource.getRepository(Vehicle);
+  const id = Number(req.params.id);
+
+  const result = await vehicleRepo.delete(id);
+  if (result.affected === 0) {
+    return res.status(404).json({ message: "Vehicle not found" });
+  }
+
+  res.json({ message: "Vehicle deleted successfully" });
 };

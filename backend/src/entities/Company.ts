@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
-import { Vehicle } from "./Vehicle";
-import { Driver } from "./Driver";
+import { Vehicle } from "./Vehicle.js";
+import { Driver } from "./Driver.js";
+import { Order } from "./Order.js"; 
 
 @Entity()
 export class Company {
@@ -21,4 +22,7 @@ export class Company {
 
   @OneToMany(() => Driver, (driver) => driver.company)
   drivers!: Driver[];
+
+  @OneToMany(() => Order, (order) => order.company)
+  orders!: Order[];
 }

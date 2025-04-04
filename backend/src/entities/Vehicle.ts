@@ -5,8 +5,8 @@ import {
   ManyToOne,
   OneToMany,
 } from "typeorm";
-import { Company } from "./Company";
-import { Order } from "./Order";
+import { Company } from "./Company.js";
+import { Driver } from "./Driver.js";
 
 @Entity()
 export class Vehicle {
@@ -25,6 +25,6 @@ export class Vehicle {
   @ManyToOne(() => Company, (company) => company.vehicles)
   company!: Company;
 
-  @OneToMany(() => Order, (order) => order.vehicle)
-  orders!: Order[];
+  @ManyToOne(() => Driver, (driver) => driver.vehicles)
+  driver!: Driver;
 }
