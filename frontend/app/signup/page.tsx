@@ -19,10 +19,20 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 export default function SignupPage() {
   const [isLoading, setIsLoading] = useState(false);
+  const [role, setRole] = useState("user");
+  const [adminCode, setAdminCode] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+
+    const formData = {
+      role,
+      adminCode: role === "admin" ? adminCode : undefined,
+      // other fields should be collected here using refs or state if needed
+    };
+
+    console.log("Form data:", formData);
 
     setTimeout(() => {
       setIsLoading(false);
@@ -103,6 +113,52 @@ export default function SignupPage() {
                 />
               </div>
 
+              {/* 🚀 Role selection dropdown */}
+              <div className="relative space-y-2">
+                <Label htmlFor="role">Register as</Label>
+                <select
+                  id="role"
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  required
+                  className="w-full appearance-none bg-[#0a0e1a] border border-[#1b2638] text-white px-3 py-2 pr-10 rounded-md focus:outline-none focus:ring-1 focus:ring-white/40"
+                >
+                  <option value="user">User</option>
+                  <option value="admin">Admin</option>
+                </select>
+
+                {/* Chevron Icon */}
+                <div className="pointer-events-none absolute right-3 top-[38px] text-white">
+                  <svg
+                    className="h-4 w-4"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 12a1 1 0 0 1-.7-.3l-4-4a1 1 0 0 1 1.4-1.4L10 9.6l3.3-3.3a1 1 0 1 1 1.4 1.4l-4 4a1 1 0 0 1-.7.3z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
+              </div>
+              
+              {/* 🚀 Admin code input (only if admin is selected) */}
+              {role === "admin" && (
+                <div className="space-y-2">
+                  <Label htmlFor="admin-code">Admin Access Code</Label>
+                  <Input
+                    id="admin-code"
+                    type="text"
+                    value={adminCode}
+                    onChange={(e) => setAdminCode(e.target.value)}
+                    placeholder="Enter admin code"
+                    required
+                    className="bg-transparent border border-[#1b2638] text-white placeholder:text-[#8e9cb1] focus-visible:ring-1 focus-visible:ring-white/40"
+                  />
+                </div>
+              )}
+
               <div className="flex items-center space-x-2">
                 <Checkbox id="terms" required />
                 <Label
@@ -160,7 +216,6 @@ export default function SignupPage() {
                 className="w-full border-[#1b2638] transition-all hover:bg-[#1e293b] hover:border-transparent"
               >
                 <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
-                  {/* Google Icon */}
                   <path
                     d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
                     fill="#4285F4"
@@ -187,7 +242,6 @@ export default function SignupPage() {
                 className="w-full border-[#1b2638] transition-all hover:bg-[#1e293b] hover:border-transparent"
               >
                 <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
-                  {/* Facebook Icon */}
                   <path
                     d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
                     fill="currentColor"

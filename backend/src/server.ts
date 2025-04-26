@@ -7,11 +7,16 @@ import vehiclesRoutes from "./routes/vehicles.js";
 import ordersRoutes from "./routes/orders.js";
 import driversRoutes from "./routes/drivers.js";
 
+import authRoutes from "./routes/auth"; 
+
 dotenv.config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+app.use("/api", authRoutes);
+
 
 app.use("/companies", companiesRoutes);
 app.use("/vehicles", vehiclesRoutes);
