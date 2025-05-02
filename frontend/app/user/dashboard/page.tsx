@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import {
   Card,
   CardContent,
@@ -7,93 +6,122 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Package,
   Truck,
+  Users,
   CheckCircle,
   Clock,
   AlertTriangle,
-  PlusCircle,
+  ArrowUpRight,
 } from "lucide-react";
 import Link from "next/link";
+import { OrdersOverview } from "@/components/user-dashboard/orders-overview";
+import { FleetStatus } from "@/components/user-dashboard/fleet-status";
 import { RecentOrders } from "@/components/user-dashboard/recent-orders";
-import { AvailableVehicles } from "@/components/user-dashboard/available-vehicles";
-
-export const metadata: Metadata = {
-  title: "Dashboard | LogiFlow",
-  description: "Logistics management dashboard",
-};
+import { PerformanceMetrics } from "@/components/user-dashboard/performance-metrics";
 
 export default function DashboardPage() {
+  // Mock data for dashboard stats
   const stats = [
     {
       title: "Total Orders",
-      value: "42",
+      value: "124",
       icon: <Package className="h-5 w-5 text-primary" />,
-      description: "All time orders",
+      description: "This month",
+      change: "+12%",
+      href: "/dashboard/orders",
     },
     {
-      title: "In Transit",
-      value: "7",
-      icon: <Clock className="h-5 w-5 text-amber-500" />,
-      description: "Currently in transit",
+      title: "Active Vehicles",
+      value: "18",
+      icon: <Truck className="h-5 w-5 text-primary" />,
+      description: "Out of 24 total",
+      change: "+2",
+      href: "/dashboard/fleet",
     },
     {
-      title: "Delivered",
-      value: "35",
+      title: "Available Drivers",
+      value: "12",
+      icon: <Users className="h-5 w-5 text-primary" />,
+      description: "Out of 20 total",
+      change: "-3",
+      href: "/dashboard/drivers",
+    },
+    {
+      title: "Completed Orders",
+      value: "98",
       icon: <CheckCircle className="h-5 w-5 text-green-500" />,
-      description: "Successfully delivered",
+      description: "This month",
+      change: "+15%",
+      href: "/dashboard/orders?status=completed",
     },
   ];
 
+  // Mock data for alerts
   const alerts = [
     {
       title: "Delivery Delay",
-      description: "Order #ORD-1002 is running 2 hours behind schedule",
+      description: "Order #ORD-1234 is running 2 hours behind schedule",
       type: "warning",
+      actionLink: "/dashboard/orders/ORD-1234",
     },
     {
       title: "Vehicle Maintenance",
-      description: "Vehicle #VEH-003 is due for maintenance in 2 days",
+      description: "Vehicle XYZ-123 is due for maintenance tomorrow",
       type: "info",
+      actionLink: "/dashboard/fleet/vehicles/XYZ-123",
     },
   ];
 
   return (
-    <div className="space-y-6 p-6 text-white" style={{ backgroundColor: "#0a0e1a" }}>
+    <div className="space-y-6">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <h1 className="text-2xl font-bold tracking-tight">Dispatcher Dashboard</h1>
+        <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
         <Button asChild>
-          <Link href="/dashboard/orders/new">
-            <PlusCircle className="mr-2 h-4 w-4" />
-            Create New Order
-          </Link>
+          <Link href="/dashboard/orders/new">Create New Order</Link>
         </Button>
       </div>
 
-      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+      {/* Stats Overview */}
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat, index) => (
-          <Card key={index} className="bg-[#0d1526] border-[#1b2638]">
-            <CardContent className="p-6 min-h-[120px]">
+          <Card key={index} className="border-white/10">
+            <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div className="flex flex-col gap-1">
-                  <span className="text-sm font-medium text-[#8e9cb1]">
+                  <span className="text-sm font-medium text-muted-foreground">
                     {stat.title}
                   </span>
-                  <span className="text-3xl font-bold text-white">{stat.value}</span>
-                  <span className="text-xs text-[#8e9cb1]">{stat.description}</span>
+                  <span className="text-3xl font-bold">{stat.value}</span>
+                  <span className="text-xs text-green-500">
+                    {stat.change} from last month
+                  </span>
                 </div>
-                <div className="rounded-full bg-[#1b2638] p-3">{stat.icon}</div>
+                <div className="rounded-full bg-primary/10 p-3">
+                  {stat.icon}
+                </div>
+              </div>
+              <div className="mt-4">
+                <Link
+                  href={stat.href}
+                  className="flex items-center text-sm text-primary hover:underline"
+                >
+                  View details
+                  <ArrowUpRight className="ml-1 h-3 w-3" />
+                </Link>
               </div>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      <Card className="border-[#1b2638] bg-[#0d1526]">
+      {/* Alerts */}
+      <Card className="border-white/10 rounded-lg">
         <CardHeader>
-          <CardTitle className="text-white">Alerts</CardTitle>
-          <CardDescription className="text-[#8e9cb1]">
+          <CardTitle className="text-xl font-semibold">Alerts</CardTitle>
+          <CardDescription>
             Important notifications requiring your attention
           </CardDescription>
         </CardHeader>
@@ -118,15 +146,26 @@ export default function DashboardPage() {
                   {alert.type === "warning" ? (
                     <AlertTriangle className="h-5 w-5" />
                   ) : (
-                    <Truck className="h-5 w-5" />
+                    <Clock className="h-5 w-5" />
                   )}
                 </div>
                 <div className="flex-1">
-                  <h4 className="font-medium text-white">{alert.title}</h4>
-                  <p className="text-sm text-[#8e9cb1]">{alert.description}</p>
+                  <h4 className="font-medium">{alert.title}</h4>
+                  <p className="text-sm text-muted-foreground">
+                    {alert.description}
+                  </p>
                 </div>
-                <Button variant="ghost" size="sm" className="text-white border border-white/20 hover:bg-white/10">
-                  View
+                <Button
+                  variant="outline"
+                  className="rounded border-white/10"
+                  asChild
+                >
+                  <Link
+                    href={alert.actionLink}
+                    className="hover:bg-[#1e293b] hover:border-transparent"
+                  >
+                    View
+                  </Link>
                 </Button>
               </div>
             ))}
@@ -134,14 +173,65 @@ export default function DashboardPage() {
         </CardContent>
       </Card>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <div className="md:col-span-2">
+      <Tabs defaultValue="overview" className="space-y-4">
+        <TabsList className="inline-flex bg-[#1d283a] rounded p-1 space-x-2">
+          <TabsTrigger
+            value="overview"
+            className="px-3 py-1 text-sm text-[#94a3b8] rounded
+                 data-[state=active]:bg-[#111827]
+                 data-[state=active]:text-white"
+          >
+            Overview
+          </TabsTrigger>
+          <TabsTrigger
+            value="orders"
+            className="px-3 py-1 text-sm text-[#94a3b8] rounded
+                 data-[state=active]:bg-[#111827]
+                 data-[state=active]:text-white"
+          >
+            Orders
+          </TabsTrigger>
+          <TabsTrigger
+            value="fleet"
+            className="px-3 py-1 text-sm text-[#94a3b8] rounded
+                 data-[state=active]:bg-[#111827]
+                 data-[state=active]:text-white"
+          >
+            Fleet
+          </TabsTrigger>
+          <TabsTrigger
+            value="performance"
+            className="px-3 py-1 text-sm text-[#94a3b8] rounded
+                 data-[state=active]:bg-[#111827]
+                 data-[state=active]:text-white"
+          >
+            Performance
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="overview" className="space-y-4">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <div className="md:col-span-2">
+              <OrdersOverview />
+            </div>
+            <div>
+              <FleetStatus />
+            </div>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="orders" className="space-y-4">
           <RecentOrders />
-        </div>
-        <div>
-          <AvailableVehicles />
-        </div>
-      </div>
+        </TabsContent>
+
+        <TabsContent value="fleet" className="space-y-4">
+          <FleetStatus showAll />
+        </TabsContent>
+
+        <TabsContent value="performance" className="space-y-4">
+          <PerformanceMetrics />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

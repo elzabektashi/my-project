@@ -11,43 +11,54 @@ import {
   Truck,
   Users,
   Building2,
+  BarChart3,
+  Settings,
   LogOut,
   Menu,
   X,
-  PlusCircle,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const navItems = [
   {
     title: "Dashboard",
-    href: "/dashboard",
+    href: "/user/dashboard",
     icon: LayoutDashboard,
   },
   {
-    title: "Create Order",
-    href: "/dashboard/orders/new",
-    icon: PlusCircle,
-  },
-  {
-    title: "My Orders",
-    href: "/dashboard/orders",
+    title: "Orders",
+    href: "/user/dashboard/orders",
     icon: Package,
   },
   {
-    title: "Vehicles",
-    href: "/dashboard/vehicles",
+    title: "Fleet",
+    href: "/user/dashboard/fleet",
     icon: Truck,
   },
   {
     title: "Drivers",
-    href: "/dashboard/drivers",
+    href: "/user/dashboard/drivers",
     icon: Users,
   },
   {
-    title: "Company Info",
-    href: "/dashboard/company",
+    title: "Company Profile",
+    href: "/user/dashboard/company",
     icon: Building2,
+  },
+  {
+    title: "User Management",
+    href: "/user/dashboard/users",
+    icon: Users,
+  },
+  {
+    title: "Reports & Analytics",
+    href: "/user/dashboard/reports",
+    icon: BarChart3,
+  },
+  {
+    title: "Settings",
+    href: "/user/dashboard/settings",
+    icon: Settings,
   },
 ];
 
@@ -75,7 +86,7 @@ export function DashboardSidebar({ className }: SidebarProps) {
         </SheetTrigger>
         <SheetContent
           side="left"
-          className="w-[240px] p-0 bg-[#0d1526] border-r border-[#1b2638]"
+          className="w-[240px] p-0 border-r border-white/10"
         >
           <MobileSidebar pathname={pathname} setIsOpen={setIsOpen} />
         </SheetContent>
@@ -84,16 +95,18 @@ export function DashboardSidebar({ className }: SidebarProps) {
       {/* Desktop Sidebar */}
       <div
         className={cn(
-          "hidden lg:flex h-screen w-64 flex-col border-r border-[#1b2638] bg-[#0d1526]",
+          "hidden lg:flex h-screen w-64 flex-col border-r border-white/10",
           className
         )}
       >
-        <div className="flex h-14 items-center border-b border-[#1b2638] px-4">
+        <div className="flex h-14 items-center border-b border-white/10 px-4">
           <Link
             href="/dashboard"
             className="flex items-center gap-2 font-semibold"
           >
-            <Truck className="h-6 w-6 text-primary" />
+            <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary">
+              <Truck className="h-4 w-4 text-primary-foreground" />
+            </div>
             <span className="text-lg">LogiFlow</span>
           </Link>
         </div>
@@ -104,26 +117,29 @@ export function DashboardSidebar({ className }: SidebarProps) {
                 key={index}
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors",
+                  "flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
                   pathname === item.href
-                    ? "bg-[#0d1526] text-zinc-50"
-                    : "text-zinc-400 hover:bg-[#1b2638] hover:text-zinc-50"
+                    ? "bg-muted font-medium text-foreground"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
                 )}
               >
-                <item.icon className="h-5 w-5" />
+                <item.icon className="h-4 w-4" />
                 {item.title}
               </Link>
             ))}
           </nav>
         </div>
-        <div className="border-t border-[#1b2638] p-4">
-          <Link
-            href="/logout"
-            className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-zinc-400 transition-colors hover:bg-red-900/20 hover:text-red-400"
+        <div className="mt-auto border-t border-white/10 p-4">
+          <Button
+            variant="outline"
+            className="w-full justify-start border border-white/10 hover:bg-[#1e293b] hover:border-transparent"
+            asChild
           >
-            <LogOut className="h-5 w-5" />
-            Logout
-          </Link>
+            <Link href="/logout" className="flex items-center gap-2">
+              <LogOut className="h-4 w-4" />
+              <span>Logout</span>
+            </Link>
+          </Button>
         </div>
       </div>
     </>
@@ -139,13 +155,15 @@ function MobileSidebar({
 }) {
   return (
     <div className="flex h-full flex-col">
-      <div className="flex h-14 items-center border-b border-[#1b2638] px-4">
+      <div className="flex h-14 items-center border-b px-4">
         <Link
           href="/dashboard"
           className="flex items-center gap-2 font-semibold"
           onClick={() => setIsOpen(false)}
         >
-          <Truck className="h-6 w-6 text-primary" />
+          <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary">
+            <Truck className="h-4 w-4 text-primary-foreground" />
+          </div>
           <span className="text-lg">LogiFlow</span>
         </Link>
         <Button
@@ -165,28 +183,30 @@ function MobileSidebar({
               key={index}
               href={item.href}
               className={cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors",
+                "flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
                 pathname === item.href
-                  ? "bg-[#0d1526] text-zinc-50"
-                  : "text-zinc-400 hover:bg-[#1b2638] hover:text-zinc-50"
+                  ? "bg-muted font-medium text-foreground"
+                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
               )}
               onClick={() => setIsOpen(false)}
             >
-              <item.icon className="h-5 w-5" />
+              <item.icon className="h-4 w-4" />
               {item.title}
             </Link>
           ))}
         </nav>
       </div>
-      <div className="border-t border-[#1b2638] p-4">
-        <Link
-          href="/logout"
-          className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-zinc-400 transition-colors hover:bg-red-900/20 hover:text-red-400"
-          onClick={() => setIsOpen(false)}
-        >
-          <LogOut className="h-5 w-5" />
-          Logout
-        </Link>
+      <div className="absolute bottom-0 w-full border-t p-4">
+        <Button variant="outline" className="w-full justify-start" asChild>
+          <Link
+            href="/logout"
+            className="flex items-center gap-2"
+            onClick={() => setIsOpen(false)}
+          >
+            <LogOut className="h-4 w-4" />
+            <span>Logout</span>
+          </Link>
+        </Button>
       </div>
     </div>
   );

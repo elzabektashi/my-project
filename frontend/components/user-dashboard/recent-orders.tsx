@@ -5,151 +5,168 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Eye, Edit, Filter } from "lucide-react";
+import { Eye, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 
 export function RecentOrders() {
+  // Mock data for orders
   const orders = [
     {
-      id: "ORD-1001",
-      date: "2025-04-05",
-      status: "Delivered",
-      vehicle: "VEH-001",
-      driver: "Alex Johnson",
-      origin: "New York, NY",
+      id: "ORD-1234",
+      customer: "ABC Corp",
+      destination: "New York, NY",
+      status: "In Transit",
+      driver: "John Doe",
+      vehicle: "ABC-1234",
+      deliveryDate: "2023-11-15",
+    },
+    {
+      id: "ORD-1233",
+      customer: "XYZ Inc",
       destination: "Boston, MA",
-    },
-    {
-      id: "ORD-1002",
-      date: "2025-04-06",
-      status: "In Transit",
-      vehicle: "VEH-002",
-      driver: "Sarah Williams",
-      origin: "Los Angeles, CA",
-      destination: "San Francisco, CA",
-    },
-    {
-      id: "ORD-1003",
-      date: "2025-04-06",
-      status: "Processing",
-      vehicle: "Unassigned",
+      status: "Pending",
       driver: "Unassigned",
-      origin: "Chicago, IL",
-      destination: "Detroit, MI",
+      vehicle: "Unassigned",
+      deliveryDate: "2023-11-16",
     },
     {
-      id: "ORD-1004",
-      date: "2025-04-07",
-      status: "In Transit",
-      vehicle: "VEH-004",
-      driver: "Michael Brown",
-      origin: "Miami, FL",
-      destination: "Orlando, FL",
+      id: "ORD-1232",
+      customer: "123 Industries",
+      destination: "Chicago, IL",
+      status: "Delivered",
+      driver: "Jane Smith",
+      vehicle: "XYZ-5678",
+      deliveryDate: "2023-11-14",
     },
-    
+    {
+      id: "ORD-1231",
+      customer: "Global Enterprises",
+      destination: "Miami, FL",
+      status: "In Transit",
+      driver: "Mike Johnson",
+      vehicle: "DEF-9012",
+      deliveryDate: "2023-11-15",
+    },
+    {
+      id: "ORD-1230",
+      customer: "Tech Solutions",
+      destination: "San Francisco, CA",
+      status: "Delivered",
+      driver: "Sarah Williams",
+      vehicle: "GHI-3456",
+      deliveryDate: "2023-11-13",
+    },
   ];
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case "Delivered":
-        return "bg-green-500/20 text-green-500 border-green-500/20";
+        return "bg-green-100 text-green-800";
       case "In Transit":
-        return "bg-blue-500/20 text-blue-500 border-blue-500/20";
-      case "Processing":
-        return "bg-amber-500/20 text-amber-500 border-amber-500/20";
+        return "bg-blue-100 text-blue-800";
+      case "Pending":
+        return "bg-amber-100 text-amber-800";
       default:
-        return "bg-zinc-500/20 text-zinc-400 border-zinc-500/20";
+        return "bg-zinc-700 text-white";
     }
   };
 
   return (
-    <Card className="border-[#1b2638] bg-[#0d1526]">
-      <CardHeader className="flex flex-row items-center justify-between">
-        <div>
-          <CardTitle>Recent Orders</CardTitle>
-          <CardDescription>Your most recent shipments</CardDescription>
-        </div>
-        <Button variant="outline" size="sm">
-          <Filter className="mr-2 h-4 w-4" />
-          Filter
-        </Button>
+    <Card className="border-white/10 rounded-lg">
+      <CardHeader className="px-6 pt-6 pb-3">
+        <CardTitle className="text-xl font-semibold">Recent Orders</CardTitle>
+        <CardDescription className="text-sm">
+          Overview of your latest orders and their status
+        </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="px-6 pb-6 pt-0">
         <div className="overflow-x-auto">
-          <table className="w-full">
+          <table className="w-full border-collapse">
             <thead>
-              <tr className="border-b border-[#1b2638]">
-                <th className="px-4 py-3 text-left text-sm font-medium text-zinc-400">
+              <tr className="border-b border-white/10">
+                <th className="text-left text-base font-semibold py-3 text-[#94a3b8]">
                   Order ID
                 </th>
-                <th className="px-4 py-3 text-left text-sm font-medium text-zinc-400">
-                  Date
+                <th className="text-left text-base font-semibold py-3 text-[#94a3b8]">
+                  Customer
                 </th>
-                <th className="px-4 py-3 text-left text-sm font-medium text-zinc-400">
+                <th className="text-left text-base font-semibold py-3 text-[#94a3b8]">
+                  Destination
+                </th>
+                <th className="text-left text-base font-semibold py-3 text-[#94a3b8]">
                   Status
                 </th>
-                <th className="px-4 py-3 text-left text-sm font-medium text-zinc-400">
-                  Vehicle
-                </th>
-                <th className="px-4 py-3 text-left text-sm font-medium text-zinc-400">
+                <th className="text-left text-base font-semibold py-3 text-[#94a3b8]">
                   Driver
                 </th>
-                <th className="px-4 py-3 text-right text-sm font-medium text-zinc-400">
+                <th className="text-left text-base font-semibold py-3 text-[#94a3b8]">
+                  Vehicle
+                </th>
+                <th className="text-left text-base font-semibold py-3 text-[#94a3b8]">
+                  Delivery Date
+                </th>
+                <th className="text-right text-base font-semibold py-3 text-[#94a3b8]">
                   Actions
                 </th>
               </tr>
             </thead>
             <tbody>
               {orders.map((order) => (
-                <tr key={order.id} className="border-b border-[#1b2638]">
-                  <td className="px-4 py-3 text-sm font-medium">{order.id}</td>
-                  <td className="px-4 py-3 text-sm text-zinc-400">
-                    {order.date}
+                <tr key={order.id} className="border-b border-white/10">
+                  <td className="text-base font-medium text-white py-4">
+                    {order.id}
                   </td>
-                  <td className="px-4 py-3">
-                    <Badge
-                      variant="outline"
-                      className={getStatusColor(order.status)}
+                  <td className="text-base py-4">
+                    {order.customer}
+                  </td>
+                  <td className="text-base py-4">
+                    {order.destination}
+                  </td>
+                  <td className="py-4">
+                    <span
+                      className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${getStatusColor(
+                        order.status
+                      )}`}
                     >
                       {order.status}
-                    </Badge>
+                    </span>
                   </td>
-                  <td className="px-4 py-3 text-sm text-zinc-400">
-                    {order.vehicle}
-                  </td>
-                  <td className="px-4 py-3 text-sm text-zinc-400">
+                  <td className="text-base py-4">
                     {order.driver}
                   </td>
-                  <td className="px-4 py-3 text-right">
-                    <div className="flex justify-end gap-2">
-                      {order.status !== "Delivered" && (
-                        <Button variant="ghost" size="icon" asChild>
-                          <Link href={`/dashboard/orders/${order.id}/edit`}>
-                            <Edit className="h-4 w-4" />
-                            <span className="sr-only">
-                              Edit order {order.id}
-                            </span>
-                          </Link>
-                        </Button>
-                      )}
-                      <Button variant="ghost" size="icon" asChild>
-                        <Link href={`/dashboard/orders/${order.id}`}>
-                          <Eye className="h-4 w-4" />
-                          <span className="sr-only">View order {order.id}</span>
-                        </Link>
-                      </Button>
-                    </div>
+                  <td className="text-base py-4">
+                    {order.vehicle}
+                  </td>
+                  <td className="text-base py-4">
+                    {order.deliveryDate}
+                  </td>
+                  <td className="text-right py-4">
+                    <Button variant="ghost" size="icon" asChild>
+                      <Link href={`/dashboard/orders/${order.id}`}>
+                        <Eye className="h-5 w-5" />
+                        <span className="sr-only">View order {order.id}</span>
+                      </Link>
+                    </Button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <div className="mt-4 flex justify-center">
-          <Button variant="outline" size="sm" asChild>
-            <Link href="/dashboard/orders">View all orders</Link>
+        <div className="mt-6 flex justify-center">
+          <Button
+            variant="outline"
+            className="rounded border-white/10"
+            asChild
+          >
+            <Link
+              href="/user/dashboard/orders"
+              className="flex items-center gap-2 px-5 py-2 text-base font-medium text-white hover:bg-[#1e293b] hover:border-transparent"
+            >
+              View all orders
+              <ArrowUpRight className="h-5 w-5 text-zinc-300" />
+            </Link>
           </Button>
         </div>
       </CardContent>
