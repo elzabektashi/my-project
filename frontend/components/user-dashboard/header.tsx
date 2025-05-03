@@ -23,42 +23,53 @@ export function DashboardHeader() {
   };
 
   return (
-    <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background border-white/10 px-4 sm:px-6">
-      {/* Removed LogiFlow logo and text */}
-
+    <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background border-white/20 px-4 sm:px-6">
       <div className="relative ml-auto flex items-center gap-2">
+        {/* Bell Notification Button */}
         <Button
-          variant="outline"
+          variant="ghost"
           size="icon"
-          className="relative"
+          className="relative border border-white/20 hover:border-white/40 hover:bg-[#1e293b] transition-colors duration-200"
           onClick={() => setShowNotifications(!showNotifications)}
         >
-          <Bell className="h-4 w-4" />
+          <Bell className="h-4 w-4 text-muted-foreground" />
           {unreadCount > 0 && (
-            <Badge className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full p-0 text-[10px]">
+            <Badge className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-white p-0 text-[10px]">
               {unreadCount}
             </Badge>
           )}
         </Button>
 
+        {/* User Dropdown Menu */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="icon" className="rounded-full">
-              <User className="h-4 w-4" />
+            <Button
+              variant="ghost"
+              size="icon"
+              className="rounded-full border border-white/20 hover:border-white/40 hover:bg-[#1e293b] transition-colors duration-200"
+            >
+              <User className="h-4 w-4 text-muted-foreground" />
               <span className="sr-only">User menu</span>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent
+            align="end"
+            className="border border-white/20 bg-background"
+          >
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Settings</DropdownMenuItem>
+            <DropdownMenuItem className="hover:bg-[#1e293b] hover:border-transparent">
+              Profile
+            </DropdownMenuItem>
+            <DropdownMenuItem className="hover:bg-[#1e293b] hover:border-transparent">
+              Settings
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Logout</DropdownMenuItem>
+            <DropdownMenuItem className="hover:bg-[#1e293b] hover:border-transparent">
+              Logout
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-
-        {/* Removed New Order button */}
       </div>
 
       {showNotifications && (
