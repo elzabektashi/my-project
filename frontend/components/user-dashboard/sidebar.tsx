@@ -117,10 +117,10 @@ export function DashboardSidebar({ className }: SidebarProps) {
                 key={index}
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
+                  "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
                   pathname === item.href
-                    ? "bg-muted font-medium text-foreground"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                    ? "bg-[#1e293b] text-white" // highlight current tab
+                    : "text-muted-foreground hover:bg-[#1e293b] hover:text-white"
                 )}
               >
                 <item.icon className="h-4 w-4" />
