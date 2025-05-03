@@ -32,7 +32,7 @@ import {
 import { format } from "date-fns";
 import { CalendarIcon, Plus, Trash } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 export default function CreateOrderPage() {
   const router = useRouter();
@@ -64,16 +64,12 @@ export default function CreateOrderPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would normally save the data to your database
     toast({
       title: "Order created",
       description: "Your new order has been created successfully.",
     });
-    // Redirect to orders list
     router.push("/dashboard/orders");
   };
-
-  export default NewOrderPage;
 
   return (
     <div className="space-y-6">
@@ -83,6 +79,7 @@ export default function CreateOrderPage() {
 
       <form onSubmit={handleSubmit}>
         <div className="grid gap-6">
+          {/* Order Details */}
           <Card className="border-zinc-800 bg-zinc-900">
             <CardHeader>
               <CardTitle>Order Details</CardTitle>
@@ -184,6 +181,7 @@ export default function CreateOrderPage() {
             </CardContent>
           </Card>
 
+          {/* Order Items */}
           <Card className="border-zinc-800 bg-zinc-900">
             <CardHeader className="flex flex-row items-center justify-between">
               <div>
@@ -270,6 +268,7 @@ export default function CreateOrderPage() {
             </CardContent>
           </Card>
 
+          {/* Resource Assignment */}
           <Card className="border-zinc-800 bg-zinc-900">
             <CardHeader>
               <CardTitle>Resource Assignment</CardTitle>
