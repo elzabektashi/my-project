@@ -6,6 +6,7 @@
     "tailwindcss": "^4.0.16"
   },
   "dependencies": {
+    "date-fns": "^3.6.0",
     "lucide-react": "^0.484.0"
   }
 }

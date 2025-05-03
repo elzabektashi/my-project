@@ -20,46 +20,22 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const navItems = [
-  {
-    title: "Dashboard",
-    href: "/user/dashboard",
-    icon: LayoutDashboard,
-  },
-  {
-    title: "Orders",
-    href: "/user/dashboard/orders",
-    icon: Package,
-  },
-  {
-    title: "Fleet",
-    href: "/user/dashboard/fleet",
-    icon: Truck,
-  },
-  {
-    title: "Drivers",
-    href: "/user/dashboard/drivers",
-    icon: Users,
-  },
+  { title: "Dashboard", href: "/user/dashboard", icon: LayoutDashboard },
+  { title: "Orders", href: "/user/dashboard/orders", icon: Package },
+  { title: "Fleet", href: "/user/dashboard/fleet", icon: Truck },
+  { title: "Drivers", href: "/user/dashboard/drivers", icon: Users },
   {
     title: "Company Profile",
     href: "/user/dashboard/company",
     icon: Building2,
   },
-  {
-    title: "User Management",
-    href: "/user/dashboard/users",
-    icon: Users,
-  },
+  { title: "User Management", href: "/user/dashboard/users", icon: Users },
   {
     title: "Reports & Analytics",
     href: "/user/dashboard/reports",
     icon: BarChart3,
   },
-  {
-    title: "Settings",
-    href: "/user/dashboard/settings",
-    icon: Settings,
-  },
+  { title: "Settings", href: "/user/dashboard/settings", icon: Settings },
 ];
 
 interface SidebarProps {
@@ -119,8 +95,8 @@ export function DashboardSidebar({ className }: SidebarProps) {
                 className={cn(
                   "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
                   pathname === item.href
-                    ? "bg-[#1e293b] text-white" // highlight current tab
-                    : "text-muted-foreground hover:bg-[#1e293b] hover:text-white"
+                    ? "bg-[#1e293b] text-white font-bold"
+                    : "text-muted-foreground hover:text-foreground hover:font-bold"
                 )}
               >
                 <item.icon className="h-4 w-4" />
@@ -132,7 +108,7 @@ export function DashboardSidebar({ className }: SidebarProps) {
         <div className="mt-auto border-t border-white/10 p-4">
           <Button
             variant="outline"
-            className="w-full justify-start border border-white/10 hover:bg-[#1e293b] hover:border-transparent"
+            className="w-full justify-start border border-white/10 hover:border-transparent"
             asChild
           >
             <Link href="/logout" className="flex items-center gap-2">
@@ -185,8 +161,8 @@ function MobileSidebar({
               className={cn(
                 "flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
                 pathname === item.href
-                  ? "bg-muted font-medium text-foreground"
-                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  ? "bg-muted font-bold text-foreground"
+                  : "text-muted-foreground hover:text-foreground hover:font-bold"
               )}
               onClick={() => setIsOpen(false)}
             >
