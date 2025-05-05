@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -37,12 +36,15 @@ import { useToast } from "@/hooks/use-toast";
 export default function CreateOrderPage() {
   const router = useRouter();
   const { toast } = useToast();
-  const [date, setDate] = useState<Date>();
+
+  const [date, setDate] = useState<Date | null>(null);
   const [items, setItems] = useState([
     { id: 1, name: "", quantity: "", weight: "" },
   ]);
-  const [selectedVehicle, setSelectedVehicle] = useState("");
-  const [selectedDriver, setSelectedDriver] = useState("");
+  const [selectedVehicle, setSelectedVehicle] = useState<string>("");
+  const [selectedDriver, setSelectedDriver] = useState<string>("");
+  const [selectedOrigin, setSelectedOrigin] = useState<string>("");
+  const [selectedDestination, setSelectedDestination] = useState<string>("");
 
   const addItem = () => {
     const newId =
@@ -72,7 +74,7 @@ export default function CreateOrderPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 bg-[#111827] min-h-screen p-6 text-white">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold tracking-tight">Create New Order</h1>
       </div>
@@ -80,7 +82,7 @@ export default function CreateOrderPage() {
       <form onSubmit={handleSubmit}>
         <div className="grid gap-6">
           {/* Order Details */}
-          <Card className="border-zinc-800 bg-zinc-900">
+          <Card className="border border-white/20 bg-[#111827] text-white">
             <CardHeader>
               <CardTitle>Order Details</CardTitle>
               <CardDescription>
@@ -91,18 +93,34 @@ export default function CreateOrderPage() {
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div className="space-y-2">
                   <Label htmlFor="origin">Origin</Label>
-                  <Select required>
-                    <SelectTrigger id="origin">
+                  <Select
+                    value={selectedOrigin}
+                    onValueChange={setSelectedOrigin}
+                    required
+                  >
+                    <SelectTrigger
+                      id="origin"
+                      className="bg-[#111827] text-white border-white/20"
+                    >
                       <SelectValue placeholder="Select origin" />
                     </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="warehouse-a">
+                    <SelectContent className="bg-[#111827] text-white border-white/20">
+                      <SelectItem
+                        value="warehouse-a"
+                        className="hover:bg-[#1e293b] transition-colors"
+                      >
                         Warehouse A - New York
                       </SelectItem>
-                      <SelectItem value="warehouse-b">
+                      <SelectItem
+                        value="warehouse-b"
+                        className="hover:bg-[#1e293b] transition-colors"
+                      >
                         Warehouse B - Los Angeles
                       </SelectItem>
-                      <SelectItem value="warehouse-c">
+                      <SelectItem
+                        value="warehouse-c"
+                        className="hover:bg-[#1e293b] transition-colors"
+                      >
                         Warehouse C - Chicago
                       </SelectItem>
                     </SelectContent>
@@ -110,21 +128,40 @@ export default function CreateOrderPage() {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="destination">Destination</Label>
-                  <Select required>
-                    <SelectTrigger id="destination">
+                  <Select
+                    value={selectedDestination}
+                    onValueChange={setSelectedDestination}
+                    required
+                  >
+                    <SelectTrigger
+                      id="destination"
+                      className="bg-[#111827] text-white border-white/20"
+                    >
                       <SelectValue placeholder="Select destination" />
                     </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="customer-1">
+                    <SelectContent className="bg-[#111827] text-white border-white/20">
+                      <SelectItem
+                        value="customer-1"
+                        className="hover:bg-[#1e293b] transition-colors"
+                      >
                         Customer Site 1 - Boston
                       </SelectItem>
-                      <SelectItem value="customer-2">
+                      <SelectItem
+                        value="customer-2"
+                        className="hover:bg-[#1e293b] transition-colors"
+                      >
                         Customer Site 2 - San Francisco
                       </SelectItem>
-                      <SelectItem value="customer-3">
+                      <SelectItem
+                        value="customer-3"
+                        className="hover:bg-[#1e293b] transition-colors"
+                      >
                         Customer Site 3 - Detroit
                       </SelectItem>
-                      <SelectItem value="customer-4">
+                      <SelectItem
+                        value="customer-4"
+                        className="hover:bg-[#1e293b] transition-colors"
+                      >
                         Customer Site 4 - Miami
                       </SelectItem>
                     </SelectContent>
@@ -141,6 +178,7 @@ export default function CreateOrderPage() {
                     min="0"
                     step="0.1"
                     required
+                    className="bg-[#111827] text-white border-white/20"
                   />
                 </div>
                 <div className="space-y-2">
@@ -150,15 +188,15 @@ export default function CreateOrderPage() {
                       <Button
                         variant={"outline"}
                         className={cn(
-                          "w-full justify-start text-left font-normal",
-                          !date && "text-zinc-400"
+                          "w-full justify-start text-left font-normal bg-[#111827] text-white border-white/20",
+                          !date && "text-muted-foreground"
                         )}
                       >
                         <CalendarIcon className="mr-2 h-4 w-4" />
                         {date ? format(date, "PPP") : <span>Select date</span>}
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0">
+                    <PopoverContent className="w-auto p-0 bg-[#111827] text-white border-white/20">
                       <Calendar
                         mode="single"
                         selected={date}
@@ -175,14 +213,14 @@ export default function CreateOrderPage() {
                 <Textarea
                   id="notes"
                   placeholder="Enter any special instructions for this order"
-                  className="min-h-[100px]"
+                  className="min-h-[100px] bg-[#111827] text-white border-white/20"
                 />
               </div>
             </CardContent>
           </Card>
 
           {/* Order Items */}
-          <Card className="border-zinc-800 bg-zinc-900">
+          <Card className="border border-white/20 bg-[#111827] text-white">
             <CardHeader className="flex flex-row items-center justify-between">
               <div>
                 <CardTitle>Order Items</CardTitle>
@@ -205,7 +243,7 @@ export default function CreateOrderPage() {
                 {items.map((item) => (
                   <div
                     key={item.id}
-                    className="grid grid-cols-1 gap-4 rounded-lg border border-zinc-800 p-4 md:grid-cols-4"
+                    className="grid grid-cols-1 gap-4 rounded-lg border border-white/20 p-4 md:grid-cols-4"
                   >
                     <div className="space-y-2">
                       <Label htmlFor={`item-name-${item.id}`}>Item Name</Label>
@@ -215,6 +253,7 @@ export default function CreateOrderPage() {
                         onChange={(e) =>
                           updateItem(item.id, "name", e.target.value)
                         }
+                        className="bg-[#111827] text-white border-white/20"
                         required
                       />
                     </div>
@@ -230,6 +269,7 @@ export default function CreateOrderPage() {
                         onChange={(e) =>
                           updateItem(item.id, "quantity", e.target.value)
                         }
+                        className="bg-[#111827] text-white border-white/20"
                         required
                       />
                     </div>
@@ -246,6 +286,7 @@ export default function CreateOrderPage() {
                         onChange={(e) =>
                           updateItem(item.id, "weight", e.target.value)
                         }
+                        className="bg-[#111827] text-white border-white/20"
                         required
                       />
                     </div>
@@ -259,7 +300,6 @@ export default function CreateOrderPage() {
                         className="h-9 w-9 text-red-500 hover:text-red-600 hover:bg-red-500/10"
                       >
                         <Trash className="h-4 w-4" />
-                        <span className="sr-only">Remove item</span>
                       </Button>
                     </div>
                   </div>
@@ -268,69 +308,12 @@ export default function CreateOrderPage() {
             </CardContent>
           </Card>
 
-          {/* Resource Assignment */}
-          <Card className="border-zinc-800 bg-zinc-900">
-            <CardHeader>
-              <CardTitle>Resource Assignment</CardTitle>
-              <CardDescription>
-                Assign a vehicle and driver to this order
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="grid gap-6">
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor="vehicle">Vehicle</Label>
-                  <Select
-                    value={selectedVehicle}
-                    onValueChange={setSelectedVehicle}
-                  >
-                    <SelectTrigger id="vehicle">
-                      <SelectValue placeholder="Select vehicle" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="auto">Auto-assign</SelectItem>
-                      <SelectItem value="veh-001">
-                        VEH-001 (Truck - 20 tons)
-                      </SelectItem>
-                      <SelectItem value="veh-002">
-                        VEH-002 (Van - 3 tons)
-                      </SelectItem>
-                      <SelectItem value="veh-003">
-                        VEH-003 (Truck - 15 tons)
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="driver">Driver</Label>
-                  <Select
-                    value={selectedDriver}
-                    onValueChange={setSelectedDriver}
-                  >
-                    <SelectTrigger id="driver">
-                      <SelectValue placeholder="Select driver" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="auto">Auto-assign</SelectItem>
-                      <SelectItem value="drv-001">Alex Johnson</SelectItem>
-                      <SelectItem value="drv-002">Sarah Williams</SelectItem>
-                      <SelectItem value="drv-005">Emily Davis</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-            </CardContent>
-            <CardFooter className="flex justify-end space-x-2 border-t border-zinc-800 pt-6">
-              <Button
-                variant="outline"
-                type="button"
-                onClick={() => router.back()}
-              >
-                Cancel
-              </Button>
-              <Button type="submit">Create Order</Button>
-            </CardFooter>
-          </Card>
+          {/* Submit */}
+          <CardFooter>
+            <Button type="submit" className="w-full">
+              Create Order
+            </Button>
+          </CardFooter>
         </div>
       </form>
     </div>

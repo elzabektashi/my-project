@@ -149,16 +149,37 @@ export default function OrdersPage() {
             </div>
             <div className="flex flex-col space-y-2 md:flex-row md:items-center md:space-x-2 md:space-y-0">
               <Select defaultValue="all">
-                <SelectTrigger className="w-full md:w-[180px] border-white/10">
+                <SelectTrigger className="w-full md:w-[180px] border border-white/10 bg-[#0f172a] text-white">
                   <SelectValue placeholder="Status" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Statuses</SelectItem>
-                  <SelectItem value="pending">Pending</SelectItem>
-                  <SelectItem value="in-transit">In Transit</SelectItem>
-                  <SelectItem value="delivered">Delivered</SelectItem>
+                <SelectContent className="bg-[#0f172a] text-white border border-white/10">
+                  <SelectItem
+                    value="all"
+                    className="px-3 py-2 text-sm hover:bg-[#1e293b] hover:text-white transition-colors"
+                  >
+                    All Statuses
+                  </SelectItem>
+                  <SelectItem
+                    value="pending"
+                    className="px-3 py-2 text-sm hover:bg-[#1e293b] hover:text-white transition-colors"
+                  >
+                    Pending
+                  </SelectItem>
+                  <SelectItem
+                    value="in-transit"
+                    className="px-3 py-2 text-sm hover:bg-[#1e293b] hover:text-white transition-colors"
+                  >
+                    In Transit
+                  </SelectItem>
+                  <SelectItem
+                    value="delivered"
+                    className="px-3 py-2 text-sm hover:bg-[#1e293b] hover:text-white transition-colors"
+                  >
+                    Delivered
+                  </SelectItem>
                 </SelectContent>
               </Select>
+
               <DateRangePicker />
               <Button variant="outline" size="icon" className="border-white/10">
                 <Filter className="h-4 w-4" />
