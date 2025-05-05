@@ -74,7 +74,7 @@ export default function CreateOrderPage() {
   };
 
   return (
-    <div className="space-y-6 bg-[#111827] min-h-screen p-6 text-white">
+    <div className="space-y-6 bg-[#0d1526] min-h-screen p-6 text-white">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold tracking-tight">Create New Order</h1>
       </div>
@@ -199,8 +199,10 @@ export default function CreateOrderPage() {
                     <PopoverContent className="w-auto p-0 bg-[#111827] text-white border-white/20">
                       <Calendar
                         mode="single"
-                        selected={date}
-                        onSelect={setDate}
+                        selected={date ?? undefined}
+                        onSelect={(selectedDate) =>
+                          setDate(selectedDate ?? null)
+                        }
                         initialFocus
                       />
                     </PopoverContent>
