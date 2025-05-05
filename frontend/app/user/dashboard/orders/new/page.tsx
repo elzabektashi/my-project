@@ -107,19 +107,19 @@ export default function CreateOrderPage() {
                     <SelectContent className="bg-[#111827] text-white border-white/20">
                       <SelectItem
                         value="warehouse-a"
-                        className="hover:bg-[#1e293b] transition-colors"
+                        className="hover:bg-[#1e293b]"
                       >
                         Warehouse A - New York
                       </SelectItem>
                       <SelectItem
                         value="warehouse-b"
-                        className="hover:bg-[#1e293b] transition-colors"
+                        className="hover:bg-[#1e293b]"
                       >
                         Warehouse B - Los Angeles
                       </SelectItem>
                       <SelectItem
                         value="warehouse-c"
-                        className="hover:bg-[#1e293b] transition-colors"
+                        className="hover:bg-[#1e293b]"
                       >
                         Warehouse C - Chicago
                       </SelectItem>
@@ -142,25 +142,25 @@ export default function CreateOrderPage() {
                     <SelectContent className="bg-[#111827] text-white border-white/20">
                       <SelectItem
                         value="customer-1"
-                        className="hover:bg-[#1e293b] transition-colors"
+                        className="hover:bg-[#1e293b]"
                       >
                         Customer Site 1 - Boston
                       </SelectItem>
                       <SelectItem
                         value="customer-2"
-                        className="hover:bg-[#1e293b] transition-colors"
+                        className="hover:bg-[#1e293b]"
                       >
                         Customer Site 2 - San Francisco
                       </SelectItem>
                       <SelectItem
                         value="customer-3"
-                        className="hover:bg-[#1e293b] transition-colors"
+                        className="hover:bg-[#1e293b]"
                       >
                         Customer Site 3 - Detroit
                       </SelectItem>
                       <SelectItem
                         value="customer-4"
-                        className="hover:bg-[#1e293b] transition-colors"
+                        className="hover:bg-[#1e293b]"
                       >
                         Customer Site 4 - Miami
                       </SelectItem>
@@ -308,9 +308,96 @@ export default function CreateOrderPage() {
             </CardContent>
           </Card>
 
+          {/* Resource Assignment */}
+          <Card className="border border-white/20 bg-[#111827] text-white">
+            <CardHeader>
+              <CardTitle>Resource Assignment</CardTitle>
+              <CardDescription>
+                Assign a vehicle and driver to this order
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="vehicle">Vehicle</Label>
+                <Select
+                  value={selectedVehicle}
+                  onValueChange={setSelectedVehicle}
+                  required
+                >
+                  <SelectTrigger
+                    id="vehicle"
+                    className="bg-[#111827] text-white border-white/20"
+                  >
+                    <SelectValue placeholder="Select vehicle" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-[#111827] text-white border-white/20">
+                    <SelectItem
+                      value="vehicle-1"
+                      className="hover:bg-[#1e293b]"
+                    >
+                      Truck 1 - Volvo
+                    </SelectItem>
+                    <SelectItem
+                      value="vehicle-2"
+                      className="hover:bg-[#1e293b]"
+                    >
+                      Truck 2 - Scania
+                    </SelectItem>
+                    <SelectItem
+                      value="vehicle-3"
+                      className="hover:bg-[#1e293b]"
+                    >
+                      Van 1 - Mercedes
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="driver">Driver</Label>
+                <Select
+                  value={selectedDriver}
+                  onValueChange={setSelectedDriver}
+                  required
+                >
+                  <SelectTrigger
+                    id="driver"
+                    className="bg-[#111827] text-white border-white/20"
+                  >
+                    <SelectValue placeholder="Select driver" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-[#111827] text-white border-white/20">
+                    <SelectItem
+                      value="driver-1 "
+                      className="hover:bg-[#1e293b]"
+                    >
+                      John Doe
+                    </SelectItem>
+                    <SelectItem value="driver-2" className="hover:bg-[#1e293b]">
+                      Jane Smith
+                    </SelectItem>
+                    <SelectItem value="driver-3" className="hover:bg-[#1e293b]">
+                      Carlos Gonzalez
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Submit */}
-          <CardFooter>
-            <Button type="submit" className="w-full">
+          <CardFooter className="flex justify-end space-x-4">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => router.push("/dashboard/orders")}
+              className="border-white/20 text-white hover:bg-white/10 transition-colors"
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              className="bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+            >
               Create Order
             </Button>
           </CardFooter>
