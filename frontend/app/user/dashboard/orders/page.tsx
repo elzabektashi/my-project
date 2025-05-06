@@ -254,7 +254,7 @@ export default function OrdersPage() {
                       </TableCell>
                       <TableCell className="py-4 px-3 text-right">
                         <Button variant="ghost" size="icon" asChild>
-                          <Link href={`/dashboard/orders/${order.id}`}>
+                          <Link href={`/user/dashboard/orders/${order.id}`}>
                             <Eye className="h-4 w-4" />
                             <span className="sr-only">
                               View order {order.id}
