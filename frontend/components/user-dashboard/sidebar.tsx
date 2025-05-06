@@ -29,7 +29,6 @@ const navItems = [
     href: "/user/dashboard/company",
     icon: Building2,
   },
-  { title: "User Management", href: "/user/dashboard/users", icon: Users },
   {
     title: "Reports & Analytics",
     href: "/user/dashboard/reports",
