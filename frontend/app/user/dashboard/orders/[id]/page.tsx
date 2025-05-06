@@ -102,7 +102,7 @@ export default function OrderDetailsPage({
       <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
         <div className="flex items-center space-x-2">
           <Button variant="outline" size="icon" asChild>
-            <Link href="/dashboard/orders">
+            <Link href="/user/dashboard/orders">
               <ArrowLeft className="h-4 w-4" />
               <span className="sr-only">Back to orders</span>
             </Link>
