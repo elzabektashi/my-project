@@ -100,9 +100,15 @@ export function NotificationCenter({
       <div className="flex items-center justify-between p-4">
         <h2 className="font-semibold">Notifications</h2>
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="sm" onClick={onMarkAllAsRead}>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onMarkAllAsRead}
+            className="text-zinc-400 hover:text-white transition-colors"
+          >
             Mark all as read
           </Button>
+
           <Button variant="ghost" size="icon" onClick={onClose}>
             <X className="h-4 w-4" />
           </Button>
@@ -116,9 +122,9 @@ export function NotificationCenter({
             <div
               key={notification.id}
               className={`flex gap-3 p-4 ${
-                notification.read ? "opacity-70" : "bg-[#111827]"
-              } border-b border-white/20 hover:bg-[#1e293b] hover:border-transparent transition-all ${
-                index === 0 ? "border-t border-white/20" : ""
+                notification.read ? "opacity-70" : "bg-[#0d1526 ]"
+              } border-b border-white/10 hover:bg-[#1e293b] hover:border-transparent transition-all ${
+                index === 0 ? "border-t border-white/10" : ""
               }`}
             >
               {/* Notification Icon */}
@@ -142,7 +148,7 @@ export function NotificationCenter({
       </ScrollArea>
 
       {/* Footer Button */}
-      <div className="border-t border-white/20 p-2">
+      <div className="border-t border-white/10 p-2">
         <Button variant="ghost" size="sm" className="w-full" asChild>
           <Link href="/dashboard/notifications">View all notifications</Link>
         </Button>

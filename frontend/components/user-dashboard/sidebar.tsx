@@ -23,7 +23,7 @@ const navItems = [
   { title: "Dashboard", href: "/user/dashboard", icon: LayoutDashboard },
   { title: "Orders", href: "/user/dashboard/orders", icon: Package },
   { title: "Fleet", href: "/user/dashboard/fleet", icon: Truck },
-  { title: "Drivers", href: "/user/dashboard/drivers", icon: Users },
+
   {
     title: "Company Profile",
     href: "/user/dashboard/company",
@@ -108,7 +108,7 @@ export function DashboardSidebar({ className }: SidebarProps) {
         <div className="mt-auto border-t border-white/10 p-4">
           <Button
             variant="outline"
-            className="w-full justify-start border border-white/10 hover:border-transparent"
+            className="w-full justify-start border border-white/10 hover:bg-[#1e293b] hover:border-transparent"
             asChild
           >
             <Link href="/logout" className="flex items-center gap-2">

@@ -82,9 +82,11 @@ export default function CreateOrderPage() {
       <form onSubmit={handleSubmit}>
         <div className="grid gap-6">
           {/* Order Details */}
-          <Card className="border border-white/20 bg-[#111827] text-white">
+          <Card className="border border-white/10 bg-[#0d1526] text-white">
             <CardHeader>
-              <CardTitle>Order Details</CardTitle>
+              <CardTitle className="text-xl font-semibold">
+                Order Details
+              </CardTitle>
               <CardDescription>
                 Enter the basic information for this order
               </CardDescription>
@@ -100,11 +102,11 @@ export default function CreateOrderPage() {
                   >
                     <SelectTrigger
                       id="origin"
-                      className="bg-[#111827] text-white border-white/20"
+                      className="bg-[#0d1526] text-white border-white/10"
                     >
                       <SelectValue placeholder="Select origin" />
                     </SelectTrigger>
-                    <SelectContent className="bg-[#111827] text-white border-white/20">
+                    <SelectContent className="bg-[#0d1526] text-white border-white/10">
                       <SelectItem
                         value="warehouse-a"
                         className="hover:bg-[#1e293b]"
@@ -135,11 +137,11 @@ export default function CreateOrderPage() {
                   >
                     <SelectTrigger
                       id="destination"
-                      className="bg-[#111827] text-white border-white/20"
+                      className="bg-[#0d1526] text-white border-white/10"
                     >
                       <SelectValue placeholder="Select destination" />
                     </SelectTrigger>
-                    <SelectContent className="bg-[#111827] text-white border-white/20">
+                    <SelectContent className="bg-[#0d1526] text-white border-white/10">
                       <SelectItem
                         value="customer-1"
                         className="hover:bg-[#1e293b]"
@@ -178,7 +180,7 @@ export default function CreateOrderPage() {
                     min="0"
                     step="0.1"
                     required
-                    className="bg-[#111827] text-white border-white/20"
+                    className="bg-[#0d1526] text-white border-white/10"
                   />
                 </div>
                 <div className="space-y-2">
@@ -188,7 +190,7 @@ export default function CreateOrderPage() {
                       <Button
                         variant={"outline"}
                         className={cn(
-                          "w-full justify-start text-left font-normal bg-[#111827] text-white border-white/20",
+                          "w-full justify-start text-left font-normal bg-[#0d1526] text-white border-white/10",
                           !date && "text-muted-foreground"
                         )}
                       >
@@ -196,7 +198,7 @@ export default function CreateOrderPage() {
                         {date ? format(date, "PPP") : <span>Select date</span>}
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0 bg-[#111827] text-white border-white/20">
+                    <PopoverContent className="w-auto p-0 bg-[#0d1526] text-white border-white/10">
                       <Calendar
                         mode="single"
                         selected={date ?? undefined}
@@ -215,17 +217,19 @@ export default function CreateOrderPage() {
                 <Textarea
                   id="notes"
                   placeholder="Enter any special instructions for this order"
-                  className="min-h-[100px] bg-[#111827] text-white border-white/20"
+                  className="min-h-[100px] bg-[#0d1526] text-white border-white/10"
                 />
               </div>
             </CardContent>
           </Card>
 
           {/* Order Items */}
-          <Card className="border border-white/20 bg-[#111827] text-white">
+          <Card className="border border-white/10 bg-[#0d1526] text-white">
             <CardHeader className="flex flex-row items-center justify-between">
               <div>
-                <CardTitle>Order Items</CardTitle>
+                <CardTitle className="text-xl font-semibold">
+                  Order Items
+                </CardTitle>
                 <CardDescription>
                   Add the items included in this order
                 </CardDescription>
@@ -233,8 +237,9 @@ export default function CreateOrderPage() {
               <Button
                 type="button"
                 onClick={addItem}
-                variant="outline"
                 size="sm"
+                variant="outline"
+                className="bg-[#0d1526] border-white/10 text-white hover:bg-[#1e293b] hover:border-transparent"
               >
                 <Plus className="mr-2 h-4 w-4" />
                 Add Item
@@ -245,7 +250,7 @@ export default function CreateOrderPage() {
                 {items.map((item) => (
                   <div
                     key={item.id}
-                    className="grid grid-cols-1 gap-4 rounded-lg border border-white/20 p-4 md:grid-cols-4"
+                    className="grid grid-cols-1 gap-4 rounded-lg border border-white/10 p-4 md:grid-cols-4"
                   >
                     <div className="space-y-2">
                       <Label htmlFor={`item-name-${item.id}`}>Item Name</Label>
@@ -255,7 +260,7 @@ export default function CreateOrderPage() {
                         onChange={(e) =>
                           updateItem(item.id, "name", e.target.value)
                         }
-                        className="bg-[#111827] text-white border-white/20"
+                        className="bg-[#0d1526] text-white border-white/10"
                         required
                       />
                     </div>
@@ -271,7 +276,7 @@ export default function CreateOrderPage() {
                         onChange={(e) =>
                           updateItem(item.id, "quantity", e.target.value)
                         }
-                        className="bg-[#111827] text-white border-white/20"
+                        className="bg-[#0d1526] text-white border-white/10"
                         required
                       />
                     </div>
@@ -288,7 +293,7 @@ export default function CreateOrderPage() {
                         onChange={(e) =>
                           updateItem(item.id, "weight", e.target.value)
                         }
-                        className="bg-[#111827] text-white border-white/20"
+                        className="bg-[#0d1526] text-white border-white/10"
                         required
                       />
                     </div>
@@ -311,9 +316,11 @@ export default function CreateOrderPage() {
           </Card>
 
           {/* Resource Assignment */}
-          <Card className="border border-white/20 bg-[#111827] text-white">
+          <Card className="border border-white/10 bg-[#0d1526] text-white">
             <CardHeader>
-              <CardTitle>Resource Assignment</CardTitle>
+              <CardTitle className="text-xl font-semibold">
+                Resource Assignment
+              </CardTitle>
               <CardDescription>
                 Assign a vehicle and driver to this order
               </CardDescription>
@@ -328,11 +335,11 @@ export default function CreateOrderPage() {
                 >
                   <SelectTrigger
                     id="vehicle"
-                    className="bg-[#111827] text-white border-white/20"
+                    className="bg-[#0d1526] text-white border-white/10"
                   >
                     <SelectValue placeholder="Select vehicle" />
                   </SelectTrigger>
-                  <SelectContent className="bg-[#111827] text-white border-white/20">
+                  <SelectContent className="bg-[#0d1526] text-white border-white/10">
                     <SelectItem
                       value="vehicle-1"
                       className="hover:bg-[#1e293b]"
@@ -363,11 +370,11 @@ export default function CreateOrderPage() {
                 >
                   <SelectTrigger
                     id="driver"
-                    className="bg-[#111827] text-white border-white/20"
+                    className="bg-[#0d1526] text-white border-white/10"
                   >
                     <SelectValue placeholder="Select driver" />
                   </SelectTrigger>
-                  <SelectContent className="bg-[#111827] text-white border-white/20">
+                  <SelectContent className="bg-[#0d1526] text-white border-white/10">
                     <SelectItem
                       value="driver-1 "
                       className="hover:bg-[#1e293b]"
@@ -391,8 +398,8 @@ export default function CreateOrderPage() {
             <Button
               type="button"
               variant="outline"
-              onClick={() => router.push("/dashboard/orders")}
-              className="border-white/20 text-white hover:bg-white/10 transition-colors"
+              onClick={() => router.push("/user/dashboard/orders")}
+              className="border-white/10 text-white hover:bg-[#1e293b] hover:border-transparent"
             >
               Cancel
             </Button>
