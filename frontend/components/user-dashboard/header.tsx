@@ -22,7 +22,7 @@ export function DashboardHeader() {
   };
 
   return (
-    <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background border-white/20 px-4 sm:px-6">
+    <header className="sticky top-0 z-30 flex h-14 items-center gap-4 backdrop-blur-md bg-[#091121]/80 border-b border-white/10 px-4 sm:px-8">
       <div className="relative ml-auto flex items-center gap-2">
         {/* Bell Notification Dropdown */}
         <DropdownMenu>

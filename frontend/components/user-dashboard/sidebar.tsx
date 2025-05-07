@@ -53,7 +53,7 @@ export function DashboardSidebar({ className }: SidebarProps) {
           <Button
             variant="outline"
             size="icon"
-            className="absolute left-4 top-3 z-40 lg:hidden"
+            className="absolute left-4 top-3 z-40 lg:hidden border-white/10"
           >
             <Menu className="h-5 w-5" />
             <span className="sr-only">Toggle Menu</span>
@@ -61,22 +61,21 @@ export function DashboardSidebar({ className }: SidebarProps) {
         </SheetTrigger>
         <SheetContent
           side="left"
-          className="w-[240px] p-0 border-r border-white/10"
+          className="w-[240px] p-0 bg-[#091121]/80 backdrop-blur-md border-r border-white/10"
         >
           <MobileSidebar pathname={pathname} setIsOpen={setIsOpen} />
         </SheetContent>
       </Sheet>
-
       {/* Desktop Sidebar */}
       <div
         className={cn(
-          "hidden lg:flex h-screen w-64 flex-col border-r border-white/10",
+          "hidden lg:flex h-screen w-64 flex-col bg-[#091121]/80 backdrop-blur-md border-r border-white/10 shadow-lg",
           className
         )}
       >
         <div className="flex h-14 items-center border-b border-white/10 px-4">
           <Link
-            href="/dashboard"
+            href="/user/dashboard"
             className="flex items-center gap-2 font-semibold"
           >
             <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary">
@@ -85,8 +84,8 @@ export function DashboardSidebar({ className }: SidebarProps) {
             <span className="text-lg">LogiFlow</span>
           </Link>
         </div>
-        <div className="flex-1 overflow-auto py-2">
-          <nav className="grid gap-1 px-2">
+        <div className="flex-1 overflow-auto py-4">
+          <nav className="grid gap-2 px-4">
             {navItems.map((item, index) => (
               <Link
                 key={index}
