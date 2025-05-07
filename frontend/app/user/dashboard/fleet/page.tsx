@@ -1,5 +1,5 @@
-"use client"
-import { useState } from "react"
+"use client";
+import { useState } from "react";
 import {
   Card,
   CardContent,
@@ -30,7 +30,9 @@ import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function FleetPage() {
-    const [activeTab, setActiveTab] = useState<"vehicles" | "drivers">("vehicles");
+  const [activeTab, setActiveTab] = useState<"vehicles" | "drivers">(
+    "vehicles"
+  );
 
   // Mock data for vehicles
   const vehicles = [
@@ -185,36 +187,43 @@ export default function FleetPage() {
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <h1 className="text-2xl font-bold tracking-tight">Fleet Management</h1>
         <div className="flex space-x-2">
-          <Button asChild>
-            <Link href="/dashboard/fleet/vehicles/new">
-              <Plus className="mr-2 h-4 w-4" />
-              New Vehicle
-            </Link>
-          </Button>
-          <Button asChild>
-            <Link href="/dashboard/fleet/drivers/new">
-              <Plus className="mr-2 h-4 w-4" />
-              New Driver
-            </Link>
-          </Button>
+          {activeTab === "vehicles" && (
+            <Button asChild>
+              <Link href="/user/dashboard/fleet/vehicles/new">
+                <Plus className="mr-2 h-4 w-4" />
+                New Vehicle
+              </Link>
+            </Button>
+          )}
+          {activeTab === "drivers" && (
+            <Button asChild>
+              <Link href="/user/dashboard/fleet/drivers/new">
+                <Plus className="mr-2 h-4 w-4" />
+                New Driver
+              </Link>
+            </Button>
+          )}
         </div>
       </div>
 
-      <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as "vehicles" | "drivers")}>
-  <TabsList className="inline-flex bg-[#1d283a] rounded p-1 space-x-1 mb-2">
-    <TabsTrigger
-      value="vehicles"
-      className="px-3 py-1 text-sm text-[#94a3b8] rounded data-[state=active]:bg-[#111827] data-[state=active]:text-white"
-    >
-      Vehicles
-    </TabsTrigger>
-    <TabsTrigger
-      value="drivers"
-      className="px-3 py-1 text-sm text-[#94a3b8] rounded data-[state=active]:bg-[#111827] data-[state=active]:text-white"
-    >
-      Drivers
-    </TabsTrigger>
-  </TabsList>
+      <Tabs
+        value={activeTab}
+        onValueChange={(v) => setActiveTab(v as "vehicles" | "drivers")}
+      >
+        <TabsList className="inline-flex bg-[#1d283a] rounded p-1 space-x-1 mb-2">
+          <TabsTrigger
+            value="vehicles"
+            className="px-3 py-1 text-sm text-[#94a3b8] rounded data-[state=active]:bg-[#111827] data-[state=active]:text-white"
+          >
+            Vehicles
+          </TabsTrigger>
+          <TabsTrigger
+            value="drivers"
+            className="px-3 py-1 text-sm text-[#94a3b8] rounded data-[state=active]:bg-[#111827] data-[state=active]:text-white"
+          >
+            Drivers
+          </TabsTrigger>
+        </TabsList>
 
         {/* VEHICLES TAB */}
         <TabsContent value="vehicles">
