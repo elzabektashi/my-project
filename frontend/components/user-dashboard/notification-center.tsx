@@ -94,7 +94,7 @@ export function NotificationCenter({
   return (
     <div
       ref={ref}
-      className="absolute right-0 top-14 z-50 w-80 rounded-md bg-background shadow-md md:right-4 md:top-16 border border-white/20"
+      className="right-0 top-12 z-50 w-80 rounded-md bg-background shadow-md md:right-4 md:top-16 border border-white/20"
     >
       {/* Notification Header */}
       <div className="flex items-center justify-between p-4">
@@ -104,7 +104,7 @@ export function NotificationCenter({
             variant="ghost"
             size="sm"
             onClick={onMarkAllAsRead}
-            className="text-zinc-400 hover:text-white transition-colors"
+            className="text-muted-foreground hover:text-white transition-colors"
           >
             Mark all as read
           </Button>
@@ -149,7 +149,7 @@ export function NotificationCenter({
 
       {/* Footer Button */}
       <div className="border-t border-white/10 p-2">
-        <Button variant="ghost" size="sm" className="w-full" asChild>
+        <Button variant="ghost" size="sm" className="w-full text-muted-foreground hover:text-white transition-colors" asChild>
           <Link href="/dashboard/notifications">View all notifications</Link>
         </Button>
       </div>

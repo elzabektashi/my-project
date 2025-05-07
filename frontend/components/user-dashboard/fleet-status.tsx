@@ -113,11 +113,15 @@ export function FleetStatus({ showAll = false }: FleetStatusProps) {
           </div>
         ))}
 
-{!showAll && (
+        {!showAll && (
           <div className="mt-6 flex justify-center">
-            <Button variant="outline" className="rounded border-white/10" asChild>
+            <Button
+              variant="outline"
+              className="rounded border-white/10"
+              asChild
+            >
               <Link
-                href="/dashboard/fleet"
+                href="/user/dashboard/fleet"
                 className="flex items-center gap-2 px-5 py-2 text-base font-medium text-white hover:bg-[#1e293b] hover:border-transparent"
               >
                 View all vehicles
@@ -128,5 +132,5 @@ export function FleetStatus({ showAll = false }: FleetStatusProps) {
         )}
       </CardContent>
     </Card>
-  )
+  );
 }
