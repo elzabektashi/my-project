@@ -188,7 +188,7 @@ export default function FleetPage() {
         <h1 className="text-2xl font-bold tracking-tight">Fleet Management</h1>
         <div className="flex space-x-2">
           {activeTab === "vehicles" && (
-            <Button asChild>
+            <Button asChild variant="primaryAction">
               <Link href="/user/dashboard/fleet/vehicles/new">
                 <Plus className="mr-2 h-4 w-4" />
                 New Vehicle
@@ -196,7 +196,7 @@ export default function FleetPage() {
             </Button>
           )}
           {activeTab === "drivers" && (
-            <Button asChild>
+            <Button asChild variant="primaryAction">
               <Link href="/user/dashboard/fleet/drivers/new">
                 <Plus className="mr-2 h-4 w-4" />
                 New Driver
@@ -305,13 +305,6 @@ export default function FleetPage() {
                       </SelectItem>
                     </SelectContent>
                   </Select>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="border-white/10"
-                  >
-                    <Filter className="h-4 w-4" />
-                  </Button>
                 </div>
               </div>
 
@@ -476,13 +469,6 @@ export default function FleetPage() {
                       </SelectItem>
                     </SelectContent>
                   </Select>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="border-white/10"
-                  >
-                    <Filter className="h-4 w-4" />
-                  </Button>
                 </div>
               </div>
 

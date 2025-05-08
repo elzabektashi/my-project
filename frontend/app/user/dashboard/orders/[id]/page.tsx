@@ -125,7 +125,7 @@ export default function OrderDetailsPage({
           <Badge variant="outline" className={getStatusColor(order.status)}>
             {order.status}
           </Badge>
-          <Button variant="outline" className="border border-white/10" asChild>
+          <Button variant="outline" className="border border-white/10 hover:bg-[#1e293b] hover:border-transparent" asChild>
             <Link href={`/user/dashboard/orders/${order.id}/edit`}>
               <Edit className="mr-2 h-4 w-4" />
               Edit Order
@@ -164,7 +164,7 @@ export default function OrderDetailsPage({
           </CardContent>
         </Card>
 
-        <Card className="border border-white/10">
+        <Card>
           <CardHeader>
             <CardTitle>Shipping Information</CardTitle>
             <CardDescription>

@@ -268,7 +268,12 @@ export default function DriverDetailsPage() {
     return (
       <div className="space-y-4">
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="icon" asChild>
+          <Button
+            variant="outline"
+            size="icon"
+            className="border border-white/10 hover:bg-[#1e293b] hover:border-transparent"
+            asChild
+          >
             <Link href="/user/dashboard/fleet">
               <ArrowLeft className="h-4 w-4" />
               <span className="sr-only">Back</span>
@@ -300,7 +305,12 @@ export default function DriverDetailsPage() {
     <div className="space-y-6">
       <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
         <div className="flex items-center gap-4">
-          <Button variant="outline" size="icon" asChild>
+          <Button
+            variant="outline"
+            size="icon"
+            className="border border-white/10 hover:bg-[#1e293b] hover:border-transparent"
+            asChild
+          >
             <Link href="/user/dashboard/fleet">
               <ArrowLeft className="h-4 w-4" />
               <span className="sr-only">Back</span>
@@ -331,7 +341,11 @@ export default function DriverDetailsPage() {
         </div>
 
         <div className="flex gap-2">
-          <Button variant="outline" asChild>
+          <Button
+            variant="outline"
+            className="border border-white/10 hover:bg-[#1e293b] hover:border-transparent"
+            asChild
+          >
             <Link href={`/user/dashboard/fleet/drivers/${driverId}/edit`}>
               <Pencil className="mr-2 h-4 w-4" />
               Edit Driver
@@ -343,14 +357,17 @@ export default function DriverDetailsPage() {
             onOpenChange={setDeleteDialogOpen}
           >
             <AlertDialogTrigger asChild>
-              <Button variant="destructive">
+              <Button
+                variant="destructive"
+                className="bg-red-800 text-white hover:bg-red-700 rounded-md px-4 py-2"
+              >
                 <Trash2 className="mr-2 h-4 w-4" />
                 Delete
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
                 <AlertDialogDescription>
                   This action cannot be undone. This will permanently delete the
                   driver{" "}
@@ -361,14 +378,16 @@ export default function DriverDetailsPage() {
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogCancel className="border border-white/10 hover:bg-[#1e293b] hover:border-transparent">
+                  Cancel
+                </AlertDialogCancel>
                 <AlertDialogAction
                   onClick={(e) => {
                     e.preventDefault();
                     handleDelete();
                   }}
                   disabled={isDeleting}
-                  className="bg-red-600 focus:ring-red-600"
+                  className="bg-red-800 text-white hover:bg-red-700 rounded-md px-4 py-2"
                 >
                   {isDeleting ? (
                     <>
@@ -385,18 +404,40 @@ export default function DriverDetailsPage() {
         </div>
       </div>
 
-      <Tabs defaultValue="details" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="details">Personal Information</TabsTrigger>
-          <TabsTrigger value="license">License & Qualifications</TabsTrigger>
-          <TabsTrigger value="emergency">Emergency Contact</TabsTrigger>
-          <TabsTrigger value="documents">Documents</TabsTrigger>
+      <Tabs defaultValue="details" className="space-y-2">
+        <TabsList className="inline-flex bg-[#1d283a] rounded p-1 space-x-1 mb-2">
+          <TabsTrigger
+            value="details"
+            className="px-3 py-1 text-sm text-[#94a3b8] rounded data-[state=active]:bg-[#111827] data-[state=active]:text-white"
+          >
+            Personal Information
+          </TabsTrigger>
+          <TabsTrigger
+            value="license"
+            className="px-3 py-1 text-sm text-[#94a3b8] rounded data-[state=active]:bg-[#111827] data-[state=active]:text-white"
+          >
+            License & Qualifications
+          </TabsTrigger>
+          <TabsTrigger
+            value="emergency"
+            className="px-3 py-1 text-sm text-[#94a3b8] rounded data-[state=active]:bg-[#111827] data-[state=active]:text-white"
+          >
+            Emergency Contact
+          </TabsTrigger>
+          <TabsTrigger
+            value="documents"
+            className="px-3 py-1 text-sm text-[#94a3b8] rounded data-[state=active]:bg-[#111827] data-[state=active]:text-white"
+          >
+            Documents
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="details">
-          <Card>
+          <Card className="border-white/10 rounded-lg">
             <CardHeader>
-              <CardTitle>Personal Information</CardTitle>
+              <CardTitle className="text-xl font-semibold">
+                Personal Information
+              </CardTitle>
               <CardDescription>
                 Contact details and personal information
               </CardDescription>
@@ -462,7 +503,7 @@ export default function DriverDetailsPage() {
                 </div>
               </div>
 
-              <Separator />
+              <Separator className="bg-white/10" />
 
               <div className="space-y-2">
                 <h3 className="text-lg font-medium">Address</h3>
@@ -478,7 +519,7 @@ export default function DriverDetailsPage() {
                 </div>
               </div>
 
-              <Separator />
+              <Separator className="bg-white/10" />
 
               <div className="space-y-1">
                 <p className="text-sm font-medium text-muted-foreground">
@@ -579,7 +620,7 @@ export default function DriverDetailsPage() {
                       className="flex items-center justify-between rounded-lg border p-4"
                     >
                       <div className="flex items-center gap-3">
-                        <FileText className="h-8 w-8 text-muted-foreground" />
+                        <FileText className="h- w-8 text-muted-foreground" />
                         <div>
                           <p className="font-medium">{doc.name}</p>
                           <p className="text-sm text-muted-foreground">

@@ -307,6 +307,7 @@ export default function EditOrderPage() {
               <Button
                 variant="outline"
                 type="button"
+                className="border border-white/10 hover:bg-[#1e293b] hover:border-transparent"
                 onClick={() => router.back()}
               >
                 Cancel

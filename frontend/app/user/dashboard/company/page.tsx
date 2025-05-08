@@ -35,7 +35,8 @@ export default function CompanyProfilePage() {
     email: "info@abclogistics.com",
     website: "https://www.abclogistics.com",
     taxId: "12-3456789",
-    description: "ABC Logistics is a leading provider of logistics and transportation services, specializing in nationwide freight delivery and supply chain management.",
+    description:
+      "ABC Logistics is a leading provider of logistics and transportation services, specializing in nationwide freight delivery and supply chain management.",
   });
 
   const handleChange = (
@@ -84,7 +85,10 @@ export default function CompanyProfilePage() {
                   <div className="flex flex-col gap-6 md:flex-row">
                     <div className="flex flex-col items-center space-y-2 md:w-1/3">
                       <Avatar className="h-32 w-32">
-                        <AvatarImage src={companyData.logo} alt={companyData.name} />
+                        <AvatarImage
+                          src={companyData.logo}
+                          alt={companyData.name}
+                        />
                         <AvatarFallback className="text-2xl">
                           {companyData.name.substring(0, 2).toUpperCase()}
                         </AvatarFallback>
@@ -254,7 +258,11 @@ export default function CompanyProfilePage() {
                   </div>
                 </CardContent>
                 <CardFooter className="flex justify-end">
-                  <Button type="submit" disabled={isSubmitting}>
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    variant="primaryAction"
+                  >
                     {isSubmitting ? "Saving..." : "Save Changes"}
                   </Button>
                 </CardFooter>
@@ -277,7 +285,9 @@ export default function CompanyProfilePage() {
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="font-medium">Current Plan</h3>
-                      <p className="text-sm text-muted-foreground">Professional Plan</p>
+                      <p className="text-sm text-muted-foreground">
+                        Professional Plan
+                      </p>
                     </div>
                     <Badge>Active</Badge>
                   </div>
@@ -314,10 +324,14 @@ export default function CompanyProfilePage() {
                         </div>
                         <div>
                           <p className="font-medium">Visa ending in 4242</p>
-                          <p className="text-sm text-muted-foreground">Expires 12/2025</p>
+                          <p className="text-sm text-muted-foreground">
+                            Expires 12/2025
+                          </p>
                         </div>
                       </div>
-                      <Button variant="ghost" size="sm">Edit</Button>
+                      <Button variant="ghost" size="sm">
+                        Edit
+                      </Button>
                     </div>
                   </div>
                 </div>
@@ -327,10 +341,14 @@ export default function CompanyProfilePage() {
                   <div className="rounded-md border p-4">
                     <p>{companyData.name}</p>
                     <p>{companyData.address}</p>
-                    <p>{companyData.city}, {companyData.state} {companyData.zip}</p>
+                    <p>
+                      {companyData.city}, {companyData.state} {companyData.zip}
+                    </p>
                     <p>{companyData.country}</p>
                     <div className="mt-2">
-                      <Button variant="ghost" size="sm">Edit</Button>
+                      <Button variant="ghost" size="sm">
+                        Edit
+                      </Button>
                     </div>
                   </div>
                 </div>

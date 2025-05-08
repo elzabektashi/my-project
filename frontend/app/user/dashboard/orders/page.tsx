@@ -118,7 +118,7 @@ export default function OrdersPage() {
     <div className="space-y-6">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <h1 className="text-2xl font-bold tracking-tight">Orders</h1>
-        <Button asChild>
+        <Button asChild variant="primaryAction">
           <Link href="/user/dashboard/orders/new">
             <Plus className="mr-2 h-4 w-4" />
             New Order
@@ -181,10 +181,6 @@ export default function OrdersPage() {
               </Select>
 
               <DateRangePicker />
-              <Button variant="outline" size="icon" className="border-white/10">
-                <Filter className="h-4 w-4" />
-                <span className="sr-only">Filter</span>
-              </Button>
             </div>
           </div>
 
