@@ -52,6 +52,7 @@ export default function EditOrderPage() {
     vehicleName: "VEH-002 (Van – Ford Transit)",
     driver: "drv-002",
     driverName: "Sarah Williams",
+    notes: "Handle with extra caution",
   };
 
   const [date, setDate] = useState<Date | undefined>(orderData.deliveryDate);
@@ -312,7 +313,12 @@ export default function EditOrderPage() {
               >
                 Cancel
               </Button>
-              <Button type="submit">Update Order</Button>
+              <Button
+                type="submit"
+                className="bg-primary hover:bg-blue-700 px-4 py-4 rounded-md"
+              >
+                Update Order
+              </Button>
             </CardFooter>
           </Card>
         </div>
