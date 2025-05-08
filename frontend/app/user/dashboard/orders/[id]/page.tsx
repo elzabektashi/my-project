@@ -125,7 +125,11 @@ export default function OrderDetailsPage({
           <Badge variant="outline" className={getStatusColor(order.status)}>
             {order.status}
           </Badge>
-          <Button variant="outline" className="border border-white/10 hover:bg-[#1e293b] hover:border-transparent" asChild>
+          <Button
+            variant="outline"
+            className="border border-white/10 hover:bg-[#1e293b] hover:border-transparent"
+            asChild
+          >
             <Link href={`/user/dashboard/orders/${order.id}/edit`}>
               <Edit className="mr-2 h-4 w-4" />
               Edit Order
@@ -281,12 +285,12 @@ export default function OrderDetailsPage({
 
         <TabsContent
           value="timeline"
-          className="space-y-4 !border !border-white/10 !shadow-none !ring-0 !outline-none"
+          className="space-y-4 border border-white/10 !shadow-none !ring-0 !outline-none"
         >
           <OrderTimeline orderId={order.id} />
         </TabsContent>
 
-        <TabsContent value="documents" className="space-y-4 !border-none">
+        <TabsContent value="documents" className="space-y-4 !border-none ">
           <OrderDocuments orderId={order.id} documents={order.documents} />
         </TabsContent>
 

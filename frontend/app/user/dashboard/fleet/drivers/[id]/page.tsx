@@ -37,6 +37,7 @@ import {
   Mail,
   MapPin,
   Truck,
+  Upload,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -165,8 +166,8 @@ const formatDate = (dateString: string): string => {
   const date = new Date(dateString);
   return new Intl.DateTimeFormat("en-US", {
     year: "numeric",
-    month: "short",
-    day: "numeric",
+    month: "2-digit",
+    day: "2-digit",
   }).format(date);
 };
 
@@ -218,6 +219,7 @@ export default function DriverDetailsPage() {
   const [error, setError] = useState<string | null>(null);
   const [driver, setDriver] = useState<Driver | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
+  const [formData, setFormData] = useState<Driver | null>(null);
 
   useEffect(() => {
     const fetchDriverData = async () => {
@@ -227,6 +229,7 @@ export default function DriverDetailsPage() {
         const data = mockDriverData[driverId];
         if (!data) throw new Error("Driver not found");
         setDriver(data);
+        setFormData(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : "An error occurred");
       } finally {
@@ -251,6 +254,26 @@ export default function DriverDetailsPage() {
     }
   };
 
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => (prev ? { ...prev, [name]: value } : null));
+  };
+
+  const handleSaveChanges = () => {
+    if (formData) {
+      setDriver(formData);
+      alert("Changes saved successfully!");
+    }
+  };
+
+  const handleCancel = () => {
+    setFormData(driver);
+  };
+
   if (isLoading) {
     return (
       <div className="flex h-[50vh] w-full items-center justify-center">
@@ -264,7 +287,7 @@ export default function DriverDetailsPage() {
     );
   }
 
-  if (error || !driver) {
+  if (error || !driver || !formData) {
     return (
       <div className="space-y-4">
         <div className="flex items-center gap-2">
@@ -405,7 +428,7 @@ export default function DriverDetailsPage() {
       </div>
 
       <Tabs defaultValue="details" className="space-y-2">
-        <TabsList className="inline-flex bg-[#1d283a] rounded p-1 space-x-1 mb-2">
+        <TabsList className="inline-flex bg-[#0d1526] rounded p-1 space-x-1 mb-2">
           <TabsTrigger
             value="details"
             className="px-3 py-1 text-sm text-[#94a3b8] rounded data-[state=active]:bg-[#111827] data-[state=active]:text-white"
@@ -426,7 +449,7 @@ export default function DriverDetailsPage() {
           </TabsTrigger>
           <TabsTrigger
             value="documents"
-            className="px-3 py-1 text-sm text-[#94a3b8] rounded data-[state=active]:bg-[#111827] data-[state=active]:text-white"
+            className="px-3 py-1 text-sm text-[#94a3b8] rounded data-[state=active]:bg-[#111827] data-[state=active]:text-white "
           >
             Documents
           </TabsTrigger>
@@ -439,131 +462,280 @@ export default function DriverDetailsPage() {
                 Personal Information
               </CardTitle>
               <CardDescription>
-                Contact details and personal information
+                Update the driver's personal details
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-1">
-                  <p className="text-sm font-medium text-muted-foreground">
-                    Email
-                  </p>
-                  <p className="flex items-center gap-2 font-medium">
-                    <Mail className="h-4 w-4 text-muted-foreground" />
-                    <a
-                      href={`mailto:${driver.email}`}
-                      className="hover:underline"
-                    >
-                      {driver.email}
-                    </a>
-                  </p>
+              <div className="grid gap-6 md:grid-cols-3">
+                <div className="space-y-2">
+                  <Avatar className="h-24 w-24 mx-auto">
+                    <AvatarImage
+                      src={`/abstract-geometric-shapes.png?height=96&width=96&query=${driver.firstName}%20${driver.lastName}`}
+                      alt={`${driver.firstName} ${driver.lastName}`}
+                    />
+                    <AvatarFallback>
+                      <User className="h-12 w-12" />
+                    </AvatarFallback>
+                  </Avatar>
+                  <Button
+                    variant="outline"
+                    className="w-full border-white/10 hover:bg-[#1e293b] hover:border-transparent"
+                  >
+                    <Upload className="mr-2 h-4 w-4" />
+                    Change Photo
+                  </Button>
                 </div>
-
-                <div className="space-y-1">
-                  <p className="text-sm font-medium text-muted-foreground">
-                    Phone
-                  </p>
-                  <p className="flex items-center gap-2 font-medium">
-                    <Phone className="h-4 w-4 text-muted-foreground" />
-                    <a href={`tel:${driver.phone}`} className="hover:underline">
-                      {driver.phone}
-                    </a>
-                  </p>
-                </div>
-
-                <div className="space-y-1">
-                  <p className="text-sm font-medium text-muted-foreground">
-                    Hire Date
-                  </p>
-                  <p className="flex items-center gap-2 font-medium">
-                    <Calendar className="h-4 w-4 text-muted-foreground" />
-                    {formatDate(driver.hireDate)}
-                  </p>
-                </div>
-
-                <div className="space-y-1">
-                  <p className="text-sm font-medium text-muted-foreground">
-                    Current Vehicle
-                  </p>
-                  <p className="flex items-center gap-2 font-medium">
-                    <Truck className="h-4 w-4 text-muted-foreground" />
-                    {driver.currentVehicleDetails ? (
-                      <Link
-                        href={`/user/dashboard/fleet/vehicles/${driver.currentVehicle}`}
-                        className="hover:underline"
+                <div className="md:col-span-2 space-y-4">
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div className="space-y-1">
+                      <label className="text-sm font-medium text-muted-foreground">
+                        First Name
+                      </label>
+                      <input
+                        type="text"
+                        name="firstName"
+                        value={formData.firstName}
+                        onChange={handleInputChange}
+                        className="w-full px-3 py-2 bg-[#0d1526] border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-sm font-medium text-muted-foreground">
+                        Last Name
+                      </label>
+                      <input
+                        type="text"
+                        name="lastName"
+                        value={formData.lastName}
+                        onChange={handleInputChange}
+                        className="w-full px-3 py-2 bg-[#0d1526] border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-sm font-medium text-muted-foreground">
+                        Email
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        className="w-full px-3 py-2 bg-[#0d1526] border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-sm font-medium text-muted-foreground">
+                        Phone Number
+                      </label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        className="w-full px-3 py-2 bg-[#0d1526] border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-sm font-medium text-muted-foreground">
+                        Status
+                      </label>
+                      <select
+                        name="status"
+                        value={formData.status}
+                        onChange={handleInputChange}
+                        className="w-full px-3 py-2 bg-[#0d1526] border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                       >
-                        {driver.currentVehicleDetails.make}{" "}
-                        {driver.currentVehicleDetails.model} (
-                        {driver.currentVehicle})
-                      </Link>
-                    ) : (
-                      "Unassigned"
-                    )}
-                  </p>
-                </div>
-              </div>
-
-              <Separator className="bg-white/10" />
-
-              <div className="space-y-2">
-                <h3 className="text-lg font-medium">Address</h3>
-                <div className="flex items-start gap-2">
-                  <MapPin className="mt-0.5 h-4 w-4 text-muted-foreground" />
-                  <div>
-                    <p>{driver.address}</p>
-                    <p>
-                      {driver.city}, {driver.state} {driver.zipCode}
-                    </p>
-                    <p>{driver.country}</p>
+                        <option value="on_duty">On Duty</option>
+                        <option value="off_duty">Off Duty</option>
+                        <option value="on_leave">On Leave</option>
+                        <option value="available">Available</option>
+                      </select>
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-sm font-medium text-muted-foreground">
+                        Assigned Vehicle
+                      </label>
+                      <select
+                        name="currentVehicle"
+                        value={formData.currentVehicle}
+                        onChange={handleInputChange}
+                        className="w-full px-3 py-2 bg-[#0d1526] border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      >
+                        <option value="">Unassigned</option>
+                        <option value="VEH-001">VEH-001 (Volvo FH16)</option>
+                        <option value="VEH-005">VEH-005 (MAN TGX)</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
               </div>
 
               <Separator className="bg-white/10" />
 
-              <div className="space-y-1">
-                <p className="text-sm font-medium text-muted-foreground">
-                  Notes
-                </p>
-                <p>{driver.notes || "No notes available"}</p>
+              <div className="space-y-4">
+                <h3 className="text-lg font-medium">Address Information</h3>
+                <div className="space-y-4">
+                  <div className="space-y-1">
+                    <label className="text-sm font-medium text-muted-foreground">
+                      Street Address
+                    </label>
+                    <input
+                      type="text"
+                      name="address"
+                      value={formData.address}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 bg-[#0d1526] border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+                  <div className="grid gap-4 md:grid-cols-4">
+                    <div className="space-y-1">
+                      <label className="text-sm font-medium text-muted-foreground">
+                        City
+                      </label>
+                      <input
+                        type="text"
+                        name="city"
+                        value={formData.city}
+                        onChange={handleInputChange}
+                        className="w-full px-3 py-2 bg-[#0d1526] border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-sm font-medium text-muted-foreground">
+                        State/Province
+                      </label>
+                      <input
+                        type="text"
+                        name="state"
+                        value={formData.state}
+                        onChange={handleInputChange}
+                        className="w-full px-3 py-2 bg-[#0d1526] border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-sm font-medium text-muted-foreground">
+                        Zip/Postal Code
+                      </label>
+                      <input
+                        type="text"
+                        name="zipCode"
+                        value={formData.zipCode}
+                        onChange={handleInputChange}
+                        className="w-full px-3 py-2 bg-[#0d1526] border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-sm font-medium text-muted-foreground">
+                        Country
+                      </label>
+                      <input
+                        type="text"
+                        name="country"
+                        value={formData.country}
+                        onChange={handleInputChange}
+                        className="w-full px-3 py-2 bg-[#0d1526] border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-2">
+                <Button
+                  variant="outline"
+                  className="border-white/10 hover:bg-[#1e293b] hover:border-transparent"
+                  onClick={handleCancel}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  className="bg-blue-600 hover:bg-blue-700"
+                  onClick={handleSaveChanges}
+                >
+                  Save Changes
+                </Button>
               </div>
             </CardContent>
           </Card>
         </TabsContent>
 
         <TabsContent value="license">
-          <Card>
+          <Card className="border border-gray-800 rounded-lg bg-[#0d1526]">
             <CardHeader>
-              <CardTitle>License Information</CardTitle>
-              <CardDescription>
-                Driver's license and qualification details
+              <CardTitle className="text-xl font-semibold text-white">
+                License Information
+              </CardTitle>
+              <CardDescription className="text-gray-400">
+                Update the driver's license and qualification details
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="grid gap-4 md:grid-cols-3">
-                <div className="space-y-1">
-                  <p className="text-sm font-medium text-muted-foreground">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-400">
                     License Number
-                  </p>
-                  <p className="font-medium">{driver.licenseNumber}</p>
+                  </label>
+                  <input
+                    type="text"
+                    name="licenseNumber"
+                    value={formData.licenseNumber}
+                    onChange={handleInputChange}
+                    className="w-full px-3 py-2 bg-[#1e293b] border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
                 </div>
-
-                <div className="space-y-1">
-                  <p className="text-sm font-medium text-muted-foreground">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-400">
                     License Type
-                  </p>
-                  <p className="font-medium">{driver.licenseType}</p>
+                  </label>
+                  <select
+                    name="licenseType"
+                    value={formData.licenseType}
+                    onChange={handleInputChange}
+                    className="w-full px-3 py-2 bg-[#1e293b] border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="Class A (CDL)">Class A (CDL)</option>
+                    <option value="Class B (CDL)">Class B (CDL)</option>
+                    <option value="Class C (CDL)">Class C (CDL)</option>
+                  </select>
                 </div>
-
-                <div className="space-y-1">
-                  <p className="text-sm font-medium text-muted-foreground">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-400">
                     License Expiry Date
-                  </p>
-                  <p className="flex items-center gap-2 font-medium">
-                    <Calendar className="h-4 w-4 text-muted-foreground" />
-                    {formatDate(driver.licenseExpiry)}
-                  </p>
+                  </label>
+                  <input
+                    type="date"
+                    name="licenseExpiry"
+                    value={formData.licenseExpiry}
+                    onChange={handleInputChange}
+                    className="w-full px-3 py-2 bg-[#1e293b] border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
                 </div>
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-400">
+                  Additional Qualifications & Notes
+                </label>
+                <textarea
+                  name="notes"
+                  value={formData.notes}
+                  onChange={handleInputChange}
+                  className="w-full h-24 px-3 py-2 bg-[#1e293b] border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div className="flex justify-end gap-4">
+                <Button
+                  variant="outline"
+                  className="border border-gray-700 hover:bg-[#1e293b] text-white"
+                  onClick={handleCancel}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                  onClick={handleSaveChanges}
+                >
+                  Save Changes
+                </Button>
               </div>
             </CardContent>
           </Card>
