@@ -547,9 +547,9 @@ export default function FleetPage() {
                           <TableCell className="py-4 px-3 text-right">
                             <Button variant="ghost" size="icon" asChild>
                               <Link
-                                href={`/dashboard/fleet/drivers/${driver.id}`}
+                                href={`/user/dashboard/fleet/drivers/${driver.id}`}
                               >
-                                <Eye className="h-4 w-4" />
+                                <Eye className="h-4 w-4 text-muted-foreground hover:text-white transition-colors cursor-pointer" />
                               </Link>
                             </Button>
                           </TableCell>

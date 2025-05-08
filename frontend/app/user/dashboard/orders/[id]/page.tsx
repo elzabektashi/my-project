@@ -101,7 +101,12 @@ export default function OrderDetailsPage({
     <div className="space-y-6">
       <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
         <div className="flex items-center space-x-2">
-          <Button variant="outline" size="icon" asChild>
+          <Button
+            variant="outline"
+            className="border border-white/10"
+            size="icon"
+            asChild
+          >
             <Link href="/user/dashboard/orders">
               <ArrowLeft className="h-4 w-4" />
               <span className="sr-only">Back to orders</span>
@@ -120,7 +125,7 @@ export default function OrderDetailsPage({
           <Badge variant="outline" className={getStatusColor(order.status)}>
             {order.status}
           </Badge>
-          <Button variant="outline" asChild>
+          <Button variant="outline" className="border border-white/10" asChild>
             <Link href={`/user/dashboard/orders/${order.id}/edit`}>
               <Edit className="mr-2 h-4 w-4" />
               Edit Order
@@ -130,7 +135,7 @@ export default function OrderDetailsPage({
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
-        <Card>
+        <Card className="border border-white/10">
           <CardHeader>
             <CardTitle>Customer Information</CardTitle>
             <CardDescription>
@@ -159,7 +164,7 @@ export default function OrderDetailsPage({
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="border border-white/10">
           <CardHeader>
             <CardTitle>Shipping Information</CardTitle>
             <CardDescription>
@@ -202,7 +207,7 @@ export default function OrderDetailsPage({
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
-        <Card>
+        <Card className="border border-white/10">
           <CardHeader>
             <CardTitle>Assignment</CardTitle>
             <CardDescription>
@@ -232,17 +237,17 @@ export default function OrderDetailsPage({
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="border border-white/10">
           <CardHeader>
             <CardTitle>Order Items</CardTitle>
             <CardDescription>Items included in this order</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
+            <div className="space-y-4 ">
               {order.items.map((item, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between rounded-md border p-3"
+                  className="flex items-center justify-between rounded-md border border-white/10 p-3"
                 >
                   <div>
                     <p className="font-medium">{item.name}</p>
@@ -273,13 +278,19 @@ export default function OrderDetailsPage({
             Notes
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="timeline" className="space-y-4">
+
+        <TabsContent
+          value="timeline"
+          className="space-y-4 !border !border-white/10 !shadow-none !ring-0 !outline-none"
+        >
           <OrderTimeline orderId={order.id} />
         </TabsContent>
-        <TabsContent value="documents" className="space-y-4">
+
+        <TabsContent value="documents" className="space-y-4 !border-none">
           <OrderDocuments orderId={order.id} documents={order.documents} />
         </TabsContent>
-        <TabsContent value="notes" className="space-y-4">
+
+        <TabsContent value="notes" className="space-y-4 !border-none">
           <OrderNotes orderId={order.id} notes={order.notes} />
         </TabsContent>
       </Tabs>
