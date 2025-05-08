@@ -22,7 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import {
   Form,
   FormControl,
@@ -239,7 +239,7 @@ export default function EditDriverPage() {
       });
 
       // Navigate back to driver details or list
-      router.push("/dashboard/drivers");
+      router.push("/user/dashboard/fleet");
     } catch (err) {
       console.error("Error updating driver:", err);
       toast({
@@ -273,7 +273,7 @@ export default function EditDriverPage() {
       <div className="space-y-4">
         <div className="flex items-center gap-2">
           <Button variant="outline" size="icon" asChild>
-            <Link href="/dashboard/drivers">
+            <Link href="/user/dashboard/fleet">
               <ArrowLeft className="h-4 w-4" />
               <span className="sr-only">Back</span>
             </Link>
@@ -287,7 +287,7 @@ export default function EditDriverPage() {
         </Alert>
 
         <Button asChild>
-          <Link href="/dashboard/drivers">Return to Driver Management</Link>
+          <Link href="/user/dashboard/fleet">Return to Driver Management</Link>
         </Button>
       </div>
     );
@@ -298,7 +298,7 @@ export default function EditDriverPage() {
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div className="flex items-center gap-2">
           <Button variant="outline" size="icon" asChild>
-            <Link href="/dashboard/drivers">
+            <Link href={`/user/dashboard/fleet/drivers/${driverId}`}>
               <ArrowLeft className="h-4 w-4" />
               <span className="sr-only">Back</span>
             </Link>
@@ -762,7 +762,7 @@ export default function EditDriverPage() {
 
           <div className="flex justify-end gap-4">
             <Button variant="outline" asChild>
-              <Link href="/dashboard/drivers">Cancel</Link>
+              <Link href={`/user/dashboard/fleet/drivers/${driverId}`}>Cancel</Link>
             </Button>
             <Button type="submit" disabled={isSubmitting}>
               {isSubmitting ? "Saving..." : "Save Changes"}

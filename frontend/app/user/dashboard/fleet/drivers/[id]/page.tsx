@@ -14,8 +14,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Toast } from "@/components/ui/toast";
-
 import {
   AlertDialog,
   AlertDialogAction,
@@ -32,7 +30,6 @@ import {
   User,
   Calendar,
   FileText,
-  AlertTriangle,
   Pencil,
   Trash2,
   Loader2,
@@ -43,8 +40,44 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-// Mock data for demonstration - in a real app, this would come from an API
-const mockDriverData = {
+// Define types for driver data
+interface VehicleDetails {
+  id: string;
+  make: string;
+  model: string;
+}
+
+interface Document {
+  name: string;
+  uploaded: string;
+}
+
+interface Driver {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  licenseNumber: string;
+  licenseType: string;
+  licenseExpiry: string;
+  status: string;
+  address: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  country: string;
+  emergencyContactName: string;
+  emergencyContactPhone: string;
+  notes: string;
+  currentVehicle: string;
+  currentVehicleDetails: VehicleDetails | null;
+  hireDate: string;
+  documents: Document[];
+}
+
+// Mock data
+const mockDriverData: { [key: string]: Driver } = {
   "DRV-001": {
     id: "DRV-001",
     firstName: "John",
@@ -64,11 +97,7 @@ const mockDriverData = {
     emergencyContactPhone: "+1 (555) 987-6543",
     notes: "Experienced long-haul driver",
     currentVehicle: "VEH-001",
-    currentVehicleDetails: {
-      id: "VEH-001",
-      make: "Volvo",
-      model: "FH16",
-    },
+    currentVehicleDetails: { id: "VEH-001", make: "Volvo", model: "FH16" },
     hireDate: "2020-03-15",
     documents: [
       { name: "Driver's License", uploaded: "2023-01-15" },
@@ -94,11 +123,7 @@ const mockDriverData = {
     emergencyContactPhone: "+1 (555) 876-5432",
     notes: "Specialized in refrigerated transport",
     currentVehicle: "VEH-005",
-    currentVehicleDetails: {
-      id: "VEH-005",
-      make: "MAN",
-      model: "TGX",
-    },
+    currentVehicleDetails: { id: "VEH-005", make: "MAN", model: "TGX" },
     hireDate: "2021-05-10",
     documents: [
       { name: "Driver's License", uploaded: "2023-02-10" },
@@ -135,7 +160,7 @@ const mockDriverData = {
 };
 
 // Helper function to format dates
-const formatDate = (dateString: string) => {
+const formatDate = (dateString: string): string => {
   if (!dateString) return "N/A";
   const date = new Date(dateString);
   return new Intl.DateTimeFormat("en-US", {
@@ -146,7 +171,13 @@ const formatDate = (dateString: string) => {
 };
 
 // Helper function to get status badge variant
-const getStatusBadge = (status: string) => {
+interface StatusBadge {
+  variant: "outline";
+  label: string;
+  className: string;
+}
+
+const getStatusBadge = (status: string): StatusBadge => {
   switch (status) {
     case "available":
       return {
@@ -181,79 +212,39 @@ export default function DriverDetailsPage() {
   const router = useRouter();
   const params = useParams();
   const driverId = params.id as string;
-  const { toast } = Toast();
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [driver, setDriver] = useState<any>(null);
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [driver, setDriver] = useState<Driver | null>(null);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
 
-  // Fetch driver data
   useEffect(() => {
     const fetchDriverData = async () => {
       setIsLoading(true);
-      setError(null);
-
       try {
-        // In a real application, this would be an API call
-        // const response = await fetch(`/api/drivers/${driverId}`);
-        // if (!response.ok) throw new Error('Failed to fetch driver data');
-        // const data = await response.json();
-
-        // Simulate API call with mock data
         await new Promise((resolve) => setTimeout(resolve, 1000));
-        const data = mockDriverData[driverId as keyof typeof mockDriverData];
-
-        if (!data) {
-          throw new Error("Driver not found");
-        }
-
+        const data = mockDriverData[driverId];
+        if (!data) throw new Error("Driver not found");
         setDriver(data);
       } catch (err) {
-        console.error("Error fetching driver data:", err);
-        setError(
-          err instanceof Error ? err.message : "An unknown error occurred"
-        );
+        setError(err instanceof Error ? err.message : "An error occurred");
       } finally {
         setIsLoading(false);
       }
     };
 
-    if (driverId) {
-      fetchDriverData();
-    }
+    if (driverId) fetchDriverData();
   }, [driverId]);
 
   const handleDelete = async () => {
+    if (!driver) return;
     setIsDeleting(true);
     try {
-      // In a real application, this would be an API call
-      // const response = await fetch(`/api/drivers/${driverId}`, {
-      //   method: 'DELETE',
-      // });
-
-      // if (!response.ok) throw new Error('Failed to delete driver');
-
-      // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      toast({
-        title: "Driver deleted",
-        description: `${driver.firstName} ${driver.lastName} has been deleted successfully.`,
-      });
-
-      router.push("/dashboard/drivers");
+      router.push("/user/dashboard/fleet");
     } catch (err) {
-      console.error("Error deleting driver:", err);
-      toast({
-        title: "Delete failed",
-        description:
-          err instanceof Error
-            ? err.message
-            : "Failed to delete driver. Please try again.",
-        variant: "destructive",
-      });
+      setError("Failed to delete driver. Please try again.");
     } finally {
       setIsDeleting(false);
       setDeleteDialogOpen(false);
@@ -278,7 +269,7 @@ export default function DriverDetailsPage() {
       <div className="space-y-4">
         <div className="flex items-center gap-2">
           <Button variant="outline" size="icon" asChild>
-            <Link href="/dashboard/drivers">
+            <Link href="/user/dashboard/fleet">
               <ArrowLeft className="h-4 w-4" />
               <span className="sr-only">Back</span>
             </Link>
@@ -288,13 +279,14 @@ export default function DriverDetailsPage() {
 
         <Card>
           <CardContent className="flex flex-col items-center justify-center p-6">
-            <AlertTriangle className="h-10 w-10 text-amber-500" />
             <h2 className="mt-4 text-xl font-semibold">Error Loading Driver</h2>
             <p className="mt-2 text-center text-muted-foreground">
               {error || "Driver not found or an error occurred."}
             </p>
-            <Button asLink className="mt-4" asChild>
-              <Link href="/dashboard/drivers">Return to Driver Management</Link>
+            <Button variant="outline" className="mt-4" asChild>
+              <Link href="/user/dashboard/fleet">
+                Return to Driver Management
+              </Link>
             </Button>
           </CardContent>
         </Card>
@@ -309,7 +301,7 @@ export default function DriverDetailsPage() {
       <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
         <div className="flex items-center gap-4">
           <Button variant="outline" size="icon" asChild>
-            <Link href="/dashboard/drivers">
+            <Link href="/user/dashboard/fleet">
               <ArrowLeft className="h-4 w-4" />
               <span className="sr-only">Back</span>
             </Link>
@@ -340,7 +332,7 @@ export default function DriverDetailsPage() {
 
         <div className="flex gap-2">
           <Button variant="outline" asChild>
-            <Link href={`/dashboard/fleet/drivers/${driverId}/edit`}>
+            <Link href={`/user/dashboard/fleet/drivers/${driverId}/edit`}>
               <Pencil className="mr-2 h-4 w-4" />
               Edit Driver
             </Link>
@@ -361,9 +353,8 @@ export default function DriverDetailsPage() {
                 <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                 <AlertDialogDescription>
                   This action cannot be undone. This will permanently delete the
-                  driver
+                  driver{" "}
                   <strong>
-                    {" "}
                     {driver.firstName} {driver.lastName} ({driver.id})
                   </strong>{" "}
                   and remove all associated data.
@@ -457,7 +448,7 @@ export default function DriverDetailsPage() {
                     <Truck className="h-4 w-4 text-muted-foreground" />
                     {driver.currentVehicleDetails ? (
                       <Link
-                        href={`/dashboard/fleet/vehicles/${driver.currentVehicle}`}
+                        href={`/user/dashboard/fleet/vehicles/${driver.currentVehicle}`}
                         className="hover:underline"
                       >
                         {driver.currentVehicleDetails.make}{" "}
@@ -582,7 +573,7 @@ export default function DriverDetailsPage() {
             <CardContent className="space-y-4">
               {driver.documents && driver.documents.length > 0 ? (
                 <div className="space-y-4">
-                  {driver.documents.map((doc: any, index: number) => (
+                  {driver.documents.map((doc, index) => (
                     <div
                       key={index}
                       className="flex items-center justify-between rounded-lg border p-4"

@@ -380,7 +380,7 @@ export default function FleetPage() {
                           <TableCell className="py-4 px-3 text-right">
                             <Button variant="ghost" size="icon" asChild>
                               <Link
-                                href={`/dashboard/fleet/vehicles/${vehicle.id}`}
+                                href={`/user/dashboard/fleet/vehicles/${vehicle.id}`}
                               >
                                 <Eye className="h-4 w-4" />
                               </Link>
