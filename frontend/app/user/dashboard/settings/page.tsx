@@ -62,15 +62,6 @@ export default function SettingsPage() {
     dataRetentionPeriod: "1-year",
   });
 
-  // Security settings
-  const [securitySettings, setSecuritySettings] = useState({
-    twoFactorAuth: false,
-    sessionTimeout: "30",
-    passwordExpiry: "90",
-    loginNotifications: true,
-    securityQuestions: false,
-  });
-
   // Notification settings
   const [notificationSettings, setNotificationSettings] = useState({
     emailNotifications: true,
@@ -81,6 +72,15 @@ export default function SettingsPage() {
     systemAlerts: true,
     marketingEmails: false,
     notificationFrequency: "immediate",
+  });
+
+  // Security settings
+  const [securitySettings, setSecuritySettings] = useState({
+    twoFactorAuth: false,
+    sessionTimeout: "30",
+    passwordExpiry: "90",
+    loginNotifications: true,
+    securityQuestions: false,
   });
 
   // Support settings
@@ -143,16 +143,16 @@ export default function SettingsPage() {
     });
   };
 
-  const handleSecurityChange = (setting: string, value: any) => {
-    setSecuritySettings({
-      ...securitySettings,
+  const handleNotificationChange = (setting: string, value: any) => {
+    setNotificationSettings({
+      ...notificationSettings,
       [setting]: value,
     });
   };
 
-  const handleNotificationChange = (setting: string, value: any) => {
-    setNotificationSettings({
-      ...notificationSettings,
+  const handleSecurityChange = (setting: string, value: any) => {
+    setSecuritySettings({
+      ...securitySettings,
       [setting]: value,
     });
   };
@@ -247,8 +247,8 @@ export default function SettingsPage() {
       <Tabs defaultValue="privacy" className="space-y-4">
         <TabsList className="grid grid-cols-2 md:grid-cols-4 gap-2">
           <TabsTrigger value="privacy">Privacy</TabsTrigger>
-          <TabsTrigger value="security">Security</TabsTrigger>
           <TabsTrigger value="notifications">Notifications</TabsTrigger>
+          <TabsTrigger value="security">Security</TabsTrigger>
           <TabsTrigger value="help">Help & Support</TabsTrigger>
         </TabsList>
 
@@ -262,7 +262,7 @@ export default function SettingsPage() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="space-y-4">
+              <div className="space-y-4 border-b border-white/10 pb-4">
                 <h3 className="text-lg font-medium">Data Visibility</h3>
                 <div className="flex items-center justify-between space-x-2">
                   <div className="flex items-center space-x-2">
@@ -277,6 +277,7 @@ export default function SettingsPage() {
                     onCheckedChange={(checked) =>
                       handlePrivacyChange("shareProfileInfo", checked)
                     }
+                    className="data-[state=unchecked]:bg-[#1e293b] bg-[#0d1526] border border-white/10 rounded-full h-6 w-11 data-[state=checked]:bg-blue-600"
                   />
                 </div>
                 <div className="flex items-center justify-between space-x-2">
@@ -287,18 +288,19 @@ export default function SettingsPage() {
                     </Label>
                   </div>
                   <Switch
-                    id="shareLocationData"
-                    checked={privacySettings.shareLocationData}
+                    id="shareLocationInfo"
+                    checked={privacySettings.shareLocationInfo}
                     onCheckedChange={(checked) =>
-                      handlePrivacyChange("shareLocationData", checked)
+                      handlePrivacyChange("shareLocationInfo", checked)
                     }
+                    className="data-[state=unchecked]:bg-[#1e293b] bg-[#0d1526] border border-white/10 rounded-full h-6 w-11 data-[state=checked]:bg-blue-600"
                   />
                 </div>
               </div>
 
               <Separator />
 
-              <div className="space-y-4">
+              <div className="space-y-4 border-b border-white/10 pb-4">
                 <h3 className="text-lg font-medium">Data Usage</h3>
                 <div className="flex items-center justify-between space-x-2">
                   <div className="flex items-center space-x-2">
@@ -313,6 +315,7 @@ export default function SettingsPage() {
                     onCheckedChange={(checked) =>
                       handlePrivacyChange("allowDataAnalytics", checked)
                     }
+                    className="data-[state=unchecked]:bg-[#1e293b] bg-[#0d1526] border border-white/10 rounded-full h-6 w-11 data-[state=checked]:bg-blue-600"
                   />
                 </div>
                 <div className="flex items-center justify-between space-x-2">
@@ -328,13 +331,14 @@ export default function SettingsPage() {
                     onCheckedChange={(checked) =>
                       handlePrivacyChange("marketingCommunications", checked)
                     }
+                    className="data-[state=unchecked]:bg-[#1e293b] bg-[#0d1526] border border-white/10 rounded-full h-6 w-11 data-[state=checked]:bg-blue-600"
                   />
                 </div>
               </div>
 
               <Separator />
 
-              <div className="space-y-4">
+              <div className="space-y-4 border-b border-white/10 pb-6">
                 <h3 className="text-lg font-medium">Data Retention</h3>
                 <div className="grid gap-2">
                   <Label htmlFor="dataRetentionPeriod">
@@ -346,14 +350,34 @@ export default function SettingsPage() {
                       handlePrivacyChange("dataRetentionPeriod", value)
                     }
                   >
-                    <SelectTrigger id="dataRetentionPeriod">
+                    <SelectTrigger
+                      id="dataRetentionPeriod"
+                      className="w-full px-3 py-2 bg-[#0d1526] border border-white/10 rounded-md text-white focus:ring-blue-500 hover:bg-[#1e293b]"
+                    >
                       <SelectValue placeholder="Select retention period" />
                     </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="6-months">6 months</SelectItem>
-                      <SelectItem value="1-year">1 year</SelectItem>
-                      <SelectItem value="2-years">2 years</SelectItem>
-                      <SelectItem value="indefinite">Indefinite</SelectItem>
+                    <SelectContent className="bg-[#0d1526] border border-white/10 rounded-md">
+                      <SelectItem
+                        value="6-months"
+                        className="hover:bg-[#1e293b]"
+                      >
+                        6 months
+                      </SelectItem>
+                      <SelectItem value="1-year" className="hover:bg-[#1e293b]">
+                        1 year
+                      </SelectItem>
+                      <SelectItem
+                        value="2-years"
+                        className="hover:bg-[#1e293b]"
+                      >
+                        2 years
+                      </SelectItem>
+                      <SelectItem
+                        value="indefinite"
+                        className="hover:bg-[#1e293b]"
+                      >
+                        Indefinite
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                   <p className="text-sm text-muted-foreground">
@@ -389,34 +413,202 @@ export default function SettingsPage() {
                 </div>
               </div>
 
-              <div className="space-y-4">
-                <h3 className="text-lg font-medium text-destructive">
-                  Danger Zone
-                </h3>
-                <div className="rounded-md border border-destructive p-4">
-                  <div className="flex flex-col space-y-2">
-                    <h4 className="font-medium">Delete Account and Data</h4>
-                    <p className="text-sm text-muted-foreground">
-                      This will permanently delete your account and all
-                      associated data. This action cannot be undone.
-                    </p>
-                    <div className="pt-2">
-                      <Button
-                        variant="destructive"
-                        onClick={handleDeleteAccount}
-                      >
-                        <Trash2 className="mr-2 h-4 w-4" />
-                        Request Account Deletion
-                      </Button>
-                    </div>
+              <div className="flex justify-end">
+                <Button
+                  onClick={() => handleSaveSettings("Privacy")}
+                  disabled={isSubmitting}
+                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                >
+                  <Save className="mr-2 h-4 w-4 " />
+                  {isSubmitting ? "Saving..." : "Save Changes"}
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Notifications Settings Tab */}
+        <TabsContent value="notifications">
+          <Card>
+            <CardHeader>
+              <CardTitle>Notification Preferences</CardTitle>
+              <CardDescription>
+                Configure how you receive notifications from the system
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="space-y-4 border-b border-white/10 pb-4">
+                <h3 className="text-lg font-medium">Notification Channels</h3>
+                <div className="flex items-center justify-between space-x-2">
+                  <div className="flex items-center space-x-2">
+                    <Mail className="h-4 w-4 text-muted-foreground" />
+                    <Label htmlFor="emailNotifications" className="flex-1">
+                      Email Notifications
+                    </Label>
                   </div>
+                  <Switch
+                    id="emailNotifications"
+                    checked={notificationSettings.emailNotifications}
+                    onCheckedChange={(checked) =>
+                      handleNotificationChange("emailNotifications", checked)
+                    }
+                    className="data-[state=unchecked]:bg-[#1e293b] bg-[#0d1526] border border-white/10 rounded-full h-6 w-11 data-[state=checked]:bg-blue-600"
+                  />
+                </div>
+                <div className="flex items-center justify-between space-x-2">
+                  <div className="flex items-center space-x-2">
+                    <MessageSquare className="h-4 w-4 text-muted-foreground" />
+                    <Label htmlFor="smsNotifications" className="flex-1">
+                      SMS Notifications
+                    </Label>
+                  </div>
+                  <Switch
+                    id="smsNotifications"
+                    checked={notificationSettings.smsNotifications}
+                    onCheckedChange={(checked) =>
+                      handleNotificationChange("smsNotifications", checked)
+                    }
+                    className="data-[state=unchecked]:bg-[#1e293b] bg-[#0d1526] border border-white/10 rounded-full h-6 w-11 data-[state=checked]:bg-blue-600"
+                  />
+                </div>
+                <div className="flex items-center justify-between space-x-2">
+                  <div className="flex items-center space-x-2">
+                    <Smartphone className="h-4 w-4 text-muted-foreground" />
+                    <Label htmlFor="pushNotifications" className="flex-1">
+                      Push Notifications
+                    </Label>
+                  </div>
+                  <Switch
+                    id="pushNotifications"
+                    checked={notificationSettings.pushNotifications}
+                    onCheckedChange={(checked) =>
+                      handleNotificationChange("pushNotifications", checked)
+                    }
+                    className="data-[state=unchecked]:bg-[#1e293b] bg-[#0d1526] border border-white/10 rounded-full h-6 w-11 data-[state=checked]:bg-blue-600"
+                  />
+                </div>
+              </div>
+
+              <Separator />
+
+              <div className="space-y-4 border-b border-white/10 pb-4">
+                <h3 className="text-lg font-medium">Notification Types</h3>
+                <div className="flex items-center justify-between space-x-2">
+                  <div className="flex items-center space-x-2">
+                    <Truck className="h-4 w-4 text-muted-foreground" />
+                    <Label htmlFor="orderUpdates" className="flex-1">
+                      Order Updates
+                    </Label>
+                  </div>
+                  <Switch
+                    id="orderUpdates"
+                    checked={notificationSettings.orderUpdates}
+                    onCheckedChange={(checked) =>
+                      handleNotificationChange("orderUpdates", checked)
+                    }
+                    className="data-[state=unchecked]:bg-[#1e293b] bg-[#0d1526] border border-white/10 rounded-full h-6 w-11 data-[state=checked]:bg-blue-600"
+                  />
+                </div>
+                <div className="flex items-center justify-between space-x-2">
+                  <div className="flex items-center space-x-2">
+                    <Users className="h-4 w-4 text-muted-foreground" />
+                    <Label htmlFor="driverUpdates" className="flex-1">
+                      Driver Updates
+                    </Label>
+                  </div>
+                  <Switch
+                    id="driverUpdates"
+                    checked={notificationSettings.driverUpdates}
+                    onCheckedChange={(checked) =>
+                      handleNotificationChange("driverUpdates", checked)
+                    }
+                    className="data-[state=unchecked]:bg-[#1e293b] bg-[#0d1526] border border-white/10 rounded-full h-6 w-11 data-[state=checked]:bg-blue-600"
+                  />
+                </div>
+                <div className="flex items-center justify-between space-x-2">
+                  <div className="flex items-center space-x-2">
+                    <AlertCircle className="h-4 w-4 text-muted-foreground" />
+                    <Label htmlFor="systemAlerts" className="flex-1">
+                      System Alerts
+                    </Label>
+                  </div>
+                  <Switch
+                    id="systemAlerts"
+                    checked={notificationSettings.systemAlerts}
+                    onCheckedChange={(checked) =>
+                      handleNotificationChange("systemAlerts", checked)
+                    }
+                    className="data-[state=unchecked]:bg-[#1e293b] bg-[#0d1526] border border-white/10 rounded-full h-6 w-11 data-[state=checked]:bg-blue-600"
+                  />
+                </div>
+                <div className="flex items-center justify-between space-x-2">
+                  <div className="flex items-center space-x-2">
+                    <Mail className="h-4 w-4 text-muted-foreground" />
+                    <Label htmlFor="marketingEmails" className="flex-1">
+                      Marketing Emails
+                    </Label>
+                  </div>
+                  <Switch
+                    id="marketingEmails"
+                    checked={notificationSettings.marketingEmails}
+                    onCheckedChange={(checked) =>
+                      handleNotificationChange("marketingEmails", checked)
+                    }
+                    className="data-[state=unchecked]:bg-[#1e293b] bg-[#0d1526] border border-white/10 rounded-full h-6 w-11 data-[state=checked]:bg-blue-600"
+                  />
+                </div>
+              </div>
+
+              <Separator />
+
+              <div className="space-y-4">
+                <h3 className="text-lg font-medium">Notification Frequency</h3>
+                <div className="grid gap-2">
+                  <Label htmlFor="notificationFrequency">
+                    Delivery Frequency
+                  </Label>
+                  <Select
+                    value={notificationSettings.notificationFrequency}
+                    onValueChange={(value) =>
+                      handleNotificationChange("notificationFrequency", value)
+                    }
+                  >
+                    <SelectTrigger
+                      id="notificationFrequency"
+                      className="w-full px-3 py-2 bg-[#0d1526] border border-white/10 rounded-md text-white focus:ring-blue-500 hover:bg-[#1e293b]"
+                    >
+                      <SelectValue placeholder="Select frequency" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-[#0d1526] border border-white/10 rounded-md">
+                      <SelectItem
+                        value="immediate"
+                        className="hover:bg-[#1e293b]"
+                      >
+                        Immediate
+                      </SelectItem>
+                      <SelectItem value="hourly" className="hover:bg-[#1e293b]">
+                        Hourly Digest
+                      </SelectItem>
+                      <SelectItem value="daily" className="hover:bg-[#1e293b]">
+                        Daily Digest
+                      </SelectItem>
+                      <SelectItem value="weekly" className="hover:bg-[#1e293b]">
+                        Weekly Digest
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p className="text-sm text-muted-foreground">
+                    Choose how frequently you want to receive notification
+                    digests
+                  </p>
                 </div>
               </div>
 
               <div className="flex justify-end">
                 <Button
-                  onClick={() => handleSaveSettings("Privacy")}
+                  onClick={() => handleSaveSettings("Notifications")}
                   disabled={isSubmitting}
+                  className="bg-blue-600 hover:bg-blue-700 text-white"
                 >
                   <Save className="mr-2 h-4 w-4" />
                   {isSubmitting ? "Saving..." : "Save Changes"}
@@ -436,28 +628,43 @@ export default function SettingsPage() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="space-y-4">
+              <div className="space-y-4 border-b border-white/10 pb-4">
                 <h3 className="text-lg font-medium">Password Management</h3>
                 <div className="grid gap-4">
                   <div className="grid gap-2">
                     <Label htmlFor="currentPassword">Current Password</Label>
-                    <Input id="currentPassword" type="password" />
+                    <Input
+                      id="currentPassword"
+                      type="password"
+                      className="border border-white/10"
+                    />
                   </div>
                   <div className="grid gap-2">
                     <Label htmlFor="newPassword">New Password</Label>
-                    <Input id="newPassword" type="password" />
+                    <Input
+                      id="newPassword"
+                      type="password"
+                      className="border border-white/10"
+                    />
                   </div>
                   <div className="grid gap-2">
                     <Label htmlFor="confirmPassword">
                       Confirm New Password
                     </Label>
-                    <Input id="confirmPassword" type="password" />
+                    <Input
+                      id="confirmPassword"
+                      type="password"
+                      className="border border-white/10"
+                    />
                   </div>
                   <div className="flex items-center justify-between">
                     <Button variant="outline" onClick={handleResetPassword}>
                       Reset Password
                     </Button>
-                    <Button onClick={() => handleSaveSettings("Password")}>
+                    <Button
+                      onClick={() => handleSaveSettings("Password")}
+                      className="bg-blue-600 hover:bg-blue-700 text-white"
+                    >
                       Update Password
                     </Button>
                   </div>
@@ -466,7 +673,7 @@ export default function SettingsPage() {
 
               <Separator />
 
-              <div className="space-y-4">
+              <div className="space-y-4 border-b border-white/10 pb-4">
                 <h3 className="text-lg font-medium">
                   Two-Factor Authentication
                 </h3>
@@ -483,6 +690,7 @@ export default function SettingsPage() {
                     onCheckedChange={(checked) =>
                       handleSecurityChange("twoFactorAuth", checked)
                     }
+                    className="data-[state=unchecked]:bg-[#1e293b] bg-[#0d1526] border border-white/10 rounded-full h-6 w-11 data-[state=checked]:bg-blue-600"
                   />
                 </div>
                 {securitySettings.twoFactorAuth && (
@@ -509,6 +717,7 @@ export default function SettingsPage() {
                         <Input
                           id="verificationCode"
                           placeholder="Enter 6-digit code"
+                          className="border border-white/10"
                         />
                       </div>
                       <div className="pt-2">
@@ -536,6 +745,7 @@ export default function SettingsPage() {
                     onChange={(e) =>
                       handleSecurityChange("sessionTimeout", e.target.value)
                     }
+                    className="border border-white/10"
                     min="5"
                     max="120"
                   />
@@ -545,13 +755,13 @@ export default function SettingsPage() {
                 </div>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-4 ">
                 <h3 className="text-lg font-medium">Active Sessions</h3>
-                <div className="rounded-md border">
+                <div className="rounded-md border border border-white/10">
                   {activeSessions.map((session) => (
                     <div
                       key={session.id}
-                      className="flex items-center justify-between p-4 border-b last:border-0"
+                      className="flex items-center justify-between p-4 border-b border-white/10 last:border-0"
                     >
                       <div className="space-y-1">
                         <p className="font-medium">{session.device}</p>
@@ -599,6 +809,7 @@ export default function SettingsPage() {
                     onCheckedChange={(checked) =>
                       handleSecurityChange("loginNotifications", checked)
                     }
+                    className="data-[state=unchecked]:bg-[#1e293b] bg-[#0d1526] border border-white/10 rounded-full h-6 w-11 data-[state=checked]:bg-blue-600"
                   />
                 </div>
               </div>
@@ -607,175 +818,7 @@ export default function SettingsPage() {
                 <Button
                   onClick={() => handleSaveSettings("Security")}
                   disabled={isSubmitting}
-                >
-                  <Save className="mr-2 h-4 w-4" />
-                  {isSubmitting ? "Saving..." : "Save Changes"}
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        {/* Notifications Settings Tab */}
-        <TabsContent value="notifications">
-          <Card>
-            <CardHeader>
-              <CardTitle>Notification Preferences</CardTitle>
-              <CardDescription>
-                Configure how you receive notifications from the system
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="space-y-4">
-                <h3 className="text-lg font-medium">Notification Channels</h3>
-                <div className="flex items-center justify-between space-x-2">
-                  <div className="flex items-center space-x-2">
-                    <Mail className="h-4 w-4 text-muted-foreground" />
-                    <Label htmlFor="emailNotifications" className="flex-1">
-                      Email Notifications
-                    </Label>
-                  </div>
-                  <Switch
-                    id="emailNotifications"
-                    checked={notificationSettings.emailNotifications}
-                    onCheckedChange={(checked) =>
-                      handleNotificationChange("emailNotifications", checked)
-                    }
-                  />
-                </div>
-                <div className="flex items-center justify-between space-x-2">
-                  <div className="flex items-center space-x-2">
-                    <MessageSquare className="h-4 w-4 text-muted-foreground" />
-                    <Label htmlFor="smsNotifications" className="flex-1">
-                      SMS Notifications
-                    </Label>
-                  </div>
-                  <Switch
-                    id="smsNotifications"
-                    checked={notificationSettings.smsNotifications}
-                    onCheckedChange={(checked) =>
-                      handleNotificationChange("smsNotifications", checked)
-                    }
-                  />
-                </div>
-                <div className="flex items-center justify-between space-x-2">
-                  <div className="flex items-center space-x-2">
-                    <Smartphone className="h-4 w-4 text-muted-foreground" />
-                    <Label htmlFor="pushNotifications" className="flex-1">
-                      Push Notifications
-                    </Label>
-                  </div>
-                  <Switch
-                    id="pushNotifications"
-                    checked={notificationSettings.pushNotifications}
-                    onCheckedChange={(checked) =>
-                      handleNotificationChange("pushNotifications", checked)
-                    }
-                  />
-                </div>
-              </div>
-
-              <Separator />
-
-              <div className="space-y-4">
-                <h3 className="text-lg font-medium">Notification Types</h3>
-                <div className="flex items-center justify-between space-x-2">
-                  <div className="flex items-center space-x-2">
-                    <Truck className="h-4 w-4 text-muted-foreground" />
-                    <Label htmlFor="orderUpdates" className="flex-1">
-                      Order Updates
-                    </Label>
-                  </div>
-                  <Switch
-                    id="orderUpdates"
-                    checked={notificationSettings.orderUpdates}
-                    onCheckedChange={(checked) =>
-                      handleNotificationChange("orderUpdates", checked)
-                    }
-                  />
-                </div>
-                <div className="flex items-center justify-between space-x-2">
-                  <div className="flex items-center space-x-2">
-                    <Users className="h-4 w-4 text-muted-foreground" />
-                    <Label htmlFor="driverUpdates" className="flex-1">
-                      Driver Updates
-                    </Label>
-                  </div>
-                  <Switch
-                    id="driverUpdates"
-                    checked={notificationSettings.driverUpdates}
-                    onCheckedChange={(checked) =>
-                      handleNotificationChange("driverUpdates", checked)
-                    }
-                  />
-                </div>
-                <div className="flex items-center justify-between space-x-2">
-                  <div className="flex items-center space-x-2">
-                    <AlertCircle className="h-4 w-4 text-muted-foreground" />
-                    <Label htmlFor="systemAlerts" className="flex-1">
-                      System Alerts
-                    </Label>
-                  </div>
-                  <Switch
-                    id="systemAlerts"
-                    checked={notificationSettings.systemAlerts}
-                    onCheckedChange={(checked) =>
-                      handleNotificationChange("systemAlerts", checked)
-                    }
-                  />
-                </div>
-                <div className="flex items-center justify-between space-x-2">
-                  <div className="flex items-center space-x-2">
-                    <Mail className="h-4 w-4 text-muted-foreground" />
-                    <Label htmlFor="marketingEmails" className="flex-1">
-                      Marketing Emails
-                    </Label>
-                  </div>
-                  <Switch
-                    id="marketingEmails"
-                    checked={notificationSettings.marketingEmails}
-                    onCheckedChange={(checked) =>
-                      handleNotificationChange("marketingEmails", checked)
-                    }
-                  />
-                </div>
-              </div>
-
-              <Separator />
-
-              <div className="space-y-4">
-                <h3 className="text-lg font-medium">Notification Frequency</h3>
-                <div className="grid gap-2">
-                  <Label htmlFor="notificationFrequency">
-                    Delivery Frequency
-                  </Label>
-                  <Select
-                    value={notificationSettings.notificationFrequency}
-                    onValueChange={(value) =>
-                      handleNotificationChange("notificationFrequency", value)
-                    }
-                  >
-                    <SelectTrigger id="notificationFrequency">
-                      <SelectValue placeholder="Select frequency" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="immediate">Immediate</SelectItem>
-                      <SelectItem value="hourly">Hourly Digest</SelectItem>
-                      <SelectItem value="daily">Daily Digest</SelectItem>
-                      <SelectItem value="weekly">Weekly Digest</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <p className="text-sm text-muted-foreground">
-                    Choose how frequently you want to receive notification
-                    digests
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex justify-end">
-                <Button
-                  onClick={() => handleSaveSettings("Notifications")}
-                  disabled={isSubmitting}
+                  className="bg-blue-600 hover:bg-blue-700 text-white"
                 >
                   <Save className="mr-2 h-4 w-4" />
                   {isSubmitting ? "Saving..." : "Save Changes"}
@@ -795,7 +838,7 @@ export default function SettingsPage() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="space-y-4">
+              <div className="space-y-4 ">
                 <h3 className="text-lg font-medium">
                   Frequently Asked Questions
                 </h3>
@@ -804,7 +847,7 @@ export default function SettingsPage() {
                     <AccordionTrigger>
                       How do I create a new shipment?
                     </AccordionTrigger>
-                    <AccordionContent>
+                    <AccordionContent className="text-white/70 px-3 py-2">
                       To create a new shipment, navigate to the Orders section
                       in the dashboard and click on the "New Order" button. Fill
                       in the required information and submit the form.
@@ -814,7 +857,7 @@ export default function SettingsPage() {
                     <AccordionTrigger>
                       How do I track my shipments?
                     </AccordionTrigger>
-                    <AccordionContent>
+                    <AccordionContent className="text-white/70 px-3 py-2">
                       You can track your shipments by going to the Orders
                       section and clicking on the specific order you want to
                       track. The order details page will show the current status
@@ -825,7 +868,7 @@ export default function SettingsPage() {
                     <AccordionTrigger>
                       How do I add a new driver to my fleet?
                     </AccordionTrigger>
-                    <AccordionContent>
+                    <AccordionContent className="text-white/70 px-3 py-2">
                       To add a new driver, go to the Fleet section, select the
                       Drivers tab, and click on the "New Driver" button. Fill in
                       the driver's information and submit the form.
@@ -835,7 +878,7 @@ export default function SettingsPage() {
                     <AccordionTrigger>
                       How do I generate reports?
                     </AccordionTrigger>
-                    <AccordionContent>
+                    <AccordionContent className="text-white/70 px-3 py-2">
                       You can generate reports by navigating to the Reports
                       section in the dashboard. Select the type of report you
                       want to generate, specify the date range and other
@@ -846,7 +889,7 @@ export default function SettingsPage() {
                     <AccordionTrigger>
                       How do I update my account information?
                     </AccordionTrigger>
-                    <AccordionContent>
+                    <AccordionContent className="text-white/70 px-3 py-2">
                       To update your account information, go to the Settings
                       section and select the appropriate tab (e.g., Profile,
                       Security). Make the necessary changes and click on the
@@ -858,9 +901,9 @@ export default function SettingsPage() {
 
               <Separator />
 
-              <div className="space-y-4">
+              <div className="space-y-4 border-b border-white/10 pb-4">
                 <h3 className="text-lg font-medium">Contact Support</h3>
-                <div className="rounded-md bg-muted p-4">
+                <div className="rounded-md bg-muted p-4 bg-[#1e293b]">
                   <div className="flex items-center space-x-4">
                     <Avatar>
                       <AvatarImage src="/support-agent.png" />
@@ -899,7 +942,7 @@ export default function SettingsPage() {
 
               <Separator />
 
-              <div className="space-y-4">
+              <div className="space-y-4 border-b border-white/10 pb-4">
                 <h3 className="text-lg font-medium">Provide Feedback</h3>
                 <div className="grid gap-2">
                   <Label htmlFor="preferredContactMethod">
@@ -911,13 +954,31 @@ export default function SettingsPage() {
                       handleSupportChange("preferredContactMethod", value)
                     }
                   >
-                    <SelectTrigger id="preferredContactMethod">
+                    <SelectTrigger
+                      id="preferredContactMethod"
+                      className="w-full px-3 py-2 bg-[#0d1526] border border-white/10 rounded-md text-white focus:ring-blue-500 hover:bg-[#1e293b]"
+                    >
                       <SelectValue placeholder="Select contact method" />
                     </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="email">Email</SelectItem>
-                      <SelectItem value="phone">Phone</SelectItem>
-                      <SelectItem value="none">No Contact Needed</SelectItem>
+                    <SelectContent className="bg-[#0d1526] border border-white/10 rounded-md">
+                      <SelectItem
+                        value="email"
+                        className="hover:bg-[#1e293b] text-white"
+                      >
+                        Email
+                      </SelectItem>
+                      <SelectItem
+                        value="phone"
+                        className="hover:bg-[#1e293b] text-white"
+                      >
+                        Phone
+                      </SelectItem>
+                      <SelectItem
+                        value="none"
+                        className="hover:bg-[#1e293b] text-white"
+                      >
+                        No Contact Needed
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -930,6 +991,7 @@ export default function SettingsPage() {
                     onChange={(e) =>
                       handleSupportChange("feedbackMessage", e.target.value)
                     }
+                    className="border border-white/10"
                     rows={5}
                   />
                 </div>
@@ -937,6 +999,7 @@ export default function SettingsPage() {
                   <Button
                     onClick={handleSubmitFeedback}
                     disabled={isSubmitting}
+                    className="bg-blue-600 hover:bg-blue-700 text-white"
                   >
                     {isSubmitting ? "Submitting..." : "Submit Feedback"}
                   </Button>
@@ -950,7 +1013,7 @@ export default function SettingsPage() {
                   Documentation & Tutorials
                 </h3>
                 <div className="grid gap-4 md:grid-cols-2">
-                  <div className="rounded-md border p-4">
+                  <div className="rounded-md border border-white/10 p-4 ">
                     <h4 className="font-medium">Getting Started Guide</h4>
                     <p className="text-sm text-muted-foreground mt-1">
                       Learn the basics of using the logistics platform
@@ -959,7 +1022,7 @@ export default function SettingsPage() {
                       View Guide
                     </Button>
                   </div>
-                  <div className="rounded-md border p-4">
+                  <div className="rounded-md border border-white/10 p-4">
                     <h4 className="font-medium">Video Tutorials</h4>
                     <p className="text-sm text-muted-foreground mt-1">
                       Watch step-by-step tutorials on key features
@@ -968,7 +1031,7 @@ export default function SettingsPage() {
                       Watch Videos
                     </Button>
                   </div>
-                  <div className="rounded-md border p-4">
+                  <div className="rounded-md border border-white/10 p-4">
                     <h4 className="font-medium">API Documentation</h4>
                     <p className="text-sm text-muted-foreground mt-1">
                       Technical documentation for developers
@@ -977,7 +1040,7 @@ export default function SettingsPage() {
                       View Docs
                     </Button>
                   </div>
-                  <div className="rounded-md border p-4">
+                  <div className="rounded-md border border-white/10 p-4">
                     <h4 className="font-medium">Best Practices</h4>
                     <p className="text-sm text-muted-foreground mt-1">
                       Tips and tricks for optimal usage

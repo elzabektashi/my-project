@@ -108,6 +108,7 @@ export default function CompanyProfilePage() {
                             value={companyData.name}
                             onChange={handleChange}
                             required
+                            className="border border-white/10"
                           />
                         </div>
                         <div className="space-y-2">
@@ -117,6 +118,7 @@ export default function CompanyProfilePage() {
                             name="taxId"
                             value={companyData.taxId}
                             onChange={handleChange}
+                            className="border border-white/10"
                           />
                         </div>
                       </div>
@@ -128,6 +130,7 @@ export default function CompanyProfilePage() {
                           value={companyData.description}
                           onChange={handleChange}
                           className="min-h-[100px]"
+                          className="border border-white/10"
                         />
                       </div>
                     </div>
@@ -147,7 +150,7 @@ export default function CompanyProfilePage() {
                     <div className="space-y-2">
                       <Label htmlFor="email">Email Address</Label>
                       <div className="flex">
-                        <span className="flex items-center rounded-l-md border border-r-0 bg-muted px-3 text-muted-foreground">
+                        <span className="flex items-center rounded-l-md border border-white/10 bg-muted px-3 text-muted-foreground">
                           <Mail className="h-4 w-4" />
                         </span>
                         <Input
@@ -158,13 +161,14 @@ export default function CompanyProfilePage() {
                           onChange={handleChange}
                           className="rounded-l-none"
                           required
+                          className="border border-white/10"
                         />
                       </div>
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="phone">Phone Number</Label>
                       <div className="flex">
-                        <span className="flex items-center rounded-l-md border border-r-0 bg-muted px-3 text-muted-foreground">
+                        <span className="flex items-center rounded-l-md border border-white/10 bg-muted px-3 text-muted-foreground">
                           <Phone className="h-4 w-4" />
                         </span>
                         <Input
@@ -175,6 +179,7 @@ export default function CompanyProfilePage() {
                           onChange={handleChange}
                           className="rounded-l-none"
                           required
+                          className="border border-white/10"
                         />
                       </div>
                     </div>
@@ -183,7 +188,7 @@ export default function CompanyProfilePage() {
                   <div className="space-y-2">
                     <Label htmlFor="website">Website</Label>
                     <div className="flex">
-                      <span className="flex items-center rounded-l-md border border-r-0 bg-muted px-3 text-muted-foreground">
+                      <span className="flex items-center rounded-l-md border border-white/10 bg-muted px-3 text-muted-foreground">
                         <Globe className="h-4 w-4" />
                       </span>
                       <Input
@@ -193,6 +198,7 @@ export default function CompanyProfilePage() {
                         value={companyData.website}
                         onChange={handleChange}
                         className="rounded-l-none"
+                        className="border border-white/10"
                       />
                     </div>
                   </div>
@@ -200,7 +206,7 @@ export default function CompanyProfilePage() {
                   <div className="space-y-2">
                     <Label htmlFor="address">Address</Label>
                     <div className="flex">
-                      <span className="flex items-center rounded-l-md border border-r-0 bg-muted px-3 text-muted-foreground">
+                      <span className="flex items-center rounded-l-md border border-white/10 bg-muted px-3 text-muted-foreground">
                         <MapPin className="h-4 w-4" />
                       </span>
                       <Input
@@ -210,6 +216,7 @@ export default function CompanyProfilePage() {
                         onChange={handleChange}
                         className="rounded-l-none"
                         required
+                        className="border border-white/10"
                       />
                     </div>
                   </div>
@@ -223,6 +230,7 @@ export default function CompanyProfilePage() {
                         value={companyData.city}
                         onChange={handleChange}
                         required
+                        className="border border-white/10"
                       />
                     </div>
                     <div className="space-y-2">
@@ -233,6 +241,7 @@ export default function CompanyProfilePage() {
                         value={companyData.state}
                         onChange={handleChange}
                         required
+                        className="border border-white/10"
                       />
                     </div>
                     <div className="space-y-2">
@@ -243,6 +252,7 @@ export default function CompanyProfilePage() {
                         value={companyData.zip}
                         onChange={handleChange}
                         required
+                        className="border border-white/10"
                       />
                     </div>
                     <div className="space-y-2">
@@ -253,6 +263,7 @@ export default function CompanyProfilePage() {
                         value={companyData.country}
                         onChange={handleChange}
                         required
+                        className="border border-white/10"
                       />
                     </div>
                   </div>
@@ -281,7 +292,7 @@ export default function CompanyProfilePage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="rounded-md border p-4">
+                <div className="rounded-md border border-white/10 p-4">
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="font-medium">Current Plan</h3>
@@ -302,7 +313,7 @@ export default function CompanyProfilePage() {
 
                 <div className="space-y-2">
                   <h3 className="font-medium">Payment Method</h3>
-                  <div className="rounded-md border p-4">
+                  <div className="rounded-md border border-white/10 p-4">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-4">
                         <div className="rounded-md bg-muted p-2">
@@ -329,7 +340,11 @@ export default function CompanyProfilePage() {
                           </p>
                         </div>
                       </div>
-                      <Button variant="ghost" size="sm">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="border border-white/10 hover:bg-[#1e293b] text-white"
+                      >
                         Edit
                       </Button>
                     </div>
@@ -338,15 +353,22 @@ export default function CompanyProfilePage() {
 
                 <div className="space-y-2">
                   <h3 className="font-medium">Billing Address</h3>
-                  <div className="rounded-md border p-4">
-                    <p>{companyData.name}</p>
-                    <p>{companyData.address}</p>
-                    <p>
-                      {companyData.city}, {companyData.state} {companyData.zip}
-                    </p>
-                    <p>{companyData.country}</p>
-                    <div className="mt-2">
-                      <Button variant="ghost" size="sm">
+                  <div className="rounded-md border border-white/10 p-4 flex justify-between items-center">
+                    <div>
+                      <p>{companyData.name}</p>
+                      <p>{companyData.address}</p>
+                      <p>
+                        {companyData.city}, {companyData.state}{" "}
+                        {companyData.zip}
+                      </p>
+                      <p>{companyData.country}</p>
+                    </div>
+                    <div className="ml-4">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="border border-white/10 hover:bg-[#1e293b] text-white"
+                      >
                         Edit
                       </Button>
                     </div>
