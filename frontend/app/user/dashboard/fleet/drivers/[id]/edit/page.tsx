@@ -272,7 +272,12 @@ export default function EditDriverPage() {
     return (
       <div className="space-y-4">
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="icon" asChild>
+          <Button
+            variant="outline"
+            size="icon"
+            className="border-white/10 hover:bg-[#1e293b]"
+            asChild
+          >
             <Link href="/user/dashboard/fleet">
               <ArrowLeft className="h-4 w-4" />
               <span className="sr-only">Back</span>
@@ -286,7 +291,11 @@ export default function EditDriverPage() {
           <AlertDescription>{error}</AlertDescription>
         </Alert>
 
-        <Button asChild>
+        <Button
+          variant="outline"
+          className="border-white/10 hover:bg-[#1e293b]"
+          asChild
+        >
           <Link href="/user/dashboard/fleet">Return to Driver Management</Link>
         </Button>
       </div>
@@ -297,7 +306,12 @@ export default function EditDriverPage() {
     <div className="space-y-6">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="icon" asChild>
+          <Button
+            variant="outline"
+            size="icon"
+            className="border-white/10 hover:bg-[#1e293b]"
+            asChild
+          >
             <Link href={`/user/dashboard/fleet/drivers/${driverId}`}>
               <ArrowLeft className="h-4 w-4" />
               <span className="sr-only">Back</span>
@@ -313,17 +327,35 @@ export default function EditDriverPage() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <Tabs defaultValue="personal" className="space-y-4">
-            <TabsList>
-              <TabsTrigger value="personal">Personal Information</TabsTrigger>
-              <TabsTrigger value="license">
+            <TabsList className="bg-[#0d1526] border-white/10 bg-[#1e293b]">
+              <TabsTrigger
+                value="personal"
+                className="data-[state=active]:bg-[#111827] data-[state=active]:text-white"
+              >
+                Personal Information
+              </TabsTrigger>
+              <TabsTrigger
+                value="license"
+                className="data-[state=active]:bg-[#111827] data-[state=active]:text-white"
+              >
                 License & Qualifications
               </TabsTrigger>
-              <TabsTrigger value="emergency">Emergency Contact</TabsTrigger>
-              <TabsTrigger value="documents">Documents</TabsTrigger>
+              <TabsTrigger
+                value="emergency"
+                className="data-[state=active]:bg-[#111827] data-[state=active]:text-white"
+              >
+                Emergency Contact
+              </TabsTrigger>
+              <TabsTrigger
+                value="documents"
+                className="data-[state=active]:bg-[#111827] data-[state=active]:text-white"
+              >
+                Documents
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="personal">
-              <Card>
+              <Card className="border-white/10">
                 <CardHeader>
                   <CardTitle>Personal Information</CardTitle>
                   <CardDescription>
@@ -342,7 +374,11 @@ export default function EditDriverPage() {
                           <User className="h-12 w-12" />
                         </AvatarFallback>
                       </Avatar>
-                      <Button variant="outline" size="sm" className="mt-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="border-white/10 hover:bg-[#1e293b]"
+                      >
                         <Upload className="mr-2 h-4 w-4" />
                         Change Photo
                       </Button>
@@ -356,7 +392,11 @@ export default function EditDriverPage() {
                             <FormItem>
                               <FormLabel>First Name</FormLabel>
                               <FormControl>
-                                <Input placeholder="John" {...field} />
+                                <Input
+                                  placeholder="John"
+                                  className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500"
+                                  {...field}
+                                />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -370,7 +410,11 @@ export default function EditDriverPage() {
                             <FormItem>
                               <FormLabel>Last Name</FormLabel>
                               <FormControl>
-                                <Input placeholder="Doe" {...field} />
+                                <Input
+                                  placeholder="Doe"
+                                  className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500"
+                                  {...field}
+                                />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -389,6 +433,7 @@ export default function EditDriverPage() {
                                 <Input
                                   type="email"
                                   placeholder="john.doe@example.com"
+                                  className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500"
                                   {...field}
                                 />
                               </FormControl>
@@ -406,6 +451,7 @@ export default function EditDriverPage() {
                               <FormControl>
                                 <Input
                                   placeholder="+1 (555) 123-4567"
+                                  className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500"
                                   {...field}
                                 />
                               </FormControl>
@@ -426,19 +472,33 @@ export default function EditDriverPage() {
                               defaultValue={field.value}
                             >
                               <FormControl>
-                                <SelectTrigger>
+                                <SelectTrigger className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500 hover:bg-[#1e293b]">
                                   <SelectValue placeholder="Select status" />
                                 </SelectTrigger>
                               </FormControl>
-                              <SelectContent>
-                                <SelectItem value="available">
+                              <SelectContent className="border-white/10 bg-[#0d1526]">
+                                <SelectItem
+                                  value="available"
+                                  className="hover:bg-[#1e293b]"
+                                >
                                   Available
                                 </SelectItem>
-                                <SelectItem value="on_duty">On Duty</SelectItem>
-                                <SelectItem value="off_duty">
+                                <SelectItem
+                                  value="on_duty"
+                                  className="hover:bg-[#1e293b]"
+                                >
+                                  On Duty
+                                </SelectItem>
+                                <SelectItem
+                                  value="off_duty"
+                                  className="hover:bg-[#1e293b]"
+                                >
                                   Off Duty
                                 </SelectItem>
-                                <SelectItem value="on_leave">
+                                <SelectItem
+                                  value="on_leave"
+                                  className="hover:bg-[#1e293b]"
+                                >
                                   On Leave
                                 </SelectItem>
                               </SelectContent>
@@ -459,27 +519,45 @@ export default function EditDriverPage() {
                               defaultValue={field.value}
                             >
                               <FormControl>
-                                <SelectTrigger>
+                                <SelectTrigger className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500 hover:bg-[#1e293b]">
                                   <SelectValue placeholder="Select vehicle" />
                                 </SelectTrigger>
                               </FormControl>
-                              <SelectContent>
-                                <SelectItem value="unassigned">
+                              <SelectContent className="border-white/10 bg-[#0d1526]">
+                                <SelectItem
+                                  value="unassigned"
+                                  className="hover:bg-[#1e293b]"
+                                >
                                   Unassigned
                                 </SelectItem>
-                                <SelectItem value="VEH-001">
+                                <SelectItem
+                                  value="VEH-001"
+                                  className="hover:bg-[#1e293b]"
+                                >
                                   VEH-001 (Volvo FH16)
                                 </SelectItem>
-                                <SelectItem value="VEH-002">
+                                <SelectItem
+                                  value="VEH-002"
+                                  className="hover:bg-[#1e293b]"
+                                >
                                   VEH-002 (Mercedes Sprinter)
                                 </SelectItem>
-                                <SelectItem value="VEH-003">
+                                <SelectItem
+                                  value="VEH-003"
+                                  className="hover:bg-[#1e293b]"
+                                >
                                   VEH-003 (Scania R450)
                                 </SelectItem>
-                                <SelectItem value="VEH-004">
+                                <SelectItem
+                                  value="VEH-004"
+                                  className="hover:bg-[#1e293b]"
+                                >
                                   VEH-004 (Ford Transit)
                                 </SelectItem>
-                                <SelectItem value="VEH-005">
+                                <SelectItem
+                                  value="VEH-005"
+                                  className="hover:bg-[#1e293b]"
+                                >
                                   VEH-005 (MAN TGX)
                                 </SelectItem>
                               </SelectContent>
@@ -500,7 +578,11 @@ export default function EditDriverPage() {
                         <FormItem>
                           <FormLabel>Street Address</FormLabel>
                           <FormControl>
-                            <Input placeholder="123 Main St" {...field} />
+                            <Input
+                              placeholder="123 Main St"
+                              className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -515,7 +597,11 @@ export default function EditDriverPage() {
                           <FormItem>
                             <FormLabel>City</FormLabel>
                             <FormControl>
-                              <Input placeholder="New York" {...field} />
+                              <Input
+                                placeholder="New York"
+                                className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500"
+                                {...field}
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -529,7 +615,11 @@ export default function EditDriverPage() {
                           <FormItem>
                             <FormLabel>State/Province</FormLabel>
                             <FormControl>
-                              <Input placeholder="NY" {...field} />
+                              <Input
+                                placeholder="NY"
+                                className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500"
+                                {...field}
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -543,7 +633,11 @@ export default function EditDriverPage() {
                           <FormItem>
                             <FormLabel>Zip/Postal Code</FormLabel>
                             <FormControl>
-                              <Input placeholder="10001" {...field} />
+                              <Input
+                                placeholder="10001"
+                                className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500"
+                                {...field}
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -557,7 +651,11 @@ export default function EditDriverPage() {
                           <FormItem>
                             <FormLabel>Country</FormLabel>
                             <FormControl>
-                              <Input placeholder="USA" {...field} />
+                              <Input
+                                placeholder="USA"
+                                className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500"
+                                {...field}
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -570,7 +668,7 @@ export default function EditDriverPage() {
             </TabsContent>
 
             <TabsContent value="license">
-              <Card>
+              <Card className="border-white/10 ">
                 <CardHeader>
                   <CardTitle>License Information</CardTitle>
                   <CardDescription>
@@ -586,7 +684,11 @@ export default function EditDriverPage() {
                         <FormItem>
                           <FormLabel>License Number</FormLabel>
                           <FormControl>
-                            <Input placeholder="DL-123456" {...field} />
+                            <Input
+                              placeholder="DL-123456"
+                              className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -604,22 +706,41 @@ export default function EditDriverPage() {
                             defaultValue={field.value}
                           >
                             <FormControl>
-                              <SelectTrigger>
+                              <SelectTrigger className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500 hover:bg-[#1e293b]">
                                 <SelectValue placeholder="Select license type" />
                               </SelectTrigger>
                             </FormControl>
-                            <SelectContent>
-                              <SelectItem value="class_a">
+                            <SelectContent className="border-white/10 bg-[#0d1526]">
+                              <SelectItem
+                                value="class_a"
+                                className="hover:bg-[#1e293b]"
+                              >
                                 Class A (CDL)
                               </SelectItem>
-                              <SelectItem value="class_b">
+                              <SelectItem
+                                value="class_b"
+                                className="hover:bg-[#1e293b]"
+                              >
                                 Class B (CDL)
                               </SelectItem>
-                              <SelectItem value="class_c">
+                              <SelectItem
+                                value="class_c"
+                                className="hover:bg-[#1e293b]"
+                              >
                                 Class C (CDL)
                               </SelectItem>
-                              <SelectItem value="standard">Standard</SelectItem>
-                              <SelectItem value="other">Other</SelectItem>
+                              <SelectItem
+                                value="standard"
+                                className="hover:bg-[#1e293b]"
+                              >
+                                Standard
+                              </SelectItem>
+                              <SelectItem
+                                value="other"
+                                className="hover:bg-[#1e293b]"
+                              >
+                                Other
+                              </SelectItem>
                             </SelectContent>
                           </Select>
                           <FormMessage />
@@ -634,7 +755,11 @@ export default function EditDriverPage() {
                         <FormItem>
                           <FormLabel>License Expiry Date</FormLabel>
                           <FormControl>
-                            <Input type="date" {...field} />
+                            <Input
+                              type="date"
+                              className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500 bg-[#0d1526]"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -651,7 +776,7 @@ export default function EditDriverPage() {
                         <FormControl>
                           <Textarea
                             placeholder="Enter any additional qualifications or notes about the driver"
-                            className="min-h-[100px]"
+                            className="min-h-[100px] bg-[#0d1526] border-white/10 text-white focus:ring-blue-500"
                             {...field}
                           />
                         </FormControl>
@@ -664,7 +789,7 @@ export default function EditDriverPage() {
             </TabsContent>
 
             <TabsContent value="emergency">
-              <Card>
+              <Card className="border-white/10">
                 <CardHeader>
                   <CardTitle>Emergency Contact</CardTitle>
                   <CardDescription>
@@ -680,7 +805,11 @@ export default function EditDriverPage() {
                         <FormItem>
                           <FormLabel>Emergency Contact Name</FormLabel>
                           <FormControl>
-                            <Input placeholder="Jane Doe" {...field} />
+                            <Input
+                              placeholder="Jane Doe"
+                              className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -694,7 +823,11 @@ export default function EditDriverPage() {
                         <FormItem>
                           <FormLabel>Emergency Contact Phone</FormLabel>
                           <FormControl>
-                            <Input placeholder="+1 (555) 987-6543" {...field} />
+                            <Input
+                              placeholder="+1 (555) 987-6543"
+                              className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -706,7 +839,7 @@ export default function EditDriverPage() {
             </TabsContent>
 
             <TabsContent value="documents">
-              <Card>
+              <Card className="border-white/10">
                 <CardHeader>
                   <CardTitle>Driver Documents</CardTitle>
                   <CardDescription>
@@ -715,7 +848,7 @@ export default function EditDriverPage() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="grid gap-4">
-                    <div className="rounded-md border border-dashed p-6 text-center">
+                    <div className="rounded-md border border-white/10 border-dashed p-6 text-center">
                       <div className="flex flex-col items-center gap-2">
                         <Upload className="h-8 w-8 text-muted-foreground" />
                         <h3 className="text-lg font-medium">
@@ -725,17 +858,25 @@ export default function EditDriverPage() {
                           Upload a copy of the driver's license
                         </p>
                         <div className="mt-2 flex gap-2">
-                          <Button variant="outline" size="sm">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="border-white/10 hover:bg-[#1e293b]"
+                          >
                             View Current
                           </Button>
-                          <Button variant="outline" size="sm">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="border-white/10 hover:bg-[#1e293b]"
+                          >
                             Upload New
                           </Button>
                         </div>
                       </div>
                     </div>
 
-                    <div className="rounded-md border border-dashed p-6 text-center">
+                    <div className="rounded-md border border-white/10 border-dashed p-6 text-center">
                       <div className="flex flex-col items-center gap-2">
                         <Upload className="h-8 w-8 text-muted-foreground" />
                         <h3 className="text-lg font-medium">
@@ -745,10 +886,18 @@ export default function EditDriverPage() {
                           Upload the driver's medical certificate
                         </p>
                         <div className="mt-2 flex gap-2">
-                          <Button variant="outline" size="sm">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="border-white/10 hover:bg-[#1e293b]"
+                          >
                             View Current
                           </Button>
-                          <Button variant="outline" size="sm">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="border-white/10 hover:bg-[#1e293b]"
+                          >
                             Upload New
                           </Button>
                         </div>
@@ -761,10 +910,20 @@ export default function EditDriverPage() {
           </Tabs>
 
           <div className="flex justify-end gap-4">
-            <Button variant="outline" asChild>
-              <Link href={`/user/dashboard/fleet/drivers/${driverId}`}>Cancel</Link>
+            <Button
+              variant="outline"
+              className="border-white/10 hover:bg-[#1e293b]"
+              asChild
+            >
+              <Link href={`/user/dashboard/fleet/drivers/${driverId}`}>
+                Cancel
+              </Link>
             </Button>
-            <Button type="submit" disabled={isSubmitting}>
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="bg-blue-600 hover:bg-blue-700 border-white/10"
+            >
               {isSubmitting ? "Saving..." : "Save Changes"}
             </Button>
           </div>

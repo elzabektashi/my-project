@@ -428,7 +428,7 @@ export default function DriverDetailsPage() {
       </div>
 
       <Tabs defaultValue="details" className="space-y-2">
-        <TabsList className="inline-flex bg-[#0d1526] rounded p-1 space-x-1 mb-2">
+        <TabsList className="inline-flex bg-[#0d1526] rounded p-1 space-x-1 mb-2 bg-[#1e293b]">
           <TabsTrigger
             value="details"
             className="px-3 py-1 text-sm text-[#94a3b8] rounded data-[state=active]:bg-[#111827] data-[state=active]:text-white"
@@ -545,10 +545,21 @@ export default function DriverDetailsPage() {
                         onChange={handleInputChange}
                         className="w-full px-3 py-2 bg-[#0d1526] border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                       >
-                        <option value="on_duty">On Duty</option>
-                        <option value="off_duty">Off Duty</option>
-                        <option value="on_leave">On Leave</option>
-                        <option value="available">Available</option>
+                        <option value="on_duty" className="hover:bg-[#1e293b]">
+                          On Duty
+                        </option>
+                        <option value="off_duty" className="hover:bg-[#1e293b]">
+                          Off Duty
+                        </option>
+                        <option value="on_leave" className="hover:bg-[#1e293b]">
+                          On Leave
+                        </option>
+                        <option
+                          value="available"
+                          className="hover:bg-[#1e293b]"
+                        >
+                          Available
+                        </option>
                       </select>
                     </div>
                     <div className="space-y-1">
@@ -680,7 +691,7 @@ export default function DriverDetailsPage() {
                     name="licenseNumber"
                     value={formData.licenseNumber}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 bg-[#1e293b] border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 bg-[#0d1526] border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <div className="space-y-2">
@@ -691,7 +702,7 @@ export default function DriverDetailsPage() {
                     name="licenseType"
                     value={formData.licenseType}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 bg-[#1e293b] border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 bg-[#0d1526] border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500 hover:bg-[#1e293b]"
                   >
                     <option value="Class A (CDL)">Class A (CDL)</option>
                     <option value="Class B (CDL)">Class B (CDL)</option>
@@ -707,7 +718,7 @@ export default function DriverDetailsPage() {
                     name="licenseExpiry"
                     value={formData.licenseExpiry}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 bg-[#1e293b] border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 bg-[#0d1526] border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
               </div>
@@ -719,7 +730,7 @@ export default function DriverDetailsPage() {
                   name="notes"
                   value={formData.notes}
                   onChange={handleInputChange}
-                  className="w-full h-24 px-3 py-2 bg-[#1e293b] border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full h-24 px-3 py-2 bg-[#0d1526] border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
               <div className="flex justify-end gap-4">
@@ -742,77 +753,104 @@ export default function DriverDetailsPage() {
         </TabsContent>
 
         <TabsContent value="emergency">
-          <Card>
+          <Card className="border-white/10 rounded-lg">
             <CardHeader>
-              <CardTitle>Emergency Contact</CardTitle>
-              <CardDescription>Emergency contact information</CardDescription>
+              <CardTitle className="text-xl font-semibold">
+                Emergency Contact
+              </CardTitle>
+              <CardDescription>
+                Update the driver's emergency contact details
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="space-y-1">
-                  <p className="text-sm font-medium text-muted-foreground">
+                  <label className="text-sm font-medium text-muted-foreground">
                     Emergency Contact Name
-                  </p>
-                  <p className="font-medium">{driver.emergencyContactName}</p>
+                  </label>
+                  <input
+                    type="text"
+                    name="emergencyContactName"
+                    value={formData.emergencyContactName}
+                    onChange={handleInputChange}
+                    className="w-full px-3 py-2 bg-[#0d1526] border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
                 </div>
-
                 <div className="space-y-1">
-                  <p className="text-sm font-medium text-muted-foreground">
+                  <label className="text-sm font-medium text-muted-foreground">
                     Emergency Contact Phone
-                  </p>
-                  <p className="flex items-center gap-2 font-medium">
-                    <Phone className="h-4 w-4 text-muted-foreground" />
-                    <a
-                      href={`tel:${driver.emergencyContactPhone}`}
-                      className="hover:underline"
-                    >
-                      {driver.emergencyContactPhone}
-                    </a>
-                  </p>
+                  </label>
+                  <input
+                    type="tel"
+                    name="emergencyContactPhone"
+                    value={formData.emergencyContactPhone}
+                    onChange={handleInputChange}
+                    className="w-full px-3 py-2 bg-[#0d1526] border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
                 </div>
+              </div>
+              <div className="flex justify-end gap-2">
+                <Button
+                  variant="outline"
+                  className="border-white/10 hover:bg-[#1e293b] hover:border-transparent"
+                  onClick={handleCancel}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  className="bg-blue-600 hover:bg-blue-700"
+                  onClick={handleSaveChanges}
+                >
+                  Save Changes
+                </Button>
               </div>
             </CardContent>
           </Card>
         </TabsContent>
 
         <TabsContent value="documents">
-          <Card>
+          <Card className="border-white/10 rounded-lg">
             <CardHeader>
-              <CardTitle>Driver Documents</CardTitle>
+              <CardTitle className="text-xl font-semibold">
+                Driver Documents
+              </CardTitle>
               <CardDescription>
-                License and other important documents
+                Manage license and other important documents
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              {driver.documents && driver.documents.length > 0 ? (
-                <div className="space-y-4">
-                  {driver.documents.map((doc, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center justify-between rounded-lg border p-4"
+            <CardContent className="space-y-6">
+              {driver.documents.map((doc, index) => (
+                <div
+                  key={index}
+                  className="border border-gray-700 rounded-lg p-4 flex flex-col items-center text-center"
+                >
+                  <Upload className="h-6 w-6 text-gray-400 mb-2" />
+                  <h3 className="text-lg font-medium text-white">{doc.name}</h3>
+                  <p className="text-sm text-gray-400 mb-4">
+                    {doc.name === "Driver's License"
+                      ? "Upload a copy of the driver's license"
+                      : "Upload the driver's medical certificate"}
+                  </p>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      className="border border-gray-700 hover:bg-[#1e293b] text-white"
                     >
-                      <div className="flex items-center gap-3">
-                        <FileText className="h- w-8 text-muted-foreground" />
-                        <div>
-                          <p className="font-medium">{doc.name}</p>
-                          <p className="text-sm text-muted-foreground">
-                            Uploaded: {formatDate(doc.uploaded)}
-                          </p>
-                        </div>
-                      </div>
-                      <Button variant="outline" size="sm">
-                        View
-                      </Button>
-                    </div>
-                  ))}
+                      View Current
+                    </Button>
+                    <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+                      Upload New
+                    </Button>
+                  </div>
                 </div>
-              ) : (
-                <div className="flex flex-col items-center justify-center rounded-lg border border-dashed p-8 text-center">
-                  <FileText className="h-10 w-10 text-muted-foreground" />
-                  <h3 className="mt-4 text-lg font-medium">
+              ))}
+              {driver.documents.length === 0 && (
+                <div className="flex flex-col items-center justify-center rounded-lg border border-dashed border-gray-700 p-8 text-center text-gray-400">
+                  <FileText className="h-10 w-10 text-gray-400" />
+                  <h3 className="mt-4 text-lg font-medium text-white">
                     No documents available
                   </h3>
-                  <p className="mt-2 text-sm text-muted-foreground">
+                  <p className="mt-2 text-sm">
                     Upload driver documents to keep track of important paperwork
                   </p>
                   <Button variant="outline" className="mt-4">
