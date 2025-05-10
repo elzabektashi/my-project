@@ -129,8 +129,7 @@ export default function CompanyProfilePage() {
                           name="description"
                           value={companyData.description}
                           onChange={handleChange}
-                          className="min-h-[100px]"
-                          className="border border-white/10"
+                          className="min-h-[100px] border border-white/10"
                         />
                       </div>
                     </div>
@@ -159,9 +158,8 @@ export default function CompanyProfilePage() {
                           type="email"
                           value={companyData.email}
                           onChange={handleChange}
-                          className="rounded-l-none"
+                          className="rounded-l-none border-white/10"
                           required
-                          className="border border-white/10"
                         />
                       </div>
                     </div>
@@ -177,7 +175,6 @@ export default function CompanyProfilePage() {
                           type="tel"
                           value={companyData.phone}
                           onChange={handleChange}
-                          className="rounded-l-none"
                           required
                           className="border border-white/10"
                         />
@@ -197,8 +194,7 @@ export default function CompanyProfilePage() {
                         type="url"
                         value={companyData.website}
                         onChange={handleChange}
-                        className="rounded-l-none"
-                        className="border border-white/10"
+                        className="rounded-l-none border border-white/10"
                       />
                     </div>
                   </div>
@@ -214,7 +210,6 @@ export default function CompanyProfilePage() {
                         name="address"
                         value={companyData.address}
                         onChange={handleChange}
-                        className="rounded-l-none"
                         required
                         className="border border-white/10"
                       />
