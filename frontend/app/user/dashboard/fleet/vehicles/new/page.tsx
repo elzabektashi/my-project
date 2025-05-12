@@ -103,7 +103,7 @@ export default function NewVehiclePage() {
         title: "Vehicle created successfully",
         description: `${data.make} ${data.model} has been added to your fleet.`,
       });
-      router.push("/dashboard/fleet");
+      router.push("/user/dashboard/fleet");
     } catch (error) {
       console.error("Error creating vehicle:", error);
       toast({
