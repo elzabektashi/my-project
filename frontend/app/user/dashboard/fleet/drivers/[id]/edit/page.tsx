@@ -56,8 +56,6 @@ const driverFormSchema = z.object({
   state: z.string().optional(),
   zipCode: z.string().optional(),
   country: z.string().optional(),
-  emergencyContactName: z.string().optional(),
-  emergencyContactPhone: z.string().optional(),
   notes: z.string().optional(),
   currentVehicle: z.string().optional(),
 });
@@ -80,8 +78,6 @@ const mockDriverData = {
     state: "NY",
     zipCode: "10001",
     country: "USA",
-    emergencyContactName: "Jane Doe",
-    emergencyContactPhone: "+1 (555) 987-6543",
     notes: "Experienced long-haul driver",
     currentVehicle: "VEH-001",
   },
@@ -99,8 +95,6 @@ const mockDriverData = {
     state: "IL",
     zipCode: "60601",
     country: "USA",
-    emergencyContactName: "John Smith",
-    emergencyContactPhone: "+1 (555) 876-5432",
     notes: "Specialized in refrigerated transport",
     currentVehicle: "VEH-005",
   },
@@ -118,8 +112,6 @@ const mockDriverData = {
     state: "CA",
     zipCode: "90001",
     country: "USA",
-    emergencyContactName: "Mary Johnson",
-    emergencyContactPhone: "+1 (555) 765-4321",
     notes: "Hazardous materials certified",
     currentVehicle: "",
   },
@@ -154,8 +146,6 @@ export default function EditDriverPage() {
       state: "",
       zipCode: "",
       country: "",
-      emergencyContactName: "",
-      emergencyContactPhone: "",
       notes: "",
       currentVehicle: "",
     },
@@ -327,30 +317,10 @@ export default function EditDriverPage() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <Tabs defaultValue="personal" className="space-y-4">
-            <TabsList className="bg-[#0d1526] border-white/10 bg-[#1e293b]">
-              <TabsTrigger
-                value="personal"
-                className="data-[state=active]:bg-[#111827] data-[state=active]:text-white"
-              >
-                Personal Information
-              </TabsTrigger>
-              <TabsTrigger
-                value="license"
-                className="data-[state=active]:bg-[#111827] data-[state=active]:text-white"
-              >
+            <TabsList className=" border-white/10">
+              <TabsTrigger value="personal">Personal Information</TabsTrigger>
+              <TabsTrigger value="license">
                 License & Qualifications
-              </TabsTrigger>
-              <TabsTrigger
-                value="emergency"
-                className="data-[state=active]:bg-[#111827] data-[state=active]:text-white"
-              >
-                Emergency Contact
-              </TabsTrigger>
-              <TabsTrigger
-                value="documents"
-                className="data-[state=active]:bg-[#111827] data-[state=active]:text-white"
-              >
-                Documents
               </TabsTrigger>
             </TabsList>
 
@@ -394,7 +364,7 @@ export default function EditDriverPage() {
                               <FormControl>
                                 <Input
                                   placeholder="John"
-                                  className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500"
+                                  className="bg-[#0d1526] border-white/10 text-white"
                                   {...field}
                                 />
                               </FormControl>
@@ -412,7 +382,7 @@ export default function EditDriverPage() {
                               <FormControl>
                                 <Input
                                   placeholder="Doe"
-                                  className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500"
+                                  className="bg-[#0d1526] border-white/10 text-white"
                                   {...field}
                                 />
                               </FormControl>
@@ -433,7 +403,7 @@ export default function EditDriverPage() {
                                 <Input
                                   type="email"
                                   placeholder="john.doe@example.com"
-                                  className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500"
+                                  className="bg-[#0d1526] border-white/10 text-white"
                                   {...field}
                                 />
                               </FormControl>
@@ -451,7 +421,7 @@ export default function EditDriverPage() {
                               <FormControl>
                                 <Input
                                   placeholder="+1 (555) 123-4567"
-                                  className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500"
+                                  className="bg-[#0d1526] border-white/10 text-white "
                                   {...field}
                                 />
                               </FormControl>
@@ -472,7 +442,7 @@ export default function EditDriverPage() {
                               defaultValue={field.value}
                             >
                               <FormControl>
-                                <SelectTrigger className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500 hover:bg-[#1e293b]">
+                                <SelectTrigger className="bg-[#0d1526] border-white/10 text-white hover:bg-[#1e293b]">
                                   <SelectValue placeholder="Select status" />
                                 </SelectTrigger>
                               </FormControl>
@@ -519,7 +489,7 @@ export default function EditDriverPage() {
                               defaultValue={field.value}
                             >
                               <FormControl>
-                                <SelectTrigger className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500 hover:bg-[#1e293b]">
+                                <SelectTrigger className="bg-[#0d1526] border-white/10 text-white hover:bg-[#1e293b]">
                                   <SelectValue placeholder="Select vehicle" />
                                 </SelectTrigger>
                               </FormControl>
@@ -580,7 +550,7 @@ export default function EditDriverPage() {
                           <FormControl>
                             <Input
                               placeholder="123 Main St"
-                              className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500"
+                              className="bg-[#0d1526] border-white/10 text-white"
                               {...field}
                             />
                           </FormControl>
@@ -599,7 +569,7 @@ export default function EditDriverPage() {
                             <FormControl>
                               <Input
                                 placeholder="New York"
-                                className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500"
+                                className="bg-[#0d1526] border-white/10 text-white"
                                 {...field}
                               />
                             </FormControl>
@@ -617,7 +587,7 @@ export default function EditDriverPage() {
                             <FormControl>
                               <Input
                                 placeholder="NY"
-                                className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500"
+                                className="bg-[#0d1526] border-white/10 text-white"
                                 {...field}
                               />
                             </FormControl>
@@ -635,7 +605,7 @@ export default function EditDriverPage() {
                             <FormControl>
                               <Input
                                 placeholder="10001"
-                                className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500"
+                                className="bg-[#0d1526] border-white/10 text-white"
                                 {...field}
                               />
                             </FormControl>
@@ -653,7 +623,7 @@ export default function EditDriverPage() {
                             <FormControl>
                               <Input
                                 placeholder="USA"
-                                className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500"
+                                className="bg-[#0d1526] border-white/10 text-white"
                                 {...field}
                               />
                             </FormControl>
@@ -686,7 +656,7 @@ export default function EditDriverPage() {
                           <FormControl>
                             <Input
                               placeholder="DL-123456"
-                              className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500"
+                              className="bg-[#0d1526] border-white/10 text-white"
                               {...field}
                             />
                           </FormControl>
@@ -706,7 +676,7 @@ export default function EditDriverPage() {
                             defaultValue={field.value}
                           >
                             <FormControl>
-                              <SelectTrigger className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500 hover:bg-[#1e293b]">
+                              <SelectTrigger className="bg-[#0d1526] border-white/10 text-white hover:bg-[#1e293b]">
                                 <SelectValue placeholder="Select license type" />
                               </SelectTrigger>
                             </FormControl>
@@ -757,7 +727,7 @@ export default function EditDriverPage() {
                           <FormControl>
                             <Input
                               type="date"
-                              className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500 bg-[#0d1526]"
+                              className="bg-[#0d1526] border-white/10 text-white"
                               {...field}
                             />
                           </FormControl>
@@ -776,7 +746,7 @@ export default function EditDriverPage() {
                         <FormControl>
                           <Textarea
                             placeholder="Enter any additional qualifications or notes about the driver"
-                            className="min-h-[100px] bg-[#0d1526] border-white/10 text-white focus:ring-blue-500"
+                            className="min-h-[100px] bg-[#0d1526] border-white/10 text-white"
                             {...field}
                           />
                         </FormControl>
@@ -784,126 +754,6 @@ export default function EditDriverPage() {
                       </FormItem>
                     )}
                   />
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="emergency">
-              <Card className="border-white/10">
-                <CardHeader>
-                  <CardTitle>Emergency Contact</CardTitle>
-                  <CardDescription>
-                    Update emergency contact information
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                    <FormField
-                      control={form.control}
-                      name="emergencyContactName"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Emergency Contact Name</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Jane Doe"
-                              className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="emergencyContactPhone"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Emergency Contact Phone</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="+1 (555) 987-6543"
-                              className="bg-[#0d1526] border-white/10 text-white focus:ring-blue-500"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="documents">
-              <Card className="border-white/10">
-                <CardHeader>
-                  <CardTitle>Driver Documents</CardTitle>
-                  <CardDescription>
-                    Manage license and other important documents
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid gap-4">
-                    <div className="rounded-md border border-white/10 border-dashed p-6 text-center">
-                      <div className="flex flex-col items-center gap-2">
-                        <Upload className="h-8 w-8 text-muted-foreground" />
-                        <h3 className="text-lg font-medium">
-                          Driver's License
-                        </h3>
-                        <p className="text-sm text-muted-foreground">
-                          Upload a copy of the driver's license
-                        </p>
-                        <div className="mt-2 flex gap-2">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="border-white/10 hover:bg-[#1e293b]"
-                          >
-                            View Current
-                          </Button>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="border-white/10 hover:bg-[#1e293b]"
-                          >
-                            Upload New
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="rounded-md border border-white/10 border-dashed p-6 text-center">
-                      <div className="flex flex-col items-center gap-2">
-                        <Upload className="h-8 w-8 text-muted-foreground" />
-                        <h3 className="text-lg font-medium">
-                          Medical Certificate
-                        </h3>
-                        <p className="text-sm text-muted-foreground">
-                          Upload the driver's medical certificate
-                        </p>
-                        <div className="mt-2 flex gap-2">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="border-white/10 hover:bg-[#1e293b]"
-                          >
-                            View Current
-                          </Button>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="border-white/10 hover:bg-[#1e293b]"
-                          >
-                            Upload New
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </CardContent>
               </Card>
             </TabsContent>

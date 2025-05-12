@@ -14,6 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useToast } from "@/components/ui/use-toast";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -30,6 +31,7 @@ import {
   User,
   Calendar,
   FileText,
+  AlertTriangle,
   Pencil,
   Trash2,
   Loader2,
@@ -37,48 +39,11 @@ import {
   Mail,
   MapPin,
   Truck,
-  Upload,
 } from "lucide-react";
 import Link from "next/link";
 
-// Define types for driver data
-interface VehicleDetails {
-  id: string;
-  make: string;
-  model: string;
-}
-
-interface Document {
-  name: string;
-  uploaded: string;
-}
-
-interface Driver {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  licenseNumber: string;
-  licenseType: string;
-  licenseExpiry: string;
-  status: string;
-  address: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  country: string;
-  emergencyContactName: string;
-  emergencyContactPhone: string;
-  notes: string;
-  currentVehicle: string;
-  currentVehicleDetails: VehicleDetails | null;
-  hireDate: string;
-  documents: Document[];
-}
-
-// Mock data
-const mockDriverData: { [key: string]: Driver } = {
+// Mock data for demonstration - in a real app, this would come from an API
+const mockDriverData = {
   "DRV-001": {
     id: "DRV-001",
     firstName: "John",
@@ -98,7 +63,11 @@ const mockDriverData: { [key: string]: Driver } = {
     emergencyContactPhone: "+1 (555) 987-6543",
     notes: "Experienced long-haul driver",
     currentVehicle: "VEH-001",
-    currentVehicleDetails: { id: "VEH-001", make: "Volvo", model: "FH16" },
+    currentVehicleDetails: {
+      id: "VEH-001",
+      make: "Volvo",
+      model: "FH16",
+    },
     hireDate: "2020-03-15",
     documents: [
       { name: "Driver's License", uploaded: "2023-01-15" },
@@ -124,7 +93,11 @@ const mockDriverData: { [key: string]: Driver } = {
     emergencyContactPhone: "+1 (555) 876-5432",
     notes: "Specialized in refrigerated transport",
     currentVehicle: "VEH-005",
-    currentVehicleDetails: { id: "VEH-005", make: "MAN", model: "TGX" },
+    currentVehicleDetails: {
+      id: "VEH-005",
+      make: "MAN",
+      model: "TGX",
+    },
     hireDate: "2021-05-10",
     documents: [
       { name: "Driver's License", uploaded: "2023-02-10" },
@@ -161,24 +134,18 @@ const mockDriverData: { [key: string]: Driver } = {
 };
 
 // Helper function to format dates
-const formatDate = (dateString: string): string => {
+const formatDate = (dateString: string) => {
   if (!dateString) return "N/A";
   const date = new Date(dateString);
   return new Intl.DateTimeFormat("en-US", {
     year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
+    month: "short",
+    day: "numeric",
   }).format(date);
 };
 
 // Helper function to get status badge variant
-interface StatusBadge {
-  variant: "outline";
-  label: string;
-  className: string;
-}
-
-const getStatusBadge = (status: string): StatusBadge => {
+const getStatusBadge = (status: string) => {
   switch (status) {
     case "available":
       return {
@@ -213,65 +180,83 @@ export default function DriverDetailsPage() {
   const router = useRouter();
   const params = useParams();
   const driverId = params.id as string;
+  const { toast } = useToast();
 
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isDeleting, setIsDeleting] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [driver, setDriver] = useState<Driver | null>(null);
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
-  const [formData, setFormData] = useState<Driver | null>(null);
+  const [driver, setDriver] = useState<any>(null);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
+  // Fetch driver data
   useEffect(() => {
     const fetchDriverData = async () => {
       setIsLoading(true);
+      setError(null);
+
       try {
+        // In a real application, this would be an API call
+        // const response = await fetch(`/api/drivers/${driverId}`);
+        // if (!response.ok) throw new Error('Failed to fetch driver data');
+        // const data = await response.json();
+
+        // Simulate API call with mock data
         await new Promise((resolve) => setTimeout(resolve, 1000));
-        const data = mockDriverData[driverId];
-        if (!data) throw new Error("Driver not found");
+        const data = mockDriverData[driverId as keyof typeof mockDriverData];
+
+        if (!data) {
+          throw new Error("Driver not found");
+        }
+
         setDriver(data);
-        setFormData(data);
       } catch (err) {
-        setError(err instanceof Error ? err.message : "An error occurred");
+        console.error("Error fetching driver data:", err);
+        setError(
+          err instanceof Error ? err.message : "An unknown error occurred"
+        );
       } finally {
         setIsLoading(false);
       }
     };
 
-    if (driverId) fetchDriverData();
+    if (driverId) {
+      fetchDriverData();
+    }
   }, [driverId]);
 
   const handleDelete = async () => {
-    if (!driver) return;
     setIsDeleting(true);
     try {
+      // In a real application, this would be an API call
+      // const response = await fetch(`/api/drivers/${driverId}`, {
+      //   method: 'DELETE',
+      // });
+
+      // if (!response.ok) throw new Error('Failed to delete driver');
+
+      // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1500));
+
+      toast({
+        title: "Driver deleted",
+        description: `${driver.firstName} ${driver.lastName} has been deleted successfully.`,
+      });
+
       router.push("/user/dashboard/fleet");
     } catch (err) {
-      setError("Failed to delete driver. Please try again.");
+      console.error("Error deleting driver:", err);
+      toast({
+        title: "Delete failed",
+        description:
+          err instanceof Error
+            ? err.message
+            : "Failed to delete driver. Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setIsDeleting(false);
       setDeleteDialogOpen(false);
     }
-  };
-
-  const handleInputChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => (prev ? { ...prev, [name]: value } : null));
-  };
-
-  const handleSaveChanges = () => {
-    if (formData) {
-      setDriver(formData);
-      alert("Changes saved successfully!");
-    }
-  };
-
-  const handleCancel = () => {
-    setFormData(driver);
   };
 
   if (isLoading) {
@@ -287,16 +272,11 @@ export default function DriverDetailsPage() {
     );
   }
 
-  if (error || !driver || !formData) {
+  if (error || !driver) {
     return (
       <div className="space-y-4">
         <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="icon"
-            className="border border-white/10 hover:bg-[#1e293b] hover:border-transparent"
-            asChild
-          >
+          <Button variant="outline" size="icon" asChild>
             <Link href="/user/dashboard/fleet">
               <ArrowLeft className="h-4 w-4" />
               <span className="sr-only">Back</span>
@@ -307,14 +287,13 @@ export default function DriverDetailsPage() {
 
         <Card>
           <CardContent className="flex flex-col items-center justify-center p-6">
+            <AlertTriangle className="h-10 w-10 text-amber-500" />
             <h2 className="mt-4 text-xl font-semibold">Error Loading Driver</h2>
             <p className="mt-2 text-center text-muted-foreground">
               {error || "Driver not found or an error occurred."}
             </p>
-            <Button variant="outline" className="mt-4" asChild>
-              <Link href="/user/dashboard/fleet">
-                Return to Driver Management
-              </Link>
+            <Button className="mt-4" asChild>
+              <Link href="/user/dashboard/fleet">Return to Driver Management</Link>
             </Button>
           </CardContent>
         </Card>
@@ -328,12 +307,7 @@ export default function DriverDetailsPage() {
     <div className="space-y-6">
       <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
         <div className="flex items-center gap-4">
-          <Button
-            variant="outline"
-            size="icon"
-            className="border border-white/10 hover:bg-[#1e293b] hover:border-transparent"
-            asChild
-          >
+          <Button variant="outline" size="icon" asChild>
             <Link href="/user/dashboard/fleet">
               <ArrowLeft className="h-4 w-4" />
               <span className="sr-only">Back</span>
@@ -364,11 +338,7 @@ export default function DriverDetailsPage() {
         </div>
 
         <div className="flex gap-2">
-          <Button
-            variant="outline"
-            className="border border-white/10 hover:bg-[#1e293b] hover:border-transparent"
-            asChild
-          >
+          <Button variant="outline" asChild>
             <Link href={`/user/dashboard/fleet/drivers/${driverId}/edit`}>
               <Pencil className="mr-2 h-4 w-4" />
               Edit Driver
@@ -393,11 +363,8 @@ export default function DriverDetailsPage() {
                 <AlertDialogTitle>Are you sure?</AlertDialogTitle>
                 <AlertDialogDescription>
                   This action cannot be undone. This will permanently delete the
-                  driver{" "}
-                  <strong>
-                    {driver.firstName} {driver.lastName} ({driver.id})
-                  </strong>{" "}
-                  and remove all associated data.
+                  order <strong>{driver.id}</strong> and remove all associated
+                  data.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
@@ -418,7 +385,7 @@ export default function DriverDetailsPage() {
                       Deleting...
                     </>
                   ) : (
-                    <>Delete Driver</>
+                    <>Delete Order</>
                   )}
                 </AlertDialogAction>
               </AlertDialogFooter>
@@ -427,437 +394,143 @@ export default function DriverDetailsPage() {
         </div>
       </div>
 
-      <Tabs defaultValue="details" className="space-y-2">
-        <TabsList className="inline-flex bg-[#0d1526] rounded p-1 space-x-1 mb-2 bg-[#1e293b]">
-          <TabsTrigger
-            value="details"
-            className="px-3 py-1 text-sm text-[#94a3b8] rounded data-[state=active]:bg-[#111827] data-[state=active]:text-white"
-          >
-            Personal Information
-          </TabsTrigger>
-          <TabsTrigger
-            value="license"
-            className="px-3 py-1 text-sm text-[#94a3b8] rounded data-[state=active]:bg-[#111827] data-[state=active]:text-white"
-          >
-            License & Qualifications
-          </TabsTrigger>
-          <TabsTrigger
-            value="emergency"
-            className="px-3 py-1 text-sm text-[#94a3b8] rounded data-[state=active]:bg-[#111827] data-[state=active]:text-white"
-          >
-            Emergency Contact
-          </TabsTrigger>
-          <TabsTrigger
-            value="documents"
-            className="px-3 py-1 text-sm text-[#94a3b8] rounded data-[state=active]:bg-[#111827] data-[state=active]:text-white "
-          >
-            Documents
-          </TabsTrigger>
+      <Tabs defaultValue="details" className="space-y-4">
+        <TabsList>
+          <TabsTrigger value="details">Personal Information</TabsTrigger>
+          <TabsTrigger value="license">License & Qualifications</TabsTrigger>
         </TabsList>
 
         <TabsContent value="details">
-          <Card className="border-white/10 rounded-lg">
+          <Card>
             <CardHeader>
-              <CardTitle className="text-xl font-semibold">
-                Personal Information
-              </CardTitle>
+              <CardTitle>Personal Information</CardTitle>
               <CardDescription>
-                Update the driver's personal details
+                Contact details and personal information
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="grid gap-6 md:grid-cols-3">
-                <div className="space-y-2">
-                  <Avatar className="h-24 w-24 mx-auto">
-                    <AvatarImage
-                      src={`/abstract-geometric-shapes.png?height=96&width=96&query=${driver.firstName}%20${driver.lastName}`}
-                      alt={`${driver.firstName} ${driver.lastName}`}
-                    />
-                    <AvatarFallback>
-                      <User className="h-12 w-12" />
-                    </AvatarFallback>
-                  </Avatar>
-                  <Button
-                    variant="outline"
-                    className="w-full border-white/10 hover:bg-[#1e293b] hover:border-transparent"
-                  >
-                    <Upload className="mr-2 h-4 w-4" />
-                    Change Photo
-                  </Button>
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-1">
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Email
+                  </p>
+                  <p className="flex items-center gap-2 font-medium">
+                    <Mail className="h-4 w-4 text-muted-foreground" />
+                    <a
+                      href={`mailto:${driver.email}`}
+                      className="hover:underline"
+                    >
+                      {driver.email}
+                    </a>
+                  </p>
                 </div>
-                <div className="md:col-span-2 space-y-4">
-                  <div className="grid gap-4 md:grid-cols-2">
-                    <div className="space-y-1">
-                      <label className="text-sm font-medium text-muted-foreground">
-                        First Name
-                      </label>
-                      <input
-                        type="text"
-                        name="firstName"
-                        value={formData.firstName}
-                        onChange={handleInputChange}
-                        className="w-full px-3 py-2 bg-[#0d1526] border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
-                    </div>
-                    <div className="space-y-1">
-                      <label className="text-sm font-medium text-muted-foreground">
-                        Last Name
-                      </label>
-                      <input
-                        type="text"
-                        name="lastName"
-                        value={formData.lastName}
-                        onChange={handleInputChange}
-                        className="w-full px-3 py-2 bg-[#0d1526] border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
-                    </div>
-                    <div className="space-y-1">
-                      <label className="text-sm font-medium text-muted-foreground">
-                        Email
-                      </label>
-                      <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        className="w-full px-3 py-2 bg-[#0d1526] border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
-                    </div>
-                    <div className="space-y-1">
-                      <label className="text-sm font-medium text-muted-foreground">
-                        Phone Number
-                      </label>
-                      <input
-                        type="tel"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleInputChange}
-                        className="w-full px-3 py-2 bg-[#0d1526] border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
-                    </div>
-                    <div className="space-y-1">
-                      <label className="text-sm font-medium text-muted-foreground">
-                        Status
-                      </label>
-                      <select
-                        name="status"
-                        value={formData.status}
-                        onChange={handleInputChange}
-                        className="w-full px-3 py-2 bg-[#0d1526] border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+
+                <div className="space-y-1">
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Phone
+                  </p>
+                  <p className="flex items-center gap-2 font-medium">
+                    <Phone className="h-4 w-4 text-muted-foreground" />
+                    <a href={`tel:${driver.phone}`} className="hover:underline">
+                      {driver.phone}
+                    </a>
+                  </p>
+                </div>
+
+                <div className="space-y-1">
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Hire Date
+                  </p>
+                  <p className="flex items-center gap-2 font-medium">
+                    <Calendar className="h-4 w-4 text-muted-foreground" />
+                    {formatDate(driver.hireDate)}
+                  </p>
+                </div>
+
+                <div className="space-y-1">
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Current Vehicle
+                  </p>
+                  <p className="flex items-center gap-2 font-medium">
+                    <Truck className="h-4 w-4 text-muted-foreground" />
+                    {driver.currentVehicleDetails ? (
+                      <Link
+                        href={`/user/dashboard/fleet/vehicles/${driver.currentVehicle}`}
+                        className="hover:underline"
                       >
-                        <option value="on_duty" className="hover:bg-[#1e293b]">
-                          On Duty
-                        </option>
-                        <option value="off_duty" className="hover:bg-[#1e293b]">
-                          Off Duty
-                        </option>
-                        <option value="on_leave" className="hover:bg-[#1e293b]">
-                          On Leave
-                        </option>
-                        <option
-                          value="available"
-                          className="hover:bg-[#1e293b]"
-                        >
-                          Available
-                        </option>
-                      </select>
-                    </div>
-                    <div className="space-y-1">
-                      <label className="text-sm font-medium text-muted-foreground">
-                        Assigned Vehicle
-                      </label>
-                      <select
-                        name="currentVehicle"
-                        value={formData.currentVehicle}
-                        onChange={handleInputChange}
-                        className="w-full px-3 py-2 bg-[#0d1526] border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      >
-                        <option value="">Unassigned</option>
-                        <option value="VEH-001">VEH-001 (Volvo FH16)</option>
-                        <option value="VEH-005">VEH-005 (MAN TGX)</option>
-                      </select>
-                    </div>
+                        {driver.currentVehicleDetails.make}{" "}
+                        {driver.currentVehicleDetails.model} (
+                        {driver.currentVehicle})
+                      </Link>
+                    ) : (
+                      "Unassigned"
+                    )}
+                  </p>
+                </div>
+              </div>
+
+              <Separator className="bg-white/10"/>
+
+              <div className="space-y-2">
+                <h3 className="text-lg font-medium">Address</h3>
+                <div className="flex items-start gap-2">
+                  <MapPin className="mt-0.5 h-4 w-4 text-muted-foreground" />
+                  <div>
+                    <p>{driver.address}</p>
+                    <p>
+                      {driver.city}, {driver.state} {driver.zipCode}
+                    </p>
+                    <p>{driver.country}</p>
                   </div>
                 </div>
               </div>
 
-              <Separator className="bg-white/10" />
+              <Separator className="bg-white/10"/>
 
-              <div className="space-y-4">
-                <h3 className="text-lg font-medium">Address Information</h3>
-                <div className="space-y-4">
-                  <div className="space-y-1">
-                    <label className="text-sm font-medium text-muted-foreground">
-                      Street Address
-                    </label>
-                    <input
-                      type="text"
-                      name="address"
-                      value={formData.address}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 bg-[#0d1526] border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-                  <div className="grid gap-4 md:grid-cols-4">
-                    <div className="space-y-1">
-                      <label className="text-sm font-medium text-muted-foreground">
-                        City
-                      </label>
-                      <input
-                        type="text"
-                        name="city"
-                        value={formData.city}
-                        onChange={handleInputChange}
-                        className="w-full px-3 py-2 bg-[#0d1526] border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
-                    </div>
-                    <div className="space-y-1">
-                      <label className="text-sm font-medium text-muted-foreground">
-                        State/Province
-                      </label>
-                      <input
-                        type="text"
-                        name="state"
-                        value={formData.state}
-                        onChange={handleInputChange}
-                        className="w-full px-3 py-2 bg-[#0d1526] border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
-                    </div>
-                    <div className="space-y-1">
-                      <label className="text-sm font-medium text-muted-foreground">
-                        Zip/Postal Code
-                      </label>
-                      <input
-                        type="text"
-                        name="zipCode"
-                        value={formData.zipCode}
-                        onChange={handleInputChange}
-                        className="w-full px-3 py-2 bg-[#0d1526] border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
-                    </div>
-                    <div className="space-y-1">
-                      <label className="text-sm font-medium text-muted-foreground">
-                        Country
-                      </label>
-                      <input
-                        type="text"
-                        name="country"
-                        value={formData.country}
-                        onChange={handleInputChange}
-                        className="w-full px-3 py-2 bg-[#0d1526] border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex justify-end gap-2">
-                <Button
-                  variant="outline"
-                  className="border-white/10 hover:bg-[#1e293b] hover:border-transparent"
-                  onClick={handleCancel}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  className="bg-blue-600 hover:bg-blue-700"
-                  onClick={handleSaveChanges}
-                >
-                  Save Changes
-                </Button>
+              <div className="space-y-1">
+                <p className="text-sm font-medium text-muted-foreground">
+                  Notes
+                </p>
+                <p>{driver.notes || "No notes available"}</p>
               </div>
             </CardContent>
           </Card>
         </TabsContent>
 
         <TabsContent value="license">
-          <Card className="border border-gray-800 rounded-lg bg-[#0d1526]">
+          <Card>
             <CardHeader>
-              <CardTitle className="text-xl font-semibold text-white">
-                License Information
-              </CardTitle>
-              <CardDescription className="text-gray-400">
-                Update the driver's license and qualification details
+              <CardTitle>License Information</CardTitle>
+              <CardDescription>
+                Driver's license and qualification details
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-400">
+              <div className="grid gap-4 md:grid-cols-3">
+                <div className="space-y-1">
+                  <p className="text-sm font-medium text-muted-foreground">
                     License Number
-                  </label>
-                  <input
-                    type="text"
-                    name="licenseNumber"
-                    value={formData.licenseNumber}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 bg-[#0d1526] border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
+                  </p>
+                  <p className="font-medium">{driver.licenseNumber}</p>
                 </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-400">
+
+                <div className="space-y-1">
+                  <p className="text-sm font-medium text-muted-foreground">
                     License Type
-                  </label>
-                  <select
-                    name="licenseType"
-                    value={formData.licenseType}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 bg-[#0d1526] border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500 hover:bg-[#1e293b]"
-                  >
-                    <option value="Class A (CDL)">Class A (CDL)</option>
-                    <option value="Class B (CDL)">Class B (CDL)</option>
-                    <option value="Class C (CDL)">Class C (CDL)</option>
-                  </select>
+                  </p>
+                  <p className="font-medium">{driver.licenseType}</p>
                 </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-400">
+
+                <div className="space-y-1">
+                  <p className="text-sm font-medium text-muted-foreground">
                     License Expiry Date
-                  </label>
-                  <input
-                    type="date"
-                    name="licenseExpiry"
-                    value={formData.licenseExpiry}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 bg-[#0d1526] border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-400">
-                  Additional Qualifications & Notes
-                </label>
-                <textarea
-                  name="notes"
-                  value={formData.notes}
-                  onChange={handleInputChange}
-                  className="w-full h-24 px-3 py-2 bg-[#0d1526] border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-              <div className="flex justify-end gap-4">
-                <Button
-                  variant="outline"
-                  className="border border-gray-700 hover:bg-[#1e293b] text-white"
-                  onClick={handleCancel}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  className="bg-blue-600 hover:bg-blue-700 text-white"
-                  onClick={handleSaveChanges}
-                >
-                  Save Changes
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="emergency">
-          <Card className="border-white/10 rounded-lg">
-            <CardHeader>
-              <CardTitle className="text-xl font-semibold">
-                Emergency Contact
-              </CardTitle>
-              <CardDescription>
-                Update the driver's emergency contact details
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-1">
-                  <label className="text-sm font-medium text-muted-foreground">
-                    Emergency Contact Name
-                  </label>
-                  <input
-                    type="text"
-                    name="emergencyContactName"
-                    value={formData.emergencyContactName}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 bg-[#0d1526] border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <label className="text-sm font-medium text-muted-foreground">
-                    Emergency Contact Phone
-                  </label>
-                  <input
-                    type="tel"
-                    name="emergencyContactPhone"
-                    value={formData.emergencyContactPhone}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 bg-[#0d1526] border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-              </div>
-              <div className="flex justify-end gap-2">
-                <Button
-                  variant="outline"
-                  className="border-white/10 hover:bg-[#1e293b] hover:border-transparent"
-                  onClick={handleCancel}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  className="bg-blue-600 hover:bg-blue-700"
-                  onClick={handleSaveChanges}
-                >
-                  Save Changes
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="documents">
-          <Card className="border-white/10 rounded-lg">
-            <CardHeader>
-              <CardTitle className="text-xl font-semibold">
-                Driver Documents
-              </CardTitle>
-              <CardDescription>
-                Manage license and other important documents
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {driver.documents.map((doc, index) => (
-                <div
-                  key={index}
-                  className="border border-gray-700 rounded-lg p-4 flex flex-col items-center text-center"
-                >
-                  <Upload className="h-6 w-6 text-gray-400 mb-2" />
-                  <h3 className="text-lg font-medium text-white">{doc.name}</h3>
-                  <p className="text-sm text-gray-400 mb-4">
-                    {doc.name === "Driver's License"
-                      ? "Upload a copy of the driver's license"
-                      : "Upload the driver's medical certificate"}
                   </p>
-                  <div className="flex gap-2">
-                    <Button
-                      variant="outline"
-                      className="border border-gray-700 hover:bg-[#1e293b] text-white"
-                    >
-                      View Current
-                    </Button>
-                    <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-                      Upload New
-                    </Button>
-                  </div>
-                </div>
-              ))}
-              {driver.documents.length === 0 && (
-                <div className="flex flex-col items-center justify-center rounded-lg border border-dashed border-gray-700 p-8 text-center text-gray-400">
-                  <FileText className="h-10 w-10 text-gray-400" />
-                  <h3 className="mt-4 text-lg font-medium text-white">
-                    No documents available
-                  </h3>
-                  <p className="mt-2 text-sm">
-                    Upload driver documents to keep track of important paperwork
+                  <p className="flex items-center gap-2 font-medium">
+                    <Calendar className="h-4 w-4 text-muted-foreground" />
+                    {formatDate(driver.licenseExpiry)}
                   </p>
-                  <Button variant="outline" className="mt-4">
-                    Upload Document
-                  </Button>
                 </div>
-              )}
+              </div>
             </CardContent>
           </Card>
         </TabsContent>

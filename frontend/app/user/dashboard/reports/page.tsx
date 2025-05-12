@@ -213,7 +213,7 @@ export default function ReportsPage() {
                 {availableReports.map((report) => (
                   <div
                     key={report.id}
-                    className="flex items-center justify-between rounded-md border p-4 border border-white/10"
+                    className="flex items-center justify-between rounded-md border p-4 border-white/10"
                   >
                     <div className="space-y-1">
                       <h3 className="font-medium">{report.name}</h3>

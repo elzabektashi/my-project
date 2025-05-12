@@ -224,7 +224,7 @@ export default function VehicleDetailsPage() {
         description: `${vehicle.make} ${vehicle.model} has been deleted successfully.`,
       });
 
-      router.push("/user/dashboard/fleet/vehicles");
+      router.push("/user/dashboard/fleet");
     } catch (err) {
       console.error("Error deleting vehicle:", err);
       toast({
@@ -264,7 +264,7 @@ export default function VehicleDetailsPage() {
             asChild
             className="border border-white/10"
           >
-            <Link href="/user/dashboard/fleet/vehicles">
+            <Link href="/user/dashboard/fleet">
               <ArrowLeft className="h-4 w-4" />
               <span className="sr-only">Back</span>
             </Link>
@@ -282,9 +282,7 @@ export default function VehicleDetailsPage() {
               {error || "Vehicle not found or an error occurred."}
             </p>
             <Button asChild className="mt-4 border border-white/10">
-              <Link href="/user/dashboard/fleet/vehicles">
-                Return to Vehicle List
-              </Link>
+              <Link href="/user/dashboard/fleet">Return to Vehicle List</Link>
             </Button>
           </CardContent>
         </Card>
@@ -304,7 +302,7 @@ export default function VehicleDetailsPage() {
             asChild
             className="border border-white/10"
           >
-            <Link href="/user/dashboard/fleet/vehicles">
+            <Link href="/user/dashboard/fleet">
               <ArrowLeft className="h-4 w-4" />
               <span className="sr-only">Back</span>
             </Link>
@@ -337,26 +335,25 @@ export default function VehicleDetailsPage() {
             onOpenChange={setDeleteDialogOpen}
           >
             <AlertDialogTrigger asChild>
-              <Button variant="destructive" className="border border-white/10">
+              <Button
+                variant="destructive"
+                className="bg-red-800 text-white hover:bg-red-700 rounded-md px-4 py-2"
+              >
                 <Trash2 className="mr-2 h-4 w-4" />
                 Delete
               </Button>
             </AlertDialogTrigger>
-            <AlertDialogContent className="border border-white/10">
+            <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
                 <AlertDialogDescription>
                   This action cannot be undone. This will permanently delete the
-                  vehicle
-                  <strong>
-                    {" "}
-                    {vehicle.make} {vehicle.model} ({vehicle.id})
-                  </strong>{" "}
-                  and remove all associated data.
+                  order <strong>{vehicle.id}</strong> and remove all associated
+                  data.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel className="border border-white/10">
+                <AlertDialogCancel className="border border-white/10 hover:bg-[#1e293b] hover:border-transparent">
                   Cancel
                 </AlertDialogCancel>
                 <AlertDialogAction
@@ -365,7 +362,7 @@ export default function VehicleDetailsPage() {
                     handleDelete();
                   }}
                   disabled={isDeleting}
-                  className="bg-red-600 focus:ring-red-600 border border-white/10"
+                  className="bg-red-800 text-white hover:bg-red-700 rounded-md px-4 py-2"
                 >
                   {isDeleting ? (
                     <>
@@ -373,7 +370,7 @@ export default function VehicleDetailsPage() {
                       Deleting...
                     </>
                   ) : (
-                    <>Delete Vehicle</>
+                    <>Delete Order</>
                   )}
                 </AlertDialogAction>
               </AlertDialogFooter>
@@ -383,10 +380,9 @@ export default function VehicleDetailsPage() {
       </div>
 
       <Tabs defaultValue="details" className="space-y-4">
-        <TabsList className="border border-white/10">
+        <TabsList>
           <TabsTrigger value="details">Vehicle Details</TabsTrigger>
           <TabsTrigger value="maintenance">Maintenance & Insurance</TabsTrigger>
-          <TabsTrigger value="documents">Documents</TabsTrigger>
         </TabsList>
 
         <TabsContent value="details">
@@ -412,26 +408,7 @@ export default function VehicleDetailsPage() {
                 {/* ... (other divs remain the same) ... */}
               </div>
 
-              <Separator className="border-b border-white/10" />
-
-              <div className="space-y-1">
-                <p className="text-sm font-medium text-muted-foreground">
-                  Current Driver
-                </p>
-                <p className="font-medium">
-                  {vehicle.currentDriver}
-                  {vehicle.driverId && (
-                    <Link
-                      href={`/dashboard/drivers/${vehicle.driverId}`}
-                      className="ml-2 text-sm text-primary hover:underline"
-                    >
-                      View Driver
-                    </Link>
-                  )}
-                </p>
-              </div>
-
-              <Separator className="border-b border-white/10" />
+              <Separator className="bg-white/10" />
 
               <div className="space-y-1">
                 <p className="text-sm font-medium text-muted-foreground">
@@ -496,7 +473,7 @@ export default function VehicleDetailsPage() {
                 </div>
               </div>
 
-              <Separator className="border-b border-white/10" />
+              <Separator className="bg-white/10" />
 
               <h3 className="text-lg font-medium">Insurance Information</h3>
               <div className="grid gap-4 md:grid-cols-2">
@@ -517,84 +494,6 @@ export default function VehicleDetailsPage() {
                   </p>
                 </div>
               </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="documents">
-          <Card className="border border-white/10">
-            <CardHeader>
-              <CardTitle>Vehicle Documents</CardTitle>
-              <CardDescription>
-                Registration and other important documents
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {vehicle.documents && vehicle.documents.length > 0 ? (
-                <div className="grid gap-4">
-                  {vehicle.documents.map((doc: any, index: number) => (
-                    <div
-                      key={index}
-                      className="rounded-md border border-white/10 p-6 text-center"
-                    >
-                      <div className="flex flex-col items-center gap-2">
-                        <FileText className="h-8 w-8 text-muted-foreground" />
-                        <h3 className="text-lg font-medium">{doc.name}</h3>
-                        <p className="text-sm text-muted-foreground">
-                          Uploaded: {formatDate(doc.uploaded)}
-                        </p>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="mt-2 border border-white/10"
-                        >
-                          View Document
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="grid gap-4">
-                  <div className="rounded-md border border-white/10 p-6 text-center">
-                    <div className="flex flex-col items-center gap-2">
-                      <Upload className="h-8 w-8 text-muted-foreground" />
-                      <h3 className="text-lg font-medium">
-                        Registration Document
-                      </h3>
-                      <p className="text-sm text-muted-foreground">
-                        Upload the vehicle registration document
-                      </p>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="mt-2 border border-white/10"
-                      >
-                        Upload File
-                      </Button>
-                    </div>
-                  </div>
-
-                  <div className="rounded-md border border-white/10 p-6 text-center">
-                    <div className="flex flex-col items-center gap-2">
-                      <Upload className="h-8 w-8 text-muted-foreground" />
-                      <h3 className="text-lg font-medium">
-                        Insurance Document
-                      </h3>
-                      <p className="text-sm text-muted-foreground">
-                        Upload the vehicle insurance document
-                      </p>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="mt-2 border border-white/10"
-                      >
-                        Upload File
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              )}
             </CardContent>
           </Card>
         </TabsContent>

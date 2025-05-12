@@ -130,7 +130,7 @@ export default function EditVehiclePage() {
 
   // Initialize form
   const form = useForm<VehicleFormValues>({
-    resolver: zodResolver(vehicleFormSchema),
+    resolver: zodResolver(vehicleFormSchema) as any, // Temporary type assertion to bypass resolver mismatch
     defaultValues: {
       vehicleType: "",
       make: "",
@@ -138,14 +138,14 @@ export default function EditVehiclePage() {
       year: "",
       licensePlate: "",
       vin: "",
-      capacity: "",
-      fuelType: "",
+      capacity: undefined, // Changed from "" to undefined
+      fuelType: undefined, // Changed from "" to undefined
       status: "",
-      notes: "",
+      notes: undefined, // Changed from "" to undefined
       maintenanceRequired: false,
-      nextMaintenanceDate: "",
-      insuranceNumber: "",
-      insuranceExpiry: "",
+      nextMaintenanceDate: undefined, // Changed from "" to undefined
+      insuranceNumber: undefined, // Changed from "" to undefined
+      insuranceExpiry: undefined, // Changed from "" to undefined
     },
   });
 
@@ -305,12 +305,11 @@ export default function EditVehiclePage() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <Tabs defaultValue="details" className="space-y-4">
-            <TabsList className="border border-white/10">
+            <TabsList>
               <TabsTrigger value="details">Vehicle Details</TabsTrigger>
               <TabsTrigger value="maintenance">
                 Maintenance & Insurance
               </TabsTrigger>
-              <TabsTrigger value="documents">Documents</TabsTrigger>
             </TabsList>
 
             <TabsContent value="details">
@@ -713,58 +712,6 @@ export default function EditVehiclePage() {
                 </CardContent>
               </Card>
             </TabsContent>
-
-            <TabsContent value="documents">
-              <Card className="border border-white/10">
-                <CardHeader>
-                  <CardTitle>Vehicle Documents</CardTitle>
-                  <CardDescription>
-                    Manage registration and other important documents
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid gap-4">
-                    <div className="rounded-md border border-white/10 border-dashed p-6 text-center">
-                      <div className="flex flex-col items-center gap-2">
-                        <Upload className="h-8 w-8 text-muted-foreground" />
-                        <h3 className="text-lg font-medium">
-                          Registration Document
-                        </h3>
-                        <p className="text-sm text-muted-foreground">
-                          Upload the vehicle registration document
-                        </p>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="border border-white/10 mt-2"
-                        >
-                          Upload File
-                        </Button>
-                      </div>
-                    </div>
-
-                    <div className="rounded-md border border-white/10 border-dashed p-6 text-center">
-                      <div className="flex flex-col items-center gap-2">
-                        <Upload className="h-8 w-8 text-muted-foreground" />
-                        <h3 className="text-lg font-medium">
-                          Insurance Document
-                        </h3>
-                        <p className="text-sm text-muted-foreground">
-                          Upload the vehicle insurance document
-                        </p>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="border border-white/10 mt-2"
-                        >
-                          Upload File
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
           </Tabs>
 
           <div className="flex justify-end gap-4">
@@ -778,7 +725,7 @@ export default function EditVehiclePage() {
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="border border-white/10"
+              className="bg-blue-600 hover:bg-blue-700"
             >
               {isSubmitting ? "Saving..." : "Save Changes"}
             </Button>

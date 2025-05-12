@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter, useParams } from "next/navigation"; // Correct import for useParams
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -7,7 +11,17 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import {
   ArrowLeft,
   Edit,
@@ -15,23 +29,20 @@ import {
   User,
   MapPin,
   Calendar,
-  FileText,
-  MessageSquare,
-  Clock,
+  Trash2,
+  Loader2,
 } from "lucide-react";
 import Link from "next/link";
-import { OrderTimeline } from "@/components/user-dashboard/order-timeline";
-import { OrderDocuments } from "@/components/user-dashboard/order-documents";
-import { OrderNotes } from "@/components/user-dashboard/order-notes";
 
-export default function OrderDetailsPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  // Mock data for order details
+export default function OrderDetailsPage() {
+  const router = useRouter();
+  const params = useParams(); // Use useParams hook
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
+
+  // Mock data for order details, using params.id
   const order = {
-    id: params.id,
+    id: params?.id as string, // Safely access id, type assertion as string
     customer: "ABC Corp",
     customerContact: "John Smith",
     customerEmail: "john@abccorp.com",
@@ -97,6 +108,19 @@ export default function OrderDetailsPage({
     }
   };
 
+  const handleDelete = async () => {
+    setIsDeleting(true);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      router.push("/user/dashboard/orders");
+    } catch (err) {
+      console.error("Failed to delete order:", err);
+    } finally {
+      setIsDeleting(false);
+      setDeleteDialogOpen(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
@@ -135,6 +159,52 @@ export default function OrderDetailsPage({
               Edit Order
             </Link>
           </Button>
+          <AlertDialog
+            open={deleteDialogOpen}
+            onOpenChange={setDeleteDialogOpen}
+          >
+            <AlertDialogTrigger asChild>
+              <Button
+                variant="destructive"
+                className="bg-red-800 text-white hover:bg-red-700 rounded-md px-4 py-2"
+              >
+                <Trash2 className="mr-2 h-4 w-4" />
+                Delete
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. This will permanently delete the
+                  order <strong>{order.id}</strong> and remove all associated
+                  data.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel className="border border-white/10 hover:bg-[#1e293b] hover:border-transparent">
+                  Cancel
+                </AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleDelete();
+                  }}
+                  disabled={isDeleting}
+                  className="bg-red-800 text-white hover:bg-red-700 rounded-md px-4 py-2"
+                >
+                  {isDeleting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Deleting...
+                    </>
+                  ) : (
+                    <>Delete Order</>
+                  )}
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </div>
 
@@ -247,7 +317,7 @@ export default function OrderDetailsPage({
             <CardDescription>Items included in this order</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4 ">
+            <div className="space-y-4">
               {order.items.map((item, index) => (
                 <div
                   key={index}
@@ -266,38 +336,6 @@ export default function OrderDetailsPage({
           </CardContent>
         </Card>
       </div>
-
-      <Tabs defaultValue="timeline" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="timeline">
-            <Clock className="mr-2 h-4 w-4" />
-            Timeline
-          </TabsTrigger>
-          <TabsTrigger value="documents">
-            <FileText className="mr-2 h-4 w-4" />
-            Documents
-          </TabsTrigger>
-          <TabsTrigger value="notes">
-            <MessageSquare className="mr-2 h-4 w-4" />
-            Notes
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent
-          value="timeline"
-          className="space-y-4 border border-white/10 !shadow-none !ring-0 !outline-none"
-        >
-          <OrderTimeline orderId={order.id} />
-        </TabsContent>
-
-        <TabsContent value="documents" className="space-y-4 !border-none ">
-          <OrderDocuments orderId={order.id} documents={order.documents} />
-        </TabsContent>
-
-        <TabsContent value="notes" className="space-y-4 !border-none">
-          <OrderNotes orderId={order.id} notes={order.notes} />
-        </TabsContent>
-      </Tabs>
     </div>
   );
 }

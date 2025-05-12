@@ -111,7 +111,7 @@ export default function NewDriverPage() {
         title: "Driver created successfully",
         description: `${data.firstName} ${data.lastName} has been added to your team.`,
       });
-      router.push("/dashboard/drivers");
+      router.push("/user/dashboard/fleet");
     } catch (error) {
       console.error("Error creating driver:", error);
       toast({
@@ -135,7 +135,7 @@ export default function NewDriverPage() {
             className="border border-white/10"
             asChild
           >
-            <Link href="/dashboard/drivers">
+            <Link href="/user/dashboard/fleet">
               <ArrowLeft className="h-4 w-4" />
               <span className="sr-only">Back</span>
             </Link>
@@ -147,13 +147,11 @@ export default function NewDriverPage() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <Tabs defaultValue="personal" className="space-y-4">
-            <TabsList className="border border-white/10">
+            <TabsList>
               <TabsTrigger value="personal">Personal Information</TabsTrigger>
               <TabsTrigger value="license">
                 License & Qualifications
               </TabsTrigger>
-              <TabsTrigger value="emergency">Emergency Contact</TabsTrigger>
-              <TabsTrigger value="documents">Documents</TabsTrigger>
             </TabsList>
 
             <TabsContent value="personal">
@@ -533,108 +531,6 @@ export default function NewDriverPage() {
                 </CardContent>
               </Card>
             </TabsContent>
-
-            <TabsContent value="emergency">
-              <Card className="border border-white/10">
-                <CardHeader>
-                  <CardTitle>Emergency Contact</CardTitle>
-                  <CardDescription>
-                    Provide emergency contact information
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                    <FormField
-                      control={form.control}
-                      name="emergencyContactName"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Emergency Contact Name</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Jane Doe"
-                              {...field}
-                              className="border border-white/10"
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="emergencyContactPhone"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Emergency Contact Phone</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="+1 (555) 987-6543"
-                              {...field}
-                              className="border border-white/10"
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="documents">
-              <Card className="border border-white/10">
-                <CardHeader>
-                  <CardTitle>Driver Documents</CardTitle>
-                  <CardDescription>
-                    Upload license and other important documents
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid gap-4">
-                    <div className="rounded-md border border-white/10 border-dashed p-6 text-center">
-                      <div className="flex flex-col items-center gap-2">
-                        <Upload className="h-8 w-8 text-muted-foreground" />
-                        <h3 className="text-lg font-medium">
-                          Driver's License
-                        </h3>
-                        <p className="text-sm text-muted-foreground">
-                          Upload a copy of the driver's license
-                        </p>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="border border-white/10 mt-2"
-                        >
-                          Upload File
-                        </Button>
-                      </div>
-                    </div>
-
-                    <div className="rounded-md border border-white/10 border-dashed p-6 text-center">
-                      <div className="flex flex-col items-center gap-2">
-                        <Upload className="h-8 w-8 text-muted-foreground" />
-                        <h3 className="text-lg font-medium">
-                          Medical Certificate
-                        </h3>
-                        <p className="text-sm text-muted-foreground">
-                          Upload the driver's medical certificate
-                        </p>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="border border-white/10 mt-2"
-                        >
-                          Upload File
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
           </Tabs>
 
           <div className="flex justify-end gap-4">
@@ -643,12 +539,12 @@ export default function NewDriverPage() {
               className="border border-white/10"
               asChild
             >
-              <Link href="/dashboard/drivers">Cancel</Link>
+              <Link href="/user/dashboard/fleet">Cancel</Link>
             </Button>
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="border border-white/10"
+              className="bg-blue-600 hover:bg-blue-700"
             >
               {isSubmitting ? "Creating..." : "Create Driver"}
             </Button>
