@@ -31,7 +31,7 @@ export default function DashboardPage() {
       icon: <Package className="h-5 w-5 text-primary" />,
       description: "This month",
       change: "+12%",
-      href: "/dashboard/orders",
+      href: "/user/dashboard/orders",
     },
     {
       title: "Active Vehicles",
@@ -39,7 +39,7 @@ export default function DashboardPage() {
       icon: <Truck className="h-5 w-5 text-primary" />,
       description: "Out of 24 total",
       change: "+2",
-      href: "/dashboard/fleet",
+      href: "/user/dashboard/fleet",
     },
     {
       title: "Available Drivers",
@@ -47,7 +47,7 @@ export default function DashboardPage() {
       icon: <Users className="h-5 w-5 text-primary" />,
       description: "Out of 20 total",
       change: "-3",
-      href: "/dashboard/drivers",
+      href: "/user/dashboard/drivers",
     },
     {
       title: "Completed Orders",
@@ -55,7 +55,7 @@ export default function DashboardPage() {
       icon: <CheckCircle className="h-5 w-5 text-green-500" />,
       description: "This month",
       change: "+15%",
-      href: "/dashboard/orders?status=completed",
+      href: "/user/dashboard/orders?status=completed",
     },
   ];
 
@@ -65,13 +65,13 @@ export default function DashboardPage() {
       title: "Delivery Delay",
       description: "Order #ORD-1234 is running 2 hours behind schedule",
       type: "warning",
-      actionLink: "/dashboard/orders/ORD-1234",
+      actionLink: "/user/dashboard/orders/ORD-1234",
     },
     {
       title: "Vehicle Maintenance",
       description: "Vehicle XYZ-123 is due for maintenance tomorrow",
       type: "info",
-      actionLink: "/dashboard/fleet/vehicles/XYZ-123",
+      actionLink: "/user/dashboard/fleet/vehicles/XYZ-123",
     },
   ];
 
