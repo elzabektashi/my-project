@@ -1,6 +1,12 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   ResponsiveContainer,
   LineChart,
@@ -14,8 +20,8 @@ import {
   Legend,
   AreaChart,
   Area,
-} from "recharts"
-import { Progress } from "@/components/ui/progress"
+} from "recharts";
+import { Progress } from "@/components/ui/progress";
 
 // Mock data for resource utilization
 const apiUsageData = [
@@ -26,7 +32,7 @@ const apiUsageData = [
   { day: "Fri", calls: 2000000 },
   { day: "Sat", calls: 1000000 },
   { day: "Sun", calls: 800000 },
-]
+];
 
 const storageGrowthData = [
   { month: "Jan", storage: 500 },
@@ -36,7 +42,7 @@ const storageGrowthData = [
   { month: "May", storage: 1050 },
   { month: "Jun", storage: 1200 },
   { month: "Jul", storage: 1350 },
-]
+];
 
 const databaseQueriesData = [
   { hour: "00:00", queries: 45000 },
@@ -51,7 +57,7 @@ const databaseQueriesData = [
   { hour: "18:00", queries: 110000 },
   { hour: "20:00", queries: 85000 },
   { hour: "22:00", queries: 60000 },
-]
+];
 
 export function ResourceUtilization() {
   return (
@@ -60,7 +66,9 @@ export function ResourceUtilization() {
         <Card>
           <CardHeader>
             <CardTitle>API Usage</CardTitle>
-            <CardDescription>Daily API calls across the platform</CardDescription>
+            <CardDescription>
+              Daily API calls across the platform
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="h-[300px]">
@@ -69,7 +77,14 @@ export function ResourceUtilization() {
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="day" />
                   <YAxis />
-                  <Tooltip formatter={(value) => new Intl.NumberFormat().format(value)} />
+                  <Tooltip
+                    formatter={(value) => {
+                      const numericValue =
+                        typeof value === "number" ? value : Number(value);
+                      return new Intl.NumberFormat().format(numericValue);
+                    }}
+                  />
+
                   <Legend />
                   <Bar dataKey="calls" fill="#3b82f6" name="API Calls" />
                 </BarChart>
@@ -92,7 +107,13 @@ export function ResourceUtilization() {
                   <YAxis />
                   <Tooltip />
                   <Legend />
-                  <Area type="monotone" dataKey="storage" fill="#10b981" stroke="#10b981" name="Storage (GB)" />
+                  <Area
+                    type="monotone"
+                    dataKey="storage"
+                    fill="#10b981"
+                    stroke="#10b981"
+                    name="Storage (GB)"
+                  />
                 </AreaChart>
               </ResponsiveContainer>
             </div>
@@ -112,9 +133,22 @@ export function ResourceUtilization() {
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="hour" />
                 <YAxis />
-                <Tooltip formatter={(value) => new Intl.NumberFormat().format(value)} />
+                <Tooltip
+                  formatter={(value) => {
+                    const numericValue =
+                      typeof value === "number" ? value : Number(value);
+                    return new Intl.NumberFormat().format(numericValue);
+                  }}
+                />
+
                 <Legend />
-                <Line type="monotone" dataKey="queries" stroke="#f59e0b" strokeWidth={2} name="DB Queries" />
+                <Line
+                  type="monotone"
+                  dataKey="queries"
+                  stroke="#f59e0b"
+                  strokeWidth={2}
+                  name="DB Queries"
+                />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -167,5 +201,5 @@ export function ResourceUtilization() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
