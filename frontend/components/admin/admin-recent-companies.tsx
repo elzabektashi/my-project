@@ -66,7 +66,7 @@ export function AdminRecentCompanies() {
       {recentCompanies.map((company) => (
         <div
           key={company.id}
-          className="flex items-center justify-between rounded-lg border p-3"
+          className="flex items-center justify-between rounded-lg border border-white/10 p-3"
         >
           <div className="space-y-1">
             <div className="flex items-center gap-2">

@@ -1,18 +1,20 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { AdminOverviewStats } from "@/components/admin/admin-overview-stats"
-import { AdminPlatformActivity } from "components/admin/admin-platform-activity"
-import { AdminCompanyGrowth } from "components/admin/admin-company-growth"
-import { AdminRecentCompanies } from "components/admin/admin-recent-companies"
-import { AdminResourceUsage } from "components/admin/admin-resource-usage"
-import { AdminSystemStatus } from "components/admin/admin-system-status"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { AdminOverviewStats } from "@/components/admin/admin-overview-stats";
+import { AdminPlatformActivity } from "components/admin/admin-platform-activity";
+import { AdminCompanyGrowth } from "components/admin/admin-company-growth";
+import { AdminRecentCompanies } from "components/admin/admin-recent-companies";
+import { AdminResourceUsage } from "components/admin/admin-resource-usage";
+import { AdminSystemStatus } from "components/admin/admin-system-status";
 
 export default function AdminDashboard() {
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold">Platform Overview</h1>
-        <p className="text-muted-foreground">Monitor and manage your logistics platform</p>
+        <p className="text-muted-foreground">
+          Monitor and manage your logistics platform
+        </p>
       </div>
 
       <AdminOverviewStats />
@@ -53,5 +55,5 @@ export default function AdminDashboard() {
         </Card>
       </div>
     </div>
-  )
+  );
 }
