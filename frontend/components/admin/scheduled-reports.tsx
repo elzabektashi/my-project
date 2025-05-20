@@ -131,7 +131,7 @@ export function ScheduledReports() {
         <NewScheduledReportDialog />
       </div>
 
-      <div className="rounded-md border">
+      <div className="rounded-md border border-white/10">
         <Table>
           <TableHeader>
             <TableRow>
@@ -185,14 +185,23 @@ export function ScheduledReports() {
                         <MoreHorizontal className="h-4 w-4" />
                       </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
+                    <DropdownMenuContent
+                      align="end"
+                      className="border border-white/10 bg-[#0d1526]"
+                    >
                       <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                      <DropdownMenuItem onClick={() => handleRunNow(report.id)}>
+                      <DropdownMenuItem
+                        onClick={() => handleRunNow(report.id)}
+                        className="hover:bg-[#1e293b]"
+                      >
                         <Play className="mr-2 h-4 w-4" />
                         Run Now
                       </DropdownMenuItem>
                       <EditScheduledReportDialog report={report}>
-                        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                        <DropdownMenuItem
+                          onSelect={(e) => e.preventDefault()}
+                          className="hover:bg-[#1e293b]"
+                        >
                           <Edit className="mr-2 h-4 w-4" />
                           Edit
                         </DropdownMenuItem>
@@ -203,6 +212,7 @@ export function ScheduledReports() {
                           onClick={() =>
                             handleStatusChange(report.id, "paused")
                           }
+                          className="hover:bg-[#1e293b]"
                         >
                           <Pause className="mr-2 h-4 w-4" />
                           Pause
@@ -212,6 +222,7 @@ export function ScheduledReports() {
                           onClick={() =>
                             handleStatusChange(report.id, "active")
                           }
+                          className="hover:bg-[#1e293b]"
                         >
                           <Play className="mr-2 h-4 w-4" />
                           Activate
@@ -219,7 +230,7 @@ export function ScheduledReports() {
                       )}
                       <DropdownMenuItem
                         onClick={() => handleDeleteReport(report.id)}
-                        className="text-destructive"
+                        className="text-destructive hover:bg-[#1e293b]"
                       >
                         <Trash2 className="mr-2 h-4 w-4" />
                         Delete
@@ -272,13 +283,20 @@ function NewScheduledReportDialog() {
               <Label htmlFor="name" className="text-right">
                 Report Name
               </Label>
-              <Input id="name" className="col-span-3" required />
+              <Input
+                id="name"
+                className="col-span-3 border border-white/10"
+                required
+              />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="description" className="text-right">
                 Description
               </Label>
-              <Input id="description" className="col-span-3" />
+              <Input
+                id="description"
+                className="col-span-3 border border-white/10"
+              />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="report-type" className="text-right">
@@ -324,7 +342,7 @@ function NewScheduledReportDialog() {
               <Input
                 id="recipients"
                 placeholder="Enter email addresses (comma separated)"
-                className="col-span-3"
+                className="col-span-3 border border-white/10"
                 required
               />
             </div>
