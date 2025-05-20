@@ -45,7 +45,7 @@ import { ResetPasswordDialog } from "./reset-password-dialog";
 import { ManageRolesDialog } from "./manage-roles-dialog";
 import { useToast } from "@/components/ui/use-toast";
 
-// Mock data for users
+// Mock data
 const users = [
   {
     id: "u1",
@@ -145,17 +145,15 @@ export function UsersTable() {
   const columns: ColumnDef<(typeof users)[0]>[] = [
     {
       accessorKey: "name",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            User
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        );
-      },
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          User
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      ),
       cell: ({ row }) => (
         <div className="flex items-center gap-3">
           <Avatar>
@@ -176,45 +174,39 @@ export function UsersTable() {
     },
     {
       accessorKey: "company",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Company
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        );
-      },
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Company
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      ),
     },
     {
       accessorKey: "role",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Role
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        );
-      },
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Role
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      ),
     },
     {
       accessorKey: "status",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Status
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        );
-      },
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Status
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      ),
       cell: ({ row }) => {
         const status = row.original.status;
         return (
@@ -234,17 +226,15 @@ export function UsersTable() {
     },
     {
       accessorKey: "lastActive",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Last Active
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        );
-      },
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Last Active
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      ),
       cell: ({ row }) => {
         const date = new Date(row.original.lastActive);
         return (
@@ -274,9 +264,13 @@ export function UsersTable() {
                 <MoreHorizontal className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent
+              align="end"
+              className="bg-[#0d1526] border border-white/10"
+            >
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuItem
+                className="hover:bg-[#1e293b]"
                 onClick={() =>
                   (window.location.href = `/admin/users/${user.id}`)
                 }
@@ -285,32 +279,45 @@ export function UsersTable() {
                 View Details
               </DropdownMenuItem>
               <EditUserDialog user={user}>
-                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                <DropdownMenuItem
+                  onSelect={(e) => e.preventDefault()}
+                  className="hover:bg-[#1e293b]"
+                >
                   <UserCog className="mr-2 h-4 w-4" />
                   Edit User
                 </DropdownMenuItem>
               </EditUserDialog>
               <ManageRolesDialog user={user}>
-                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                <DropdownMenuItem
+                  onSelect={(e) => e.preventDefault()}
+                  className="hover:bg-[#1e293b]"
+                >
                   <Shield className="mr-2 h-4 w-4" />
                   Manage Roles
                 </DropdownMenuItem>
               </ManageRolesDialog>
               <ResetPasswordDialog user={user}>
-                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                <DropdownMenuItem
+                  onSelect={(e) => e.preventDefault()}
+                  className="hover:bg-[#1e293b]"
+                >
                   <KeyRound className="mr-2 h-4 w-4" />
                   Reset Password
                 </DropdownMenuItem>
               </ResetPasswordDialog>
               <DropdownMenuSeparator />
               {user.status !== "active" && (
-                <DropdownMenuItem onClick={() => handleStatusChange("active")}>
+                <DropdownMenuItem
+                  onClick={() => handleStatusChange("active")}
+                  className="hover:bg-[#1e293b]"
+                >
                   Activate User
                 </DropdownMenuItem>
               )}
               {user.status !== "inactive" && (
                 <DropdownMenuItem
                   onClick={() => handleStatusChange("inactive")}
+                  className="hover:bg-[#1e293b]"
                 >
                   Deactivate User
                 </DropdownMenuItem>
@@ -318,7 +325,7 @@ export function UsersTable() {
               {user.status !== "blocked" && (
                 <DropdownMenuItem
                   onClick={() => handleStatusChange("blocked")}
-                  className="text-destructive"
+                  className="text-destructive hover:bg-[#1e293b]"
                 >
                   <UserX className="mr-2 h-4 w-4" />
                   Block User
@@ -347,23 +354,21 @@ export function UsersTable() {
   });
 
   return (
-    <div className="rounded-md border">
+    <div className="rounded-md border border-white/10">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                return (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                );
-              })}
+            <TableRow className="border border-white/10" key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <TableHead key={header.id}>
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                </TableHead>
+              ))}
             </TableRow>
           ))}
         </TableHeader>
@@ -373,6 +378,7 @@ export function UsersTable() {
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
+                className="border border-white/10"
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>

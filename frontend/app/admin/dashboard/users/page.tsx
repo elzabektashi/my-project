@@ -29,7 +29,10 @@ export default function UsersPage() {
 
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div className="flex flex-1 items-center gap-2">
-          <Input placeholder="Search users..." className="max-w-sm" />
+          <Input
+            placeholder="Search users..."
+            className="max-w-sm border border-white/10"
+          />
           <Select defaultValue="all">
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Filter by role" />

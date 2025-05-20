@@ -80,7 +80,10 @@ export function CustomReportBuilder() {
         <div className="space-y-6">
           <div className="space-y-2">
             <Label>Report Name</Label>
-            <Input placeholder="Enter report name" />
+            <Input
+              placeholder="Enter report name"
+              className="border border-white/10"
+            />
           </div>
 
           <div className="space-y-2">

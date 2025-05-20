@@ -329,9 +329,9 @@ export function AuditLogsList() {
 
   return (
     <>
-      <div className="rounded-md border">
+      <div className="rounded-md border border-white/10">
         <Table>
-          <TableHeader>
+          <TableHeader className="border border-white/10">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
@@ -355,6 +355,7 @@ export function AuditLogsList() {
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  className="border border-white/10"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
@@ -475,7 +476,7 @@ export function AuditLogsList() {
                   </p>
                 </div>
                 <div className="col-span-2">
-                  <h3 className="text-sm font-medium text-muted-foreground">
+                  <h3 className="text-sm font-medium text-muted-foreground b">
                     Details
                   </h3>
                   <p>{selectedLog.details}</p>
