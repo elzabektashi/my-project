@@ -12,16 +12,6 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import {
   Table,
   TableBody,
@@ -30,19 +20,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  ArrowUpDown,
-  MoreHorizontal,
-  Shield,
-  UserCog,
-  UserX,
-  KeyRound,
-  Eye,
-} from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { EditUserDialog } from "./edit-user-dialog";
-import { ResetPasswordDialog } from "./reset-password-dialog";
-import { ManageRolesDialog } from "./manage-roles-dialog";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ArrowUpDown, Eye } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 
 // Mock data
@@ -140,203 +121,86 @@ const users = [
 export function UsersTable() {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const { toast } = useToast();
 
-  const columns: ColumnDef<(typeof users)[0]>[] = [
-    {
-      accessorKey: "name",
-      header: ({ column }) => (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          User
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      ),
-      cell: ({ row }) => (
-        <div className="flex items-center gap-3">
-          <Avatar>
-            <AvatarImage
-              src={row.original.avatar || "/placeholder.svg"}
-              alt={row.original.name}
-            />
-            <AvatarFallback>{row.original.name.charAt(0)}</AvatarFallback>
-          </Avatar>
-          <div className="flex flex-col">
-            <span className="font-medium">{row.original.name}</span>
-            <span className="text-xs text-muted-foreground">
-              {row.original.email}
-            </span>
-          </div>
-        </div>
-      ),
-    },
-    {
-      accessorKey: "company",
-      header: ({ column }) => (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Company
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      ),
-    },
-    {
-      accessorKey: "role",
-      header: ({ column }) => (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Role
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      ),
-    },
-    {
-      accessorKey: "status",
-      header: ({ column }) => (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Status
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      ),
-      cell: ({ row }) => {
-        const status = row.original.status;
-        return (
-          <Badge
-            variant={
-              status === "active"
-                ? "default"
-                : status === "inactive"
-                  ? "outline"
-                  : "destructive"
-            }
-          >
-            {status.charAt(0).toUpperCase() + status.slice(1)}
-          </Badge>
-        );
-      },
-    },
-    {
-      accessorKey: "lastActive",
-      header: ({ column }) => (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Last Active
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      ),
-      cell: ({ row }) => {
-        const date = new Date(row.original.lastActive);
-        return (
-          <span>
-            {date.toLocaleDateString()} {date.toLocaleTimeString()}
+ const columns: ColumnDef<(typeof users)[0]>[] = [
+  {
+    accessorKey: "name",
+    header: "User",
+    cell: ({ row }) => (
+      <div className="flex items-center gap-3">
+        <Avatar>
+          <AvatarImage
+            src={row.original.avatar || "/placeholder.svg"}
+            alt={row.original.name}
+          />
+          <AvatarFallback>{row.original.name.charAt(0)}</AvatarFallback>
+        </Avatar>
+        <div className="flex flex-col">
+          <span className="font-medium">{row.original.name}</span>
+          <span className="text-xs text-muted-foreground">
+            {row.original.email}
           </span>
-        );
-      },
+        </div>
+      </div>
+    ),
+  },
+  {
+    accessorKey: "company",
+    header: "Company",
+  },
+  {
+    accessorKey: "role",
+    header: "Role",
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => {
+      const status = row.original.status;
+      const color =
+        status === "active"
+          ? "bg-green-100 text-green-800"
+          : status === "inactive"
+          ? "bg-amber-100 text-amber-800"
+          : "bg-red-100 text-red-800";
+      return (
+        <span
+          className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${color}`}
+        >
+          {status.charAt(0).toUpperCase() + status.slice(1)}
+        </span>
+      );
     },
-    {
-      id: "actions",
-      cell: ({ row }) => {
-        const user = row.original;
-
-        const handleStatusChange = (status: string) => {
-          toast({
-            title: "User Status Updated",
-            description: `${user.name}'s status has been changed to ${status}.`,
-          });
-        };
-
-        return (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              align="end"
-              className="bg-[#0d1526] border border-white/10"
-            >
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem
-                className="hover:bg-[#1e293b]"
-                onClick={() =>
-                  (window.location.href = `/admin/users/${user.id}`)
-                }
-              >
-                <Eye className="mr-2 h-4 w-4" />
-                View Details
-              </DropdownMenuItem>
-              <EditUserDialog user={user}>
-                <DropdownMenuItem
-                  onSelect={(e) => e.preventDefault()}
-                  className="hover:bg-[#1e293b]"
-                >
-                  <UserCog className="mr-2 h-4 w-4" />
-                  Edit User
-                </DropdownMenuItem>
-              </EditUserDialog>
-              <ManageRolesDialog user={user}>
-                <DropdownMenuItem
-                  onSelect={(e) => e.preventDefault()}
-                  className="hover:bg-[#1e293b]"
-                >
-                  <Shield className="mr-2 h-4 w-4" />
-                  Manage Roles
-                </DropdownMenuItem>
-              </ManageRolesDialog>
-              <ResetPasswordDialog user={user}>
-                <DropdownMenuItem
-                  onSelect={(e) => e.preventDefault()}
-                  className="hover:bg-[#1e293b]"
-                >
-                  <KeyRound className="mr-2 h-4 w-4" />
-                  Reset Password
-                </DropdownMenuItem>
-              </ResetPasswordDialog>
-              <DropdownMenuSeparator />
-              {user.status !== "active" && (
-                <DropdownMenuItem
-                  onClick={() => handleStatusChange("active")}
-                  className="hover:bg-[#1e293b]"
-                >
-                  Activate User
-                </DropdownMenuItem>
-              )}
-              {user.status !== "inactive" && (
-                <DropdownMenuItem
-                  onClick={() => handleStatusChange("inactive")}
-                  className="hover:bg-[#1e293b]"
-                >
-                  Deactivate User
-                </DropdownMenuItem>
-              )}
-              {user.status !== "blocked" && (
-                <DropdownMenuItem
-                  onClick={() => handleStatusChange("blocked")}
-                  className="text-destructive hover:bg-[#1e293b]"
-                >
-                  <UserX className="mr-2 h-4 w-4" />
-                  Block User
-                </DropdownMenuItem>
-              )}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        );
-      },
+  },
+  {
+    accessorKey: "lastActive",
+    header: "Last Active",
+    cell: ({ row }) => {
+      const date = new Date(row.original.lastActive);
+      return (
+        <span>
+          {date.toLocaleDateString()} {date.toLocaleTimeString()}
+        </span>
+      );
     },
-  ];
+  },
+  {
+    id: "actions",
+    header: () => <span className="sr-only">Actions</span>,
+    cell: ({ row }) => {
+      const user = row.original;
+      return (
+        <Button variant="ghost" size="icon" asChild>
+          <a href={`/admin/users/${user.id}`}>
+            <Eye className="h-4 w-4" />
+            <span className="sr-only">View user</span>
+          </a>
+        </Button>
+      );
+    },
+  },
+];
+
 
   const table = useReactTable({
     data: users,
@@ -354,70 +218,57 @@ export function UsersTable() {
   });
 
   return (
-    <div className="rounded-md border border-white/10">
-      <Table>
-        <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow className="border border-white/10" key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <TableHead key={header.id}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                </TableHead>
-              ))}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
+    <div className="space-y-6">
+      <div className="min-w-[1000px]">
+        <Table className="w-full text-sm">
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
               <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-                className="border border-white/10"
+                key={headerGroup.id}
+                className="border-b border-white/10"
               >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id} className="px-3 py-3">
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </TableHead>
                 ))}
               </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                No users found.
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-      <div className="flex items-center justify-end space-x-2 p-4">
-        <div className="flex-1 text-sm text-muted-foreground">
-          Showing {table.getRowModel().rows.length} of {users.length} users
-        </div>
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
-        </div>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  className="border-b border-white/10 hover:bg-white/5"
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id} className="px-3 py-4">
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  No users found.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
       </div>
     </div>
   );
