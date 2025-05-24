@@ -44,36 +44,6 @@ export function AdminHeader() {
         </SheetContent>
       </Sheet>
       <div className="relative ml-auto flex items-center gap-2">
-        {showSearch ? (
-          <div className="relative flex items-center">
-            <Search className="absolute left-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              type="search"
-              placeholder="Search across platform..."
-              className="rounded-lg bg-[#0d1526] text-white border-white/10 pl-8 w-[200px] md:w-[250px] lg:w-[300px]"
-            />
-            <Button
-              variant="ghost"
-              size="icon"
-              className="absolute right-0 text-muted-foreground hover:bg-[#1e293b]"
-              onClick={() => setShowSearch(false)}
-            >
-              <X className="h-4 w-4" />
-              <span className="sr-only">Close search</span>
-            </Button>
-          </div>
-        ) : (
-          <Button
-            variant="ghost"
-            size="icon"
-            className="border border-white/10 hover:bg-[#1e293b] hover:border-transparent transition-colors duration-200"
-            onClick={() => setShowSearch(true)}
-          >
-            <Search className="h-4 w-4 text-muted-foreground" />
-            <span className="sr-only">Search</span>
-          </Button>
-        )}
-
         {/* Bell Notification Dropdown */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -95,7 +65,7 @@ export function AdminHeader() {
             align="end"
             className="w-80 p-0 border border-white/10 bg-[#091121]/80 backdrop-blur-md"
           >
-            <AdminNotifications />
+            <AdminNotifications onClose={() => {}} onMarkAllAsRead={() => {}} />
           </DropdownMenuContent>
         </DropdownMenu>
 
