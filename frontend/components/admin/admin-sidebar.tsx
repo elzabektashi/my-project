@@ -151,7 +151,6 @@ export function AdminSidebar({ className }: SidebarProps) {
                       <span>{link.title}</span>
                     </Link>
                   </TooltipTrigger>
-                  <TooltipContent side="right">{link.title}</TooltipContent>
                 </Tooltip>
               </TooltipProvider>
             ))}
