@@ -35,7 +35,7 @@ export function NotificationSettings() {
   return (
     <div className="space-y-6 bg-[#0d1526]">
       <Tabs defaultValue="email" className="w-full">
-        <TabsList className="grid w-full grid-cols-3 bg-[#0d1526] border-white/10">
+        <TabsList className="inline-flex bg-[#1d283a] rounded p-1 space-x-2">
           <TabsTrigger value="email">Email Notifications</TabsTrigger>
           <TabsTrigger value="inapp">In-App Notifications</TabsTrigger>
           <TabsTrigger value="push">Push Notifications</TabsTrigger>

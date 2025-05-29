@@ -160,7 +160,7 @@ export function EmailSettings() {
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="welcome">
-            <TabsList className="grid w-full grid-cols-4 bg-[#0d1526] border-white/10">
+            <TabsList className="inline-flex bg-[#1d283a] rounded p-1 space-x-2">
               <TabsTrigger value="welcome">Welcome</TabsTrigger>
               <TabsTrigger value="reset-password">Reset Password</TabsTrigger>
               <TabsTrigger value="order-confirmation">

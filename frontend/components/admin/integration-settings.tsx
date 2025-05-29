@@ -128,7 +128,7 @@ export function IntegrationSettings() {
   return (
     <div className="space-y-6 bg-[#0d1526]">
       <Tabs defaultValue="payment" className="w-full">
-        <TabsList className="grid w-full grid-cols-4 bg-[#0d1526] border-white/10">
+        <TabsList className="inline-flex bg-[#1d283a] rounded p-1 space-x-2">
           <TabsTrigger value="payment">Payment</TabsTrigger>
           <TabsTrigger value="analytics">Analytics</TabsTrigger>
           <TabsTrigger value="communication">Communication</TabsTrigger>
