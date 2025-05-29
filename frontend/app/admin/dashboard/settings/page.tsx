@@ -1,25 +1,27 @@
-import type { Metadata } from "next"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { GeneralSettings } from "@/components/admin/general-settings"
-import { SecuritySettings } from "@/components/admin/security-settings"
-import { IntegrationSettings } from "@/components/admin/integration-settings"
-import { EmailSettings } from "@/components/admin/email-settings"
-import { ApiSettings } from "@/components/admin/api-settings"
-import { BrandingSettings } from "@/components/admin/branding-settings"
-import { RolesSettings } from "@/components/admin/roles-settings"
-import { NotificationSettings } from "@/components/admin/notification-settings"
+import type { Metadata } from "next";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { GeneralSettings } from "@/components/admin/general-settings";
+import { SecuritySettings } from "@/components/admin/security-settings";
+import { IntegrationSettings } from "@/components/admin/integration-settings";
+import { EmailSettings } from "@/components/admin/email-settings";
+import { ApiSettings } from "@/components/admin/api-settings";
+import { BrandingSettings } from "@/components/admin/branding-settings";
+import { RolesSettings } from "@/components/admin/roles-settings";
+import { NotificationSettings } from "@/components/admin/notification-settings";
 
 export const metadata: Metadata = {
   title: "Admin | Settings",
   description: "Configure platform-wide settings",
-}
+};
 
 export default function SettingsPage() {
   return (
     <div className="flex flex-col gap-6 p-6">
       <div className="flex flex-col gap-2">
         <h1 className="text-3xl font-bold tracking-tight">Settings</h1>
-        <p className="text-muted-foreground">Configure platform-wide settings and preferences</p>
+        <p className="text-muted-foreground">
+          Configure platform-wide settings and preferences
+        </p>
       </div>
 
       <Tabs defaultValue="general" className="w-full">
@@ -58,5 +60,5 @@ export default function SettingsPage() {
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }

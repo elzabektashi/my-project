@@ -25,7 +25,6 @@ export function GeneralSettings() {
   const { toast } = useToast();
 
   const handleSave = () => {
-    // In a real app, you would call an API to save the settings
     toast({
       title: "Settings Saved",
       description: "Your settings have been saved successfully.",
@@ -33,8 +32,8 @@ export function GeneralSettings() {
   };
 
   return (
-    <div className="space-y-6">
-      <Card>
+    <div className="space-y-6 bg-[#0d1526]">
+      <Card className="bg-[#0d1526] border-white/10">
         <CardHeader>
           <CardTitle>Platform Information</CardTitle>
           <CardDescription>
@@ -47,6 +46,7 @@ export function GeneralSettings() {
             <Input
               id="platform-name"
               defaultValue="Logistics Management Platform"
+              className="border-white/10"
             />
           </div>
           <div className="space-y-2">
@@ -55,6 +55,7 @@ export function GeneralSettings() {
               id="platform-description"
               defaultValue="A comprehensive logistics management platform for companies of all sizes."
               rows={3}
+              className="border-white/10"
             />
           </div>
           <div className="space-y-2">
@@ -63,11 +64,16 @@ export function GeneralSettings() {
               id="support-email"
               type="email"
               defaultValue="support@logisticsplatform.com"
+              className="border-white/10"
             />
           </div>
           <div className="space-y-2">
             <Label htmlFor="support-phone">Support Phone</Label>
-            <Input id="support-phone" defaultValue="+1 (555) 123-4567" />
+            <Input
+              id="support-phone"
+              defaultValue="+1 (555) 123-4567"
+              className="border-white/10"
+            />
           </div>
         </CardContent>
         <CardFooter>
@@ -75,7 +81,7 @@ export function GeneralSettings() {
         </CardFooter>
       </Card>
 
-      <Card>
+      <Card className="bg-[#0d1526] border-white/10">
         <CardHeader>
           <CardTitle>Regional Settings</CardTitle>
           <CardDescription>
@@ -86,10 +92,10 @@ export function GeneralSettings() {
           <div className="space-y-2">
             <Label htmlFor="timezone">Default Timezone</Label>
             <Select defaultValue="utc">
-              <SelectTrigger id="timezone">
+              <SelectTrigger id="timezone" className="border-white/10">
                 <SelectValue placeholder="Select timezone" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-[#0d1526] border-white/10">
                 <SelectItem value="utc">
                   UTC (Coordinated Universal Time)
                 </SelectItem>
@@ -105,10 +111,10 @@ export function GeneralSettings() {
           <div className="space-y-2">
             <Label htmlFor="date-format">Date Format</Label>
             <Select defaultValue="mdy">
-              <SelectTrigger id="date-format">
+              <SelectTrigger id="date-format" className="border-white/10">
                 <SelectValue placeholder="Select date format" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-[#0d1526] border-white/10">
                 <SelectItem value="mdy">MM/DD/YYYY</SelectItem>
                 <SelectItem value="dmy">DD/MM/YYYY</SelectItem>
                 <SelectItem value="ymd">YYYY/MM/DD</SelectItem>
@@ -118,10 +124,10 @@ export function GeneralSettings() {
           <div className="space-y-2">
             <Label htmlFor="currency">Default Currency</Label>
             <Select defaultValue="usd">
-              <SelectTrigger id="currency">
+              <SelectTrigger id="currency" className="border-white/10">
                 <SelectValue placeholder="Select currency" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-[#0d1526] border-white/10">
                 <SelectItem value="usd">USD ($)</SelectItem>
                 <SelectItem value="eur">EUR (€)</SelectItem>
                 <SelectItem value="gbp">GBP (£)</SelectItem>
@@ -133,10 +139,10 @@ export function GeneralSettings() {
           <div className="space-y-2">
             <Label htmlFor="distance-unit">Distance Unit</Label>
             <Select defaultValue="miles">
-              <SelectTrigger id="distance-unit">
+              <SelectTrigger id="distance-unit" className="border-white/10">
                 <SelectValue placeholder="Select distance unit" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-[#0d1526] border-white/10">
                 <SelectItem value="miles">Miles</SelectItem>
                 <SelectItem value="kilometers">Kilometers</SelectItem>
               </SelectContent>
@@ -148,7 +154,7 @@ export function GeneralSettings() {
         </CardFooter>
       </Card>
 
-      <Card>
+      <Card className="bg-[#0d1526] border-white/10">
         <CardHeader>
           <CardTitle>Feature Toggles</CardTitle>
           <CardDescription>Enable or disable platform features</CardDescription>
@@ -161,7 +167,10 @@ export function GeneralSettings() {
                 Put the platform in maintenance mode
               </p>
             </div>
-            <Switch id="toggle-maintenance" />
+            <Switch
+              id="toggle-maintenance"
+              className="data-[state=unchecked]:bg-[#1e293b]"
+            />
           </div>
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
@@ -170,7 +179,11 @@ export function GeneralSettings() {
                 Allow new users to register
               </p>
             </div>
-            <Switch id="toggle-registration" defaultChecked />
+            <Switch
+              id="toggle-registration"
+              defaultChecked
+              className="data-[state=unchecked]:bg-[#1e293b]"
+            />
           </div>
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
@@ -181,7 +194,11 @@ export function GeneralSettings() {
                 Allow new companies to register
               </p>
             </div>
-            <Switch id="toggle-company-registration" defaultChecked />
+            <Switch
+              id="toggle-company-registration"
+              defaultChecked
+              className="data-[state=unchecked]:bg-[#1e293b]"
+            />
           </div>
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
@@ -190,7 +207,11 @@ export function GeneralSettings() {
                 Enable public API access
               </p>
             </div>
-            <Switch id="toggle-api" defaultChecked />
+            <Switch
+              id="toggle-api"
+              defaultChecked
+              className="data-[state=unchecked]:bg-[#1e293b]"
+            />
           </div>
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
@@ -199,7 +220,11 @@ export function GeneralSettings() {
                 Collect anonymous usage analytics
               </p>
             </div>
-            <Switch id="toggle-analytics" defaultChecked />
+            <Switch
+              id="toggle-analytics"
+              defaultChecked
+              className="data-[state=unchecked]:bg-[#1e293b]"
+            />
           </div>
         </CardContent>
         <CardFooter>

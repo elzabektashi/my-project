@@ -33,16 +33,16 @@ export function NotificationSettings() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 bg-[#0d1526]">
       <Tabs defaultValue="email" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full grid-cols-3 bg-[#0d1526] border-white/10">
           <TabsTrigger value="email">Email Notifications</TabsTrigger>
           <TabsTrigger value="inapp">In-App Notifications</TabsTrigger>
           <TabsTrigger value="push">Push Notifications</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="email" className="space-y-6">
-          <Card>
+        <TabsContent value="email" className="space-y-6 bg-[#0d1526]">
+          <Card className="bg-[#0d1526] border-white/10">
             <CardHeader>
               <CardTitle>Email Notification Settings</CardTitle>
               <CardDescription>
@@ -55,109 +55,145 @@ export function NotificationSettings() {
                   <Label htmlFor="email-enabled">
                     Enable Email Notifications
                   </Label>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-gray-400">
                     Send email notifications to users
                   </p>
                 </div>
-                <Switch id="email-enabled" defaultChecked />
+                <Switch
+                  id="email-enabled"
+                  defaultChecked
+                  className="data-[state=unchecked]:bg-[#1e293b]"
+                />
               </div>
 
               <div className="space-y-4">
-                <h4 className="font-medium">User Events</h4>
+                <h4 className="font-medium text-gray-200">User Events</h4>
                 <div className="space-y-3 pl-4">
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
                       <Label htmlFor="email-welcome">Welcome Email</Label>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-gray-400">
                         Send welcome email to new users
                       </p>
                     </div>
-                    <Switch id="email-welcome" defaultChecked />
+                    <Switch
+                      id="email-welcome"
+                      defaultChecked
+                      className="data-[state=unchecked]:bg-[#1e293b]"
+                    />
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
                       <Label htmlFor="email-password-reset">
                         Password Reset
                       </Label>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-gray-400">
                         Send password reset emails
                       </p>
                     </div>
-                    <Switch id="email-password-reset" defaultChecked />
+                    <Switch
+                      id="email-password-reset"
+                      defaultChecked
+                      className="data-[state=unchecked]:bg-[#1e293b]"
+                    />
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
                       <Label htmlFor="email-account-changes">
                         Account Changes
                       </Label>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-gray-400">
                         Notify users of account modifications
                       </p>
                     </div>
-                    <Switch id="email-account-changes" defaultChecked />
+                    <Switch
+                      id="email-account-changes"
+                      defaultChecked
+                      className="data-[state=unchecked]:bg-[#1e293b]"
+                    />
                   </div>
                 </div>
               </div>
 
               <div className="space-y-4">
-                <h4 className="font-medium">Order Events</h4>
+                <h4 className="font-medium text-gray-200">Order Events</h4>
                 <div className="space-y-3 pl-4">
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
                       <Label htmlFor="email-order-created">Order Created</Label>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-gray-400">
                         Notify when new orders are created
                       </p>
                     </div>
-                    <Switch id="email-order-created" defaultChecked />
+                    <Switch
+                      id="email-order-created"
+                      defaultChecked
+                      className="data-[state=unchecked]:bg-[#1e293b]"
+                    />
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
                       <Label htmlFor="email-order-updated">
                         Order Status Updates
                       </Label>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-gray-400">
                         Notify when order status changes
                       </p>
                     </div>
-                    <Switch id="email-order-updated" defaultChecked />
+                    <Switch
+                      id="email-order-updated"
+                      defaultChecked
+                      className="data-[state=unchecked]:bg-[#1e293b]"
+                    />
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
                       <Label htmlFor="email-order-completed">
                         Order Completed
                       </Label>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-gray-400">
                         Notify when orders are completed
                       </p>
                     </div>
-                    <Switch id="email-order-completed" defaultChecked />
+                    <Switch
+                      id="email-order-completed"
+                      defaultChecked
+                      className="data-[state=unchecked]:bg-[#1e293b]"
+                    />
                   </div>
                 </div>
               </div>
 
               <div className="space-y-4">
-                <h4 className="font-medium">System Events</h4>
+                <h4 className="font-medium text-gray-200">System Events</h4>
                 <div className="space-y-3 pl-4">
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
                       <Label htmlFor="email-maintenance">
                         Maintenance Notifications
                       </Label>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-gray-400">
                         Notify users of scheduled maintenance
                       </p>
                     </div>
-                    <Switch id="email-maintenance" defaultChecked />
+                    <Switch
+                      id="email-maintenance"
+                      defaultChecked
+                      className="data-[state=unchecked]:bg-[#1e293b]"
+                    />
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
                       <Label htmlFor="email-security">Security Alerts</Label>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-gray-400">
                         Send security-related notifications
                       </p>
                     </div>
-                    <Switch id="email-security" defaultChecked />
+                    <Switch
+                      id="email-security"
+                      defaultChecked
+                      className="data-[state=unchecked]:bg-[#1e293b]"
+                    />
                   </div>
                 </div>
               </div>
@@ -165,10 +201,13 @@ export function NotificationSettings() {
               <div className="space-y-2">
                 <Label htmlFor="email-frequency">Email Frequency</Label>
                 <Select defaultValue="immediate">
-                  <SelectTrigger id="email-frequency">
+                  <SelectTrigger
+                    id="email-frequency"
+                    className="border-white/10"
+                  >
                     <SelectValue placeholder="Select frequency" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-[#0d1526] border-white/10">
                     <SelectItem value="immediate">Immediate</SelectItem>
                     <SelectItem value="hourly">Hourly Digest</SelectItem>
                     <SelectItem value="daily">Daily Digest</SelectItem>
@@ -183,8 +222,8 @@ export function NotificationSettings() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="inapp" className="space-y-6">
-          <Card>
+        <TabsContent value="inapp" className="space-y-6 bg-[#0d1526]">
+          <Card className="bg-[#0d1526] border-white/10">
             <CardHeader>
               <CardTitle>In-App Notification Settings</CardTitle>
               <CardDescription>
@@ -197,11 +236,15 @@ export function NotificationSettings() {
                   <Label htmlFor="inapp-enabled">
                     Enable In-App Notifications
                   </Label>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-gray-400">
                     Show notifications within the application
                   </p>
                 </div>
-                <Switch id="inapp-enabled" defaultChecked />
+                <Switch
+                  id="inapp-enabled"
+                  defaultChecked
+                  className="data-[state=unchecked]:bg-[#1e293b]"
+                />
               </div>
 
               <div className="space-y-2">
@@ -209,10 +252,13 @@ export function NotificationSettings() {
                   Notification Position
                 </Label>
                 <Select defaultValue="top-right">
-                  <SelectTrigger id="notification-position">
+                  <SelectTrigger
+                    id="notification-position"
+                    className="border-white/10"
+                  >
                     <SelectValue placeholder="Select position" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-[#0d1526] border-white/10">
                     <SelectItem value="top-left">Top Left</SelectItem>
                     <SelectItem value="top-right">Top Right</SelectItem>
                     <SelectItem value="bottom-left">Bottom Left</SelectItem>
@@ -231,26 +277,34 @@ export function NotificationSettings() {
                   defaultValue="5"
                   min="1"
                   max="30"
+                  className="border-white/10 text-gray-200"
                 />
               </div>
 
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
                   <Label htmlFor="sound-enabled">Enable Sound</Label>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-gray-400">
                     Play sound for notifications
                   </p>
                 </div>
-                <Switch id="sound-enabled" defaultChecked />
+                <Switch
+                  id="sound-enabled"
+                  defaultChecked
+                  className="data-[state=unchecked]:bg-[#1e293b]"
+                />
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="notification-sound">Notification Sound</Label>
                 <Select defaultValue="default">
-                  <SelectTrigger id="notification-sound">
+                  <SelectTrigger
+                    id="notification-sound"
+                    className="border-white/10"
+                  >
                     <SelectValue placeholder="Select sound" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-[#0d1526] border-white/10">
                     <SelectItem value="default">Default</SelectItem>
                     <SelectItem value="chime">Chime</SelectItem>
                     <SelectItem value="bell">Bell</SelectItem>
@@ -266,8 +320,8 @@ export function NotificationSettings() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="push" className="space-y-6">
-          <Card>
+        <TabsContent value="push" className="space-y-6 bg-[#0d1526]">
+          <Card className="bg-[#0d1526] border-white/10">
             <CardHeader>
               <CardTitle>Push Notification Settings</CardTitle>
               <CardDescription>
@@ -280,11 +334,14 @@ export function NotificationSettings() {
                   <Label htmlFor="push-enabled">
                     Enable Push Notifications
                   </Label>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-gray-400">
                     Send push notifications to browsers and mobile devices
                   </p>
                 </div>
-                <Switch id="push-enabled" />
+                <Switch
+                  id="push-enabled"
+                  className="data-[state=unchecked]:bg-[#1e293b]"
+                />
               </div>
 
               <div className="space-y-2">
@@ -293,6 +350,7 @@ export function NotificationSettings() {
                   id="vapid-public-key"
                   placeholder="Enter VAPID public key"
                   defaultValue="BEl62iUYgUivxIkv69yViEuiBIa-Ib9-SkvMeAtA3LFgDzkrxZJjSgSnfckjBJuBkr3qBUYIHBQFLXYp5Nksh8U"
+                  className="border-white/10 text-gray-200"
                 />
               </div>
 
@@ -303,6 +361,7 @@ export function NotificationSettings() {
                   type="password"
                   placeholder="Enter VAPID private key"
                   defaultValue="••••••••••••••••••••••••••••••••••••••••••••"
+                  className="border-white/10 text-gray-200"
                 />
               </div>
 
@@ -312,38 +371,52 @@ export function NotificationSettings() {
                   id="push-endpoint"
                   placeholder="Enter push service endpoint"
                   defaultValue="https://fcm.googleapis.com/fcm/send"
+                  className="border-white/10 text-gray-200"
                 />
               </div>
 
               <div className="space-y-4">
-                <h4 className="font-medium">Push Notification Events</h4>
+                <h4 className="font-medium text-gray-200">
+                  Push Notification Events
+                </h4>
                 <div className="space-y-3 pl-4">
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
                       <Label htmlFor="push-urgent-orders">Urgent Orders</Label>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-gray-400">
                         Push notifications for urgent orders
                       </p>
                     </div>
-                    <Switch id="push-urgent-orders" defaultChecked />
+                    <Switch
+                      id="push-urgent-orders"
+                      defaultChecked
+                      className="data-[state=unchecked]:bg-[#1e293b]"
+                    />
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
                       <Label htmlFor="push-system-alerts">System Alerts</Label>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-gray-400">
                         Push notifications for system alerts
                       </p>
                     </div>
-                    <Switch id="push-system-alerts" defaultChecked />
+                    <Switch
+                      id="push-system-alerts"
+                      defaultChecked
+                      className="data-[state=unchecked]:bg-[#1e293b]"
+                    />
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
                       <Label htmlFor="push-reminders">Reminders</Label>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-gray-400">
                         Push notifications for reminders
                       </p>
                     </div>
-                    <Switch id="push-reminders" />
+                    <Switch
+                      id="push-reminders"
+                      className="data-[state=unchecked]:bg-[#1e293b]"
+                    />
                   </div>
                 </div>
               </div>

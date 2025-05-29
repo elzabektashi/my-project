@@ -58,8 +58,8 @@ export function BrandingSettings() {
   };
 
   return (
-    <div className="space-y-6">
-      <Card>
+    <div className="space-y-6 bg-[#0d1526]">
+      <Card className="bg-[#0d1526] border-white/10">
         <CardHeader>
           <CardTitle>Platform Identity</CardTitle>
           <CardDescription>
@@ -72,6 +72,7 @@ export function BrandingSettings() {
             <Input
               id="platform-name"
               defaultValue="Logistics Management Platform"
+              className="border-white/10 text-gray-200"
             />
           </div>
 
@@ -80,6 +81,7 @@ export function BrandingSettings() {
             <Input
               id="platform-tagline"
               defaultValue="Streamline your logistics operations"
+              className="border-white/10 text-gray-200"
             />
           </div>
 
@@ -89,13 +91,14 @@ export function BrandingSettings() {
               id="platform-description"
               defaultValue="A comprehensive logistics management platform for companies of all sizes."
               rows={3}
+              className="border-white/10 text-gray-200"
             />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-4">
               <Label>Platform Logo</Label>
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+              <div className="border-2 border-dashed border-white/10 rounded-lg p-6 text-center bg-[#0d1526]">
                 {logoPreview ? (
                   <div className="space-y-4">
                     <div className="relative inline-block">
@@ -119,7 +122,7 @@ export function BrandingSettings() {
                 ) : (
                   <div className="space-y-2">
                     <Upload className="mx-auto h-8 w-8 text-gray-400" />
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-400">
                       Upload your platform logo
                     </p>
                   </div>
@@ -128,17 +131,17 @@ export function BrandingSettings() {
                   type="file"
                   accept="image/*"
                   onChange={handleLogoUpload}
-                  className="mt-2 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                  className="mt-2 block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-900 file:text-blue-300 hover:file:bg-blue-800"
                 />
               </div>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-gray-400">
                 Recommended: PNG or SVG, max 2MB
               </p>
             </div>
 
             <div className="space-y-4">
               <Label>Favicon</Label>
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+              <div className="border-2 border-dashed border-white/10 rounded-lg p-6 text-center bg-[#0d1526]">
                 {faviconPreview ? (
                   <div className="space-y-4">
                     <div className="relative inline-block">
@@ -162,17 +165,17 @@ export function BrandingSettings() {
                 ) : (
                   <div className="space-y-2">
                     <Upload className="mx-auto h-8 w-8 text-gray-400" />
-                    <p className="text-sm text-gray-600">Upload favicon</p>
+                    <p className="text-sm text-gray-400">Upload favicon</p>
                   </div>
                 )}
                 <input
                   type="file"
                   accept="image/*"
                   onChange={handleFaviconUpload}
-                  className="mt-2 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                  className="mt-2 block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-900 file:text-blue-300 hover:file:bg-blue-800"
                 />
               </div>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-gray-400">
                 Recommended: ICO or PNG, 32x32px
               </p>
             </div>
@@ -183,7 +186,7 @@ export function BrandingSettings() {
         </CardFooter>
       </Card>
 
-      <Card>
+      <Card className="bg-[#0d1526] border-white/10">
         <CardHeader>
           <CardTitle>Color Scheme</CardTitle>
           <CardDescription>
@@ -199,9 +202,12 @@ export function BrandingSettings() {
                   type="color"
                   id="primary-color"
                   defaultValue="#3b82f6"
-                  className="w-12 h-10 rounded border border-gray-300"
+                  className="w-12 h-10 rounded border-white/10"
                 />
-                <Input defaultValue="#3b82f6" className="flex-1" />
+                <Input
+                  defaultValue="#3b82f6"
+                  className="flex-1 border-white/10 text-gray-200"
+                />
               </div>
             </div>
             <div className="space-y-2">
@@ -211,9 +217,12 @@ export function BrandingSettings() {
                   type="color"
                   id="secondary-color"
                   defaultValue="#64748b"
-                  className="w-12 h-10 rounded border border-gray-300"
+                  className="w-12 h-10 rounded border-white/10"
                 />
-                <Input defaultValue="#64748b" className="flex-1" />
+                <Input
+                  defaultValue="#64748b"
+                  className="flex-1 border-white/10 text-gray-200"
+                />
               </div>
             </div>
             <div className="space-y-2">
@@ -223,9 +232,12 @@ export function BrandingSettings() {
                   type="color"
                   id="accent-color"
                   defaultValue="#10b981"
-                  className="w-12 h-10 rounded border border-gray-300"
+                  className="w-12 h-10 rounded border-white/10"
                 />
-                <Input defaultValue="#10b981" className="flex-1" />
+                <Input
+                  defaultValue="#10b981"
+                  className="flex-1 border-white/10 text-gray-200"
+                />
               </div>
             </div>
             <div className="space-y-2">
@@ -235,17 +247,22 @@ export function BrandingSettings() {
                   type="color"
                   id="danger-color"
                   defaultValue="#ef4444"
-                  className="w-12 h-10 rounded border border-gray-300"
+                  className="w-12 h-10 rounded border-white/10"
                 />
-                <Input defaultValue="#ef4444" className="flex-1" />
+                <Input
+                  defaultValue="#ef4444"
+                  className="flex-1 border-white/10 text-gray-200"
+                />
               </div>
             </div>
           </div>
           <div className="pt-4">
-            <Button variant="outline" className="mr-2">
+            <Button variant="outline" className="mr-2 border-white/10">
               Reset to Default
             </Button>
-            <Button variant="outline">Preview Changes</Button>
+            <Button variant="outline" className="border-white/10">
+              Preview Changes
+            </Button>
           </div>
         </CardContent>
         <CardFooter>
@@ -253,7 +270,7 @@ export function BrandingSettings() {
         </CardFooter>
       </Card>
 
-      <Card>
+      <Card className="bg-[#0d1526] border-white/10">
         <CardHeader>
           <CardTitle>Custom CSS</CardTitle>
           <CardDescription>
@@ -275,10 +292,10 @@ export function BrandingSettings() {
   border-radius: 8px;
   transition: all 0.2s ease;
 }"
-              className="font-mono text-sm"
+              className="font-mono text-sm border-white/10 text-gray-200"
             />
           </div>
-          <p className="text-xs text-gray-500 mt-2">
+          <p className="text-xs text-gray-400 mt-2">
             Custom CSS will be applied globally across the platform. Use with
             caution.
           </p>

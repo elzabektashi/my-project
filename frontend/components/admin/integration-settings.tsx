@@ -126,9 +126,9 @@ export function IntegrationSettings() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 bg-[#0d1526]">
       <Tabs defaultValue="payment" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-4 bg-[#0d1526] border-white/10">
           <TabsTrigger value="payment">Payment</TabsTrigger>
           <TabsTrigger value="analytics">Analytics</TabsTrigger>
           <TabsTrigger value="communication">Communication</TabsTrigger>
@@ -136,7 +136,7 @@ export function IntegrationSettings() {
         </TabsList>
 
         <TabsContent value="payment" className="space-y-6">
-          <Card>
+          <Card className="bg-[#0d1526] border-white/10">
             <CardHeader>
               <CardTitle>Stripe Integration</CardTitle>
               <CardDescription>
@@ -153,7 +153,11 @@ export function IntegrationSettings() {
                 </div>
                 <div className="flex items-center gap-2">
                   {getStatusBadge("connected")}
-                  <Switch id="stripe-enabled" defaultChecked />
+                  <Switch
+                    id="stripe-enabled"
+                    defaultChecked
+                    className="data-[state=unchecked]:bg-[#1e293b]"
+                  />
                 </div>
               </div>
 
@@ -164,11 +168,13 @@ export function IntegrationSettings() {
                     id="stripe-publishable-key"
                     type={showApiKeys.stripe ? "text" : "password"}
                     defaultValue="pk_live_51JKl2JGjR8xZQKlM5tY6vX9Zs7gN2pJmHbVwQZlM5tY6vX9Zs"
+                    className="border-white/10"
                   />
                   <Button
                     variant="outline"
                     size="icon"
                     onClick={() => toggleApiKeyVisibility("stripe")}
+                    className="border-white/10"
                   >
                     {showApiKeys.stripe ? (
                       <EyeOff className="h-4 w-4" />
@@ -186,11 +192,13 @@ export function IntegrationSettings() {
                     id="stripe-secret-key"
                     type="password"
                     defaultValue="sk_live_51JKl2JGjR8xZQKlM5tY6vX9Zs7gN2pJmHbVwQZlM5tY6vX9Zs"
+                    className="border-white/10"
                   />
                   <Button
                     variant="outline"
                     size="icon"
                     onClick={() => handleTestConnection("Stripe")}
+                    className="border-white/10"
                   >
                     <TestTube className="h-4 w-4" />
                   </Button>
@@ -203,6 +211,7 @@ export function IntegrationSettings() {
                   id="stripe-webhook-secret"
                   type="password"
                   defaultValue="whsec_JKl2JGjR8xZQKlM5tY6vX9Zs7gN2pJmHbVwQZlM5tY6vX9Zs"
+                  className="border-white/10"
                 />
               </div>
             </CardContent>
@@ -211,7 +220,7 @@ export function IntegrationSettings() {
             </CardFooter>
           </Card>
 
-          <Card>
+          <Card className="bg-[#0d1526] border-white/10">
             <CardHeader>
               <CardTitle>PayPal Integration</CardTitle>
               <CardDescription>
@@ -228,7 +237,10 @@ export function IntegrationSettings() {
                 </div>
                 <div className="flex items-center gap-2">
                   {getStatusBadge("disconnected")}
-                  <Switch id="paypal-enabled" />
+                  <Switch
+                    id="paypal-enabled"
+                    className="data-[state=unchecked]:bg-[#1e293b]"
+                  />
                 </div>
               </div>
 
@@ -237,6 +249,7 @@ export function IntegrationSettings() {
                 <Input
                   id="paypal-client-id"
                   placeholder="Enter PayPal Client ID"
+                  className="border-white/10"
                 />
               </div>
 
@@ -247,11 +260,13 @@ export function IntegrationSettings() {
                     id="paypal-client-secret"
                     type="password"
                     placeholder="Enter PayPal Client Secret"
+                    className="border-white/10"
                   />
                   <Button
                     variant="outline"
                     size="icon"
                     onClick={() => handleTestConnection("PayPal")}
+                    className="border-white/10"
                   >
                     <TestTube className="h-4 w-4" />
                   </Button>
@@ -265,7 +280,7 @@ export function IntegrationSettings() {
         </TabsContent>
 
         <TabsContent value="analytics" className="space-y-6">
-          <Card>
+          <Card className="bg-[#0d1526] border-white/10">
             <CardHeader>
               <CardTitle>Google Analytics</CardTitle>
               <CardDescription>
@@ -282,7 +297,11 @@ export function IntegrationSettings() {
                 </div>
                 <div className="flex items-center gap-2">
                   {getStatusBadge("connected")}
-                  <Switch id="ga-enabled" defaultChecked />
+                  <Switch
+                    id="ga-enabled"
+                    defaultChecked
+                    className="data-[state=unchecked]:bg-[#1e293b]"
+                  />
                 </div>
               </div>
 
@@ -292,6 +311,7 @@ export function IntegrationSettings() {
                   id="ga-tracking-id"
                   defaultValue="GA-XXXXXXXXX-X"
                   placeholder="Enter Google Analytics Tracking ID"
+                  className="border-white/10"
                 />
               </div>
 
@@ -301,6 +321,7 @@ export function IntegrationSettings() {
                   id="ga-measurement-id"
                   defaultValue="G-XXXXXXXXXX"
                   placeholder="Enter GA4 Measurement ID"
+                  className="border-white/10"
                 />
               </div>
             </CardContent>
@@ -309,7 +330,7 @@ export function IntegrationSettings() {
             </CardFooter>
           </Card>
 
-          <Card>
+          <Card className="bg-[#0d1526] border-white/10">
             <CardHeader>
               <CardTitle>Mixpanel</CardTitle>
               <CardDescription>
@@ -326,7 +347,10 @@ export function IntegrationSettings() {
                 </div>
                 <div className="flex items-center gap-2">
                   {getStatusBadge("disconnected")}
-                  <Switch id="mixpanel-enabled" />
+                  <Switch
+                    id="mixpanel-enabled"
+                    className="data-[state=unchecked]:bg-[#1e293b]"
+                  />
                 </div>
               </div>
 
@@ -335,6 +359,7 @@ export function IntegrationSettings() {
                 <Input
                   id="mixpanel-token"
                   placeholder="Enter Mixpanel Project Token"
+                  className="border-white/10"
                 />
               </div>
             </CardContent>
@@ -345,7 +370,7 @@ export function IntegrationSettings() {
         </TabsContent>
 
         <TabsContent value="communication" className="space-y-6">
-          <Card>
+          <Card className="bg-[#0d1526] border-white/10">
             <CardHeader>
               <CardTitle>SendGrid</CardTitle>
               <CardDescription>
@@ -362,7 +387,11 @@ export function IntegrationSettings() {
                 </div>
                 <div className="flex items-center gap-2">
                   {getStatusBadge("connected")}
-                  <Switch id="sendgrid-enabled" defaultChecked />
+                  <Switch
+                    id="sendgrid-enabled"
+                    defaultChecked
+                    className="data-[state=unchecked]:bg-[#1e293b]"
+                  />
                 </div>
               </div>
 
@@ -373,11 +402,13 @@ export function IntegrationSettings() {
                     id="sendgrid-api-key"
                     type="password"
                     defaultValue="SG.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+                    className="border-white/10"
                   />
                   <Button
                     variant="outline"
                     size="icon"
                     onClick={() => handleTestConnection("SendGrid")}
+                    className="border-white/10"
                   >
                     <TestTube className="h-4 w-4" />
                   </Button>
@@ -389,7 +420,7 @@ export function IntegrationSettings() {
             </CardFooter>
           </Card>
 
-          <Card>
+          <Card className="bg-[#0d1526] border-white/10">
             <CardHeader>
               <CardTitle>Twilio</CardTitle>
               <CardDescription>
@@ -406,7 +437,10 @@ export function IntegrationSettings() {
                 </div>
                 <div className="flex items-center gap-2">
                   {getStatusBadge("error")}
-                  <Switch id="twilio-enabled" />
+                  <Switch
+                    id="twilio-enabled"
+                    className="data-[state=unchecked]:bg-[#1e293b]"
+                  />
                 </div>
               </div>
 
@@ -415,6 +449,7 @@ export function IntegrationSettings() {
                 <Input
                   id="twilio-account-sid"
                   placeholder="Enter Twilio Account SID"
+                  className="border-white/10"
                 />
               </div>
 
@@ -425,11 +460,13 @@ export function IntegrationSettings() {
                     id="twilio-auth-token"
                     type="password"
                     placeholder="Enter Twilio Auth Token"
+                    className="border-white/10"
                   />
                   <Button
                     variant="outline"
                     size="icon"
                     onClick={() => handleTestConnection("Twilio")}
+                    className="border-white/10"
                   >
                     <TestTube className="h-4 w-4" />
                   </Button>
@@ -438,7 +475,11 @@ export function IntegrationSettings() {
 
               <div className="space-y-2">
                 <Label htmlFor="twilio-phone-number">Phone Number</Label>
-                <Input id="twilio-phone-number" placeholder="+1234567890" />
+                <Input
+                  id="twilio-phone-number"
+                  placeholder="+1234567890"
+                  className="border-white/10"
+                />
               </div>
             </CardContent>
             <CardFooter>
@@ -448,7 +489,7 @@ export function IntegrationSettings() {
         </TabsContent>
 
         <TabsContent value="logistics" className="space-y-6">
-          <Card>
+          <Card className="bg-[#0d1526] border-white/10">
             <CardHeader>
               <CardTitle>Logistics Integrations</CardTitle>
               <CardDescription>

@@ -278,8 +278,8 @@ export function RolesSettings() {
   };
 
   return (
-    <div className="space-y-6">
-      <Card>
+    <div className="space-y-6 bg-[#0d1526]">
+      <Card className="bg-[#0d1526] border-white/10">
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
@@ -298,7 +298,7 @@ export function RolesSettings() {
                   Create Role
                 </Button>
               </DialogTrigger>
-              <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+              <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto bg-[#0d1526] border-white/10">
                 <DialogHeader>
                   <DialogTitle>Create New Role</DialogTitle>
                   <DialogDescription>
@@ -318,6 +318,7 @@ export function RolesSettings() {
                         }))
                       }
                       placeholder="Enter role name"
+                      className="border-white/10 text-gray-200"
                     />
                   </div>
                   <div className="space-y-2">
@@ -333,6 +334,7 @@ export function RolesSettings() {
                       }
                       placeholder="Enter role description"
                       rows={3}
+                      className="border-white/10 text-gray-200"
                     />
                   </div>
                   <div className="space-y-4">
@@ -340,7 +342,9 @@ export function RolesSettings() {
                     {Object.entries(permissionsByCategory).map(
                       ([category, permissions]) => (
                         <div key={category} className="space-y-2">
-                          <h4 className="font-medium text-sm">{category}</h4>
+                          <h4 className="font-medium text-sm text-gray-200">
+                            {category}
+                          </h4>
                           <div className="grid grid-cols-1 gap-2 pl-4">
                             {permissions.map((permission) => (
                               <div
@@ -358,15 +362,16 @@ export function RolesSettings() {
                                       checked as boolean
                                     )
                                   }
+                                  className="border-white/10 data-[state=checked]:bg-blue-900 data-[state=checked]:text-blue-300"
                                 />
                                 <div className="flex-1">
                                   <Label
                                     htmlFor={permission.id}
-                                    className="text-sm font-normal"
+                                    className="text-sm font-normal text-gray-200"
                                   >
                                     {permission.name}
                                   </Label>
-                                  <p className="text-xs text-muted-foreground">
+                                  <p className="text-xs text-gray-400">
                                     {permission.description}
                                   </p>
                                 </div>
@@ -382,6 +387,7 @@ export function RolesSettings() {
                   <Button
                     variant="outline"
                     onClick={() => setIsCreateDialogOpen(false)}
+                    className="border-white/10"
                   >
                     Cancel
                   </Button>
@@ -410,12 +416,14 @@ export function RolesSettings() {
             <TableBody>
               {roles.map((role) => (
                 <TableRow key={role.id}>
-                  <TableCell className="font-medium">{role.name}</TableCell>
-                  <TableCell className="max-w-[300px] truncate">
+                  <TableCell className="font-medium text-gray-200">
+                    {role.name}
+                  </TableCell>
+                  <TableCell className="max-w-[300px] truncate text-gray-200">
                     {role.description}
                   </TableCell>
                   <TableCell>
-                    <div className="flex items-center">
+                    <div className="flex items-center text-gray-200">
                       <Users className="mr-1 h-4 w-4" />
                       {role.userCount}
                     </div>
@@ -432,7 +440,10 @@ export function RolesSettings() {
                           <MoreHorizontal className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
+                      <DropdownMenuContent
+                        align="end"
+                        className="bg-[#0d1526] border-white/10"
+                      >
                         <DropdownMenuItem onClick={() => openEditDialog(role)}>
                           <Edit className="mr-2 h-4 w-4" />
                           Edit
@@ -458,7 +469,7 @@ export function RolesSettings() {
 
       {/* Edit Role Dialog */}
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto bg-[#0d1526] border-white/10">
           <DialogHeader>
             <DialogTitle>Edit Role</DialogTitle>
             <DialogDescription>
@@ -475,6 +486,7 @@ export function RolesSettings() {
                   setNewRole((prev) => ({ ...prev, name: e.target.value }))
                 }
                 placeholder="Enter role name"
+                className="border-white/10 text-gray-200"
               />
             </div>
             <div className="space-y-2">
@@ -490,6 +502,7 @@ export function RolesSettings() {
                 }
                 placeholder="Enter role description"
                 rows={3}
+                className="border-white/10 text-gray-200"
               />
             </div>
             <div className="space-y-4">
@@ -497,7 +510,9 @@ export function RolesSettings() {
               {Object.entries(permissionsByCategory).map(
                 ([category, permissions]) => (
                   <div key={category} className="space-y-2">
-                    <h4 className="font-medium text-sm">{category}</h4>
+                    <h4 className="font-medium text-sm text-gray-200">
+                      {category}
+                    </h4>
                     <div className="grid grid-cols-1 gap-2 pl-4">
                       {permissions.map((permission) => (
                         <div
@@ -515,15 +530,16 @@ export function RolesSettings() {
                                 checked as boolean
                               )
                             }
+                            className="border-white/10 data-[state=checked]:bg-blue-900 data-[state=checked]:text-blue-300"
                           />
                           <div className="flex-1">
                             <Label
                               htmlFor={`edit-${permission.id}`}
-                              className="text-sm font-normal"
+                              className="text-sm font-normal text-gray-200"
                             >
                               {permission.name}
                             </Label>
-                            <p className="text-xs text-muted-foreground">
+                            <p className="text-xs text-gray-400">
                               {permission.description}
                             </p>
                           </div>
@@ -539,6 +555,7 @@ export function RolesSettings() {
             <Button
               variant="outline"
               onClick={() => setIsEditDialogOpen(false)}
+              className="border-white/10"
             >
               Cancel
             </Button>
