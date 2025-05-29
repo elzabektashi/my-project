@@ -54,16 +54,13 @@ const mainLinks: SidebarLink[] = [
     href: "/admin/dashboard/reports",
     icon: FileBarChart,
   },
-  {
-    title: "Audit Logs",
-    href: "/admin/dashboard/audit-logs",
-    icon: FileText,
-  },
+
   {
     title: "Analytics",
     href: "/admin/dashboard/analytics",
     icon: BarChart3,
   },
+  { title: "Settings", href: "/admin/dashboard/settings", icon: Settings },
 ];
 
 const bottomLinks: SidebarLink[] = [

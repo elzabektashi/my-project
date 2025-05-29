@@ -12,7 +12,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { PlusCircle, Search } from "lucide-react";
-import { CreateUserDialog } from "@/components/admin/create-user-dialog";
 import {
   Card,
   CardContent,
@@ -31,12 +30,6 @@ export default function UsersPage() {
     <div className="space-y-6">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <h1 className="text-2xl font-bold tracking-tight">Users Management</h1>
-        <CreateUserDialog>
-          <Button variant="primaryAction">
-            <PlusCircle className="mr-2 h-4 w-4" />
-            Add User
-          </Button>
-        </CreateUserDialog>
       </div>
 
       <Card className="border-white/10 rounded-lg">

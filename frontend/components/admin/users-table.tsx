@@ -191,7 +191,7 @@ export function UsersTable() {
       const user = row.original;
       return (
         <Button variant="ghost" size="icon" asChild>
-          <a href={`/admin/users/${user.id}`}>
+          <a href={`/admin/dashboard/users/${user.id}`}>
             <Eye className="h-4 w-4" />
             <span className="sr-only">View user</span>
           </a>
